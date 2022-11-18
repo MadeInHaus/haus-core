@@ -17,4 +17,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
   <Story name="Default">
     <ImgOptimized src="https://images.ctfassets.net/j8tkpy1gjhi5/7zdc4JYXlD68uFKFf60Gjn/4421e0bbf32a80101075b50053453a5c/shreds.jpg" />
   </Story>
+  <Story name="WithCustomeSources">
+    <ImgOptimized
+      src="https://images.ctfassets.net/j8tkpy1gjhi5/7zdc4JYXlD68uFKFf60Gjn/4421e0bbf32a80101075b50053453a5c/shreds.jpg"
+      customSources={[
+        {
+          breakpoint: 1024,
+          imageWidth: 1024 * 1.5,
+        },
+        {
+          breakpoint: 768,
+          imageWidth: 768 * 1.5,
+        },
+        {
+          imageWidth: 768,
+        },
+      ]}
+    />
+  </Story>
 </Canvas>
