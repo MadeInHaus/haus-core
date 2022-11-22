@@ -1,5 +1,15 @@
 .root {
-  background-color: yellow;
-  color: darkslategray;
   padding: 0.5rem;
+}
+
+.primary {
+  background-color: yellow;
+  border: 2px solid transparent;
+  color: darkslategray;
+}
+
+.secondary {
+  background-color: transparent;
+  border: 2px solid lightcoral;
+  color: lightcoral;
 }
