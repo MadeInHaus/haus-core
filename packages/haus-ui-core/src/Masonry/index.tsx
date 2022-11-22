@@ -7,6 +7,16 @@ import cx from "classnames";
 
 import styles from "./Masonry.module.scss";
 
+export interface MasonryProps {
+  breakpointCols: {
+    default: number;
+    [key: number]: number;
+  };
+  className?: string;
+  columnClassName?: string;
+  children: React.ReactNode;
+}
+
 const DEFAULT_COLUMNS = 2;
 
 export const Masonry = ({
@@ -15,15 +25,7 @@ export const Masonry = ({
   columnClassName,
   children,
   ...rest
-}: {
-  breakpointCols: {
-    default: number;
-    [key: number]: number;
-  };
-  className?: string;
-  columnClassName?: string;
-  children: React.ReactNode;
-}) => {
+}: MasonryProps) => {
   const [columnCount, setColumnCount] = useState(
     breakpointCols?.default || DEFAULT_COLUMNS
   );
