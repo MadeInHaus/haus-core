@@ -1,0 +1,38 @@
+import { Masonry } from "@haus-ui/core/src";
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+
+<Meta title="Components/Masonry" component={Masonry} />
+
+# Masonry
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+
+## Props
+
+<ArgsTable of={ImgOptimized} />
+
+## Examples
+
+<Canvas>
+  <Story name="Default">
+    <Masonry
+      breakpointCols={{
+        default: 1,
+        768: 2,
+        1024: 3,
+      }}
+    >
+      {[...new Array(20)].map((_, index) => {
+        return (
+          <img
+            key={index}
+            style={{ width: "100%", display: "block" }}
+            src={`https://picsum.photos/500/${Math.floor(
+              200 + Math.random() * (600 - 200 + 1)
+            )}?random=${index}`}
+          />
+        );
+      })}
+    </Masonry>
+  </Story>
+</Canvas>
