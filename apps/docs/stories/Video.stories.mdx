@@ -1,0 +1,36 @@
+import { Video } from "@haus-ui/core/src";
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+
+<Meta title="Components/Video" component={Video} />
+
+export const Template = ({ children, ...args }) => (
+  <Video {...args}>{children}</Video>
+);
+
+# Video
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+
+## Props
+
+<ArgsTable of={Video} />
+
+## Examples
+
+<Canvas>
+  <Story
+    name="Default"
+    argTypes={{
+      textural: { control: "boolean" },
+    }}
+    args={{
+      textural: true,
+      sources: [
+        "https://videos.ctfassets.net/j8tkpy1gjhi5/4YWtNzFROCQBTLFmgt0GtC/46b15d9fbb9a6f5af12819461a37bfc9/Tillamook_Desktop_v7.mp4",
+        "https://videos.ctfassets.net/j8tkpy1gjhi5/3vr3eDCt4firB4lb5snVrc/c55eb5261efbe9cf0f8489e5aa4b5ab4/Tillamook_Desktop_v7.webm",
+      ],
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

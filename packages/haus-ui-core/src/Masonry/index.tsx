@@ -1,8 +1,7 @@
 // Stolen & Rewritten from https://github.com/paulcollett/react-masonry-css
 
 import React, { useState, useEffect } from "react";
-
-import { useWindowSize } from "@haus-ui/utils";
+import { useWindowSize } from "react-use";
 import cx from "classnames";
 
 import styles from "./Masonry.module.scss";

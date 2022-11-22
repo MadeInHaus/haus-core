@@ -28,6 +28,7 @@
     "node-sass": "^8.0.0",
     "postcss": "^8.4.19",
     "react": "^18.1.0",
+    "react-use": "^17.4.0",
     "rollup": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
