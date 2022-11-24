@@ -19,7 +19,8 @@ const texturalProps = {
   disablePictureInPicture: true,
 };
 
-export interface VideoProps {
+export interface VideoProps
+  extends React.VideoHTMLAttributes<HTMLVideoElement> {
   playState: "loadstart" | "play" | "pause";
   poster: string;
   sources: string[];
