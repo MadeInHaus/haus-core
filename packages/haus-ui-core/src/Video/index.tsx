@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useIntersection } from "react-use";
 
 const getFileExtension = (filename = "") => {
@@ -26,7 +26,6 @@ export interface VideoProps
   sources: string[];
   textural?: boolean;
   threshold?: number;
-  [key: string]: any;
 }
 
 export const Video = ({

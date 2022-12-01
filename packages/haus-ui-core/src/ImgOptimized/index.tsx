@@ -3,7 +3,7 @@ import { Fragment, memo } from "react";
 // This component requires Contentful's Image API
 // Inspiration: https://www.contentful.com/blog/2019/10/31/webp-source-sets-images-api/
 
-type TypeSource = {
+type Source = {
   breakpoint?: number;
   src?: string;
   imageWidth: number;
@@ -13,7 +13,7 @@ type TypeSource = {
 export interface ImgOptimizedProps {
   alt: string;
   className?: string;
-  customSources?: TypeSource[];
+  customSources?: Source[];
   decoding?: "async" | "sync" | "auto";
   draggable?: boolean;
   fallbackImageWidth: number;
@@ -75,7 +75,7 @@ export const ImgOptimized = memo(
     const isGif = /.gif$/i.test(ogSrc);
     const fallbackQuality = isGif ? 100 : 90;
     const quality = isGif ? 100 : 80;
-    const sources: TypeSource[] =
+    const sources: Source[] =
       customSources?.length && customSources?.length > 0
         ? customSources
         : getDefaultCustomSources(ogSrc);
@@ -126,7 +126,8 @@ export const ImgOptimized = memo(
           loading={priority ? "eager" : loading}
           decoding={priority ? "sync" : decoding}
           // @ts-ignore:next-line
-          fetchpriority={priority ? "high" : "low"}
+          // eslint-disable-next-line react/no-unknown-property
+          fetchriority={priority ? "high" : "low"}
           {...rest}
         />
       </picture>
