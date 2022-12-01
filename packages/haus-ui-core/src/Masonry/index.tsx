@@ -75,12 +75,11 @@ export const Masonry = ({
   const renderColumns = () => {
     const childrenInColumns = itemsInColumns();
     const columnWidth = `${100 / childrenInColumns.length}%`;
-    let className = columnClassName;
 
     return childrenInColumns.map((items, index) => {
       return (
         <div
-          className={className}
+          className={columnClassName}
           style={{
             width: columnWidth,
           }}
