@@ -4,6 +4,7 @@ This guide explains how to use a React design system starter powered by:
 
 - 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
+- 🛠 [Vite](https://vitejs.dev/) — A bundler powered by Rollup
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
 - 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
 
@@ -15,24 +16,21 @@ As well as a few others tools preconfigured:
 - [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
 - [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
 
-## Using this example
-
-Clone the design system example locally or [from GitHub](https://github.com/vercel/turbo/tree/main/examples/design-system):
+## Clone the repo
 
 ```bash
-npx degit vercel/turbo/examples/design-system design-system
-cd design-system
-yarn install
-git init . && git add . && git commit -m "Init"
+git clone https://github.com/MadeInHaus/haus-ui.git
+cd haus-ui
+npm install
 ```
 
 ### Useful Commands
 
-- `yarn build` - Build all packages including the Storybook site
-- `yarn dev` - Run all packages locally and preview with Storybook
-- `yarn lint` - Lint all packages
-- `yarn changeset` - Generate a changeset
-- `yarn clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
+- `npm run build` - Build all packages including the Storybook site
+- `npm run dev` - Run all packages locally and preview with Storybook
+- `npm run lint` - Lint all packages
+- `npm run changeset` - Generate a changeset
+- `npm run clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
 
 ## Turborepo
 
@@ -50,23 +48,21 @@ This Turborepo includes the following packages and applications:
 - `packages/@haus-ui/tsconfig`: Shared `tsconfig.json`s used throughout the Turborepo
 - `packages/eslint-config-haus-ui`: ESLint preset
 
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Yarn Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-W` workspaces flag with `yarn add`.
-
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
 
 ### Compilation
 
-To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `tsup`, which uses `esbuild` to greatly improve performance.
+To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `vite`, which uses `rollup` to greatly improve performance.
 
-Running `yarn build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+Running `npm run build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
 
-For `haus-ui-core`, the `build` command is the following:
+For `haus-ui-core`, the `build` command, which depends on `vite.config.js` is the following:
 
 ```bash
-tsup src/index.tsx --format esm,cjs --dts --external react
+npx vite build
 ```
 
-`tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `haus-ui-core` then instructs the consumer to select the correct format:
+`vite` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `haus-ui-core` then instructs the consumer to select the correct format:
 
 ```json:haus-ui-core/package.json
 {
@@ -79,12 +75,11 @@ tsup src/index.tsx --format esm,cjs --dts --external react
 }
 ```
 
-Run `yarn build` to confirm compilation is working correctly. You should see a folder `haus-ui-core/dist` which contains the compiled output.
+Run `npm run build` to confirm compilation is working correctly. You should see a folder `haus-ui-core/dist` which contains the compiled output.
 
 ```bash
 haus-ui-core
 └── dist
-    ├── index.d.ts  <-- Types
     ├── index.js    <-- CommonJS version
     └── index.mjs   <-- ES Modules version
 ```
@@ -93,23 +88,26 @@ haus-ui-core
 
 Each file inside of `haus-ui-core/src` is a component inside our design system. For example:
 
-```tsx:haus-ui-core/src/Button.tsx
-import * as React from 'react';
+```tsx:haus-ui-core/src/Button/index.tsx
+import * as React from "react";
+import cx from "classnames";
+import styles from "./Button.module.scss";
 
 export interface ButtonProps {
   children: React.ReactNode;
+  variant: "primary" | "secondary";
 }
 
-export function Button(props: ButtonProps) {
-  return <button>{props.children}</button>;
+export function Button({ children, variant }: ButtonProps) {
+  return (
+    <button className={cx(styles.root, styles[variant])}>{children}</button>
+  );
 }
-
-Button.displayName = 'Button';
 ```
 
 When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
 
-```tsx:haus-ui-core/src/index.tsx
+```tsx:haus-ui-core/src/index.ts
 import * as React from "react";
 export { Button, type ButtonProps } from "./Button";
 // Add new component exports here
@@ -127,10 +125,14 @@ Storybook provides us with an interactive UI playground for our components. This
 For example, here's the included Story for our `Button` component:
 
 ```js:apps/docs/stories/button.stories.mdx
-import { Button } from '@haus-ui-core/src';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Button } from "@haus-ui/core/src";
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 
 <Meta title="Components/Button" component={Button} />
+
+export const Template = ({ children, ...args }) => (
+  <Button {...args}>{children}</Button>
+);
 
 # Button
 
@@ -138,22 +140,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 
 ## Props
 
-<Props of={Box} />
+<ArgsTable story="Default" />
 
 ## Examples
 
-<Preview>
-  <Story name="Default">
-    <Button>Hello</Button>
+<Canvas>
+  <Story
+    name="Default"
+    argTypes={{
+      variant: {
+        options: ["primary", "secondary"],
+        control: { type: "radio" },
+      },
+    }}
+    args={{
+      children: "Hello World",
+      variant: "primary",
+    }}
+  >
+    {Template.bind({})}
   </Story>
-</Preview>
+</Canvas>
 ```
 
 This example includes a few helpful Storybook scripts:
 
-- `yarn dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
-- `yarn build`: Builds the Storybook UI and generates the static HTML files
-- `yarn preview-storybook`: Starts a local server to view the generated Storybook UI
+- `npm run dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
+- `npm run build`: Builds the Storybook UI and generates the static HTML files
+- `npm run preview-storybook`: Starts a local server to view the generated Storybook UI
 
 ## Versioning & Publishing Packages
 
@@ -163,7 +177,7 @@ You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHu
 
 ### Generating the Changelog
 
-To generate your changelog, run `yarn changeset` locally:
+To generate your changelog, run `npm run changeset` locally:
 
 1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
 1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
@@ -184,7 +198,7 @@ Turborepo runs the `build` script for all publishable packages (excluding docs) 
 
 - Rename folders in `packages/*` to replace `haus-ui` with your desired scope
 - Search and replace `haus-ui` with your desired scope
-- Re-run `yarn install`
+- Re-run `npm install`
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 
