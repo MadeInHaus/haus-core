@@ -10,9 +10,8 @@
     "dist/**"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "npx vite",
+    "build": "npx vite build ",
     "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
