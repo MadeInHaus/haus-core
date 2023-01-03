@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const packageJson = require("./package.json");
+
 // https://vitejs.dev/config/
 export default defineConfig((configEnv) => ({
   plugins: [react()],
@@ -11,11 +13,11 @@ export default defineConfig((configEnv) => ({
       output: [
         {
           format: "cjs",
-          entryFileNames: "[name].bundle.[format].js",
+          entryFileNames: packageJson.main,
         },
         {
           format: "esm",
-          entryFileNames: "[name].bundle.[format].js",
+          entryFileNames: packageJson.module,
         },
       ],
     },
