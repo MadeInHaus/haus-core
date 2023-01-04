@@ -4,7 +4,7 @@ This guide explains how to use a React design system starter powered by:
 
 - 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
-- 🛠 [Vite](https://vitejs.dev/) — A bundler powered by Rollup
+- 🛠 [Rollup](https://rollupjs.org/guide/en/) — A module bundler for JavaScript
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
 - 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
 
@@ -21,16 +21,16 @@ As well as a few others tools preconfigured:
 ```bash
 git clone https://github.com/MadeInHaus/haus-ui.git
 cd haus-ui
-npm install
+yarn install
 ```
 
 ### Useful Commands
 
-- `npm run build` - Build all packages including the Storybook site
-- `npm run dev` - Run all packages locally and preview with Storybook
-- `npm run lint` - Lint all packages
-- `npm run changeset` - Generate a changeset
-- `npm run clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
+- `yarn build` - Build all packages including the Storybook site
+- `yarn dev` - Run all packages locally and preview with Storybook
+- `yarn lint` - Lint all packages
+- `yarn changeset` - Generate a changeset
+- `yarn clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
 
 ## Turborepo
 
@@ -54,15 +54,15 @@ This example sets up your `.gitignore` to exclude all generated files, other fol
 
 To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `vite`, which uses `rollup` to greatly improve performance.
 
-Running `npm run build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+Running `yarn build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
 
-For `haus-ui-core`, the `build` command, which depends on `vite.config.js` is the following:
+For `haus-ui-core`, the `build` command, which depends on `rollup.config.js` is the following:
 
 ```bash
-npx vite build
+rollup -c --bundleConfigAsCjs
 ```
 
-`vite` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `haus-ui-core` then instructs the consumer to select the correct format:
+`rollup` compiles `src/index.ts`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `haus-ui-core` then instructs the consumer to select the correct format:
 
 ```json:haus-ui-core/package.json
 {
@@ -75,7 +75,7 @@ npx vite build
 }
 ```
 
-Run `npm run build` to confirm compilation is working correctly. You should see a folder `haus-ui-core/dist` which contains the compiled output.
+Run `yarn build` to confirm compilation is working correctly. You should see a folder `haus-ui-core/dist` which contains the compiled output.
 
 ```bash
 haus-ui-core
@@ -165,9 +165,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 
 This example includes a few helpful Storybook scripts:
 
-- `npm run dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
-- `npm run build`: Builds the Storybook UI and generates the static HTML files
-- `npm run preview-storybook`: Starts a local server to view the generated Storybook UI
+- `yarn dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
+- `yarn build`: Builds the Storybook UI and generates the static HTML files
+- `yarn preview-storybook`: Starts a local server to view the generated Storybook UI
 
 ## Versioning & Publishing Packages
 
@@ -177,7 +177,7 @@ You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHu
 
 ### Generating the Changelog
 
-To generate your changelog, run `npm run changeset` locally:
+To generate your changelog, run `yarn changeset` locally:
 
 1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
 1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
@@ -198,7 +198,7 @@ Turborepo runs the `build` script for all publishable packages (excluding docs) 
 
 - Rename folders in `packages/*` to replace `haus-ui` with your desired scope
 - Search and replace `haus-ui` with your desired scope
-- Re-run `npm install`
+- Re-run `yarn install`
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 
