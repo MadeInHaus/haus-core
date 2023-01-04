@@ -13,11 +13,13 @@ export default {
       file: packageJson.main,
       format: "cjs",
       sourcemap: true,
+      globals: { react: "React" },
     },
     {
       file: packageJson.module,
       format: "esm",
       sourcemap: true,
+      globals: { react: "React" },
     },
   ],
   plugins: [
@@ -25,6 +27,10 @@ export default {
     resolve(),
     commonjs(),
     typescript({ useTsconfigDeclarationDir: true }),
-    postcss(),
+    postcss({
+      extract: false,
+      modules: true,
+      use: ["sass"],
+    }),
   ],
 };

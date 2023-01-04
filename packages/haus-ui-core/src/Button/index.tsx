@@ -7,7 +7,7 @@ export interface ButtonProps {
   variant: "primary" | "secondary";
 }
 
-export function Button({ children, variant }: ButtonProps) {
+export function Button({ children, variant = "primary" }: ButtonProps) {
   return (
     <button className={cx(styles.root, styles[variant])}>{children}</button>
   );
