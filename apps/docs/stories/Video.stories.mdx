@@ -4,7 +4,9 @@ import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 <Meta title="Components/Video" component={Video} />
 
 export const Template = ({ children, ...args }) => (
-  <Video {...args}>{children}</Video>
+  <Video {...args} style={{ width: "100%" }}>
+    {children}
+  </Video>
 );
 
 # Video

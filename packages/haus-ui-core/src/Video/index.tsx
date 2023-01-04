@@ -34,9 +34,9 @@ export const Video = ({
   sources,
   textural = true,
   threshold = 0.25,
-  ...props
+  ...rest
 }: VideoProps) => {
-  const videoRef = useRef<any>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const intersection = useIntersection(videoRef, {
     root: null,
@@ -60,25 +60,43 @@ export const Video = ({
     }
   }
 
+  const playStateMap: {
+    play: () => void;
+    pause: () => void;
+  } = {
+    play: playVideo,
+    pause: pauseVideo,
+  };
+
   useEffect(() => {
-    const intersecting = intersection && intersection.isIntersecting;
-    intersecting === true && playVideo();
-    intersecting === false && pauseVideo();
+    const isIntersecting = intersection?.isIntersecting;
+
+    if (isIntersecting) {
+      playVideo();
+    }
+
+    if (!isIntersecting) {
+      pauseVideo();
+    }
   }, [intersection, playState]);
 
   useEffect(() => {
-    playState === "play" && playVideo();
-    playState === "pause" && pauseVideo();
+    if (playState === "loadstart") {
+      return;
+    }
+
+    const videoAction = playStateMap[playState];
+
+    videoAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playState]);
 
-  const videoProps = Object.assign(
-    textural ? texturalProps : defaultProps,
-    props
-  );
+  const videoProps = textural ? texturalProps : defaultProps;
 
   return (
     <video
       {...videoProps}
+      {...rest}
       poster={poster ? `${poster}?w=1200&fm=webp&q=80` : undefined}
       ref={videoRef}
     >
