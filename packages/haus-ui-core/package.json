@@ -17,26 +17,23 @@
   },
   "devDependencies": {
     "@haus-ui/tsconfig": "*",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
     "classnames": "^2.3.2",
     "eslint": "^8.15.0",
     "eslint-config-haus-ui": "*",
+    "postcss": "^8.4.20",
     "react": "^18.1.0",
     "react-use": "^17.4.0",
+    "rollup": "^3.9.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
     "sass": "^1.57.1",
     "typescript": "^4.5.3"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@rollup/plugin-commonjs": "^24.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "postcss": "^8.4.20",
-    "rollup": "^3.9.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.34.1"
   }
 }
