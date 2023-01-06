@@ -1,14 +1,14 @@
-import * as React from "react";
-import cx from "classnames";
-import styles from "./Button.module.scss";
+import * as React from 'react';
+import cx from 'classnames';
+import styles from './Button.module.scss';
 
 export interface ButtonProps {
-  children: React.ReactNode;
-  variant: "primary" | "secondary";
+    children: React.ReactNode;
+    variant: 'primary' | 'secondary';
 }
 
-export function Button({ children, variant = "primary" }: ButtonProps) {
-  return (
-    <button className={cx(styles.root, styles[variant])}>{children}</button>
-  );
+export function Button({ children, variant = 'primary' }: ButtonProps) {
+    return (
+        <button className={cx(styles.root, styles[variant])}>{children}</button>
+    );
 }

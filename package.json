@@ -16,8 +16,8 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.22.0",
+    "@madeinhaus/prettier-config": "1.2.1",
     "eslint": "^8.15.0",
-    "eslint-config-haus-ui": "*",
     "prettier": "^2.5.1",
     "turbo": "latest"
   }

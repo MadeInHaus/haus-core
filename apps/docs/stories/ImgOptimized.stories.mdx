@@ -1,9 +1,9 @@
-import { ImgOptimized } from "@haus-ui/core/src";
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ImgOptimized } from '@haus-ui/core/src';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 <Meta title="Components/ImgOptimized" component={ImgOptimized} />
 
-export const Template = (args) => <ImgOptimized {...args} />;
+export const Template = args => <ImgOptimized {...args} />;
 
 # ImgOptimized
 
@@ -16,37 +16,37 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 ## Examples
 
 <Canvas>
-  <Story
-    name="Default"
-    argTypes={{
-      fallbackImageWidth: {
-        defaultValue: { summary: 1280 },
-        control: "number",
-      },
-      priority: {
-        defaultValue: { summary: false },
-        control: "boolean",
-      },
-    }}
-    args={{
-      fallbackImageWidth: 1280,
-      customSources: [
-        {
-          breakpoint: 1024,
-          imageWidth: 1024 * 1.5,
-        },
-        {
-          breakpoint: 768,
-          imageWidth: 768 * 1.5,
-        },
-        {
-          imageWidth: 768,
-        },
-      ],
-      priority: false,
-      src: "https://images.ctfassets.net/j8tkpy1gjhi5/1sNDo90vR4xXAv1RdrQFki/1fe19001c36da6b7f9d0afd5745a930f/Frame_1826.png",
-    }}
-  >
-    {Template.bind({})}
-  </Story>
+    <Story
+        name="Default"
+        argTypes={{
+            fallbackImageWidth: {
+                defaultValue: { summary: 1280 },
+                control: 'number',
+            },
+            priority: {
+                defaultValue: { summary: false },
+                control: 'boolean',
+            },
+        }}
+        args={{
+            fallbackImageWidth: 1280,
+            customSources: [
+                {
+                    breakpoint: 1024,
+                    imageWidth: 1024 * 1.5,
+                },
+                {
+                    breakpoint: 768,
+                    imageWidth: 768 * 1.5,
+                },
+                {
+                    imageWidth: 768,
+                },
+            ],
+            priority: false,
+            src: 'https://images.ctfassets.net/j8tkpy1gjhi5/1sNDo90vR4xXAv1RdrQFki/1fe19001c36da6b7f9d0afd5745a930f/Frame_1826.png',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
 </Canvas>

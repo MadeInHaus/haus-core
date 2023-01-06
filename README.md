@@ -45,8 +45,6 @@ This Turborepo includes the following packages and applications:
 - `apps/docs`: Component documentation site with Storybook
 - `packages/@haus-ui/core`: Core React components
 - `packages/@haus-ui/utils`: Shared React utilities
-- `packages/@haus-ui/tsconfig`: Shared `tsconfig.json`s used throughout the Turborepo
-- `packages/eslint-config-haus-ui`: ESLint preset
 
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
 
