@@ -1,4 +1,15 @@
 module.exports = {
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true,
+  },
   root: true,
-  extends: ["haus-ui"],
+  rules: {
+    "import/no-unresolved": "off",
+    "no-empty": "off",
+    "no-unused-vars": "warn",
+    "no-undef": "warn",
+  },
 };
