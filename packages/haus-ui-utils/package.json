@@ -16,7 +16,7 @@
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "devDependencies": {
-        "@madeinhaus/prettier-config": "1.2.1",
+        "@madeinhaus/prettier-config": "^1.2.1",
         "@types/react": "^18.0.9",
         "@types/react-dom": "^18.0.4",
         "eslint": "^8.15.0",

@@ -16,6 +16,7 @@
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "devDependencies": {
+        "@madeinhaus/prettier-config": "^1.2.1",
         "@rollup/plugin-commonjs": "^24.0.0",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@types/react": "^18.0.9",

@@ -1506,7 +1506,7 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@madeinhaus/prettier-config@1.2.1":
+"@madeinhaus/prettier-config@1.2.1", "@madeinhaus/prettier-config@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@madeinhaus/prettier-config/-/prettier-config-1.2.1.tgz#4523a34f84027a2f4ca1680484b3114f3a904893"
   integrity sha512-hHzPP9W1fjpZ5jVlCn2RLjpWH/exvXgyIFjrVL5TycE1xovzAmpWdgnMTl7KPumn0nmAFM7DLM700Bj4b3SQUg==
