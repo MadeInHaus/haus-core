@@ -5,7 +5,7 @@ module.exports = {
         es6: true,
         node: true,
     },
-    extends: 'next/core-web-vitals',
+    extends: ['next', 'turbo'],
     root: true,
     rules: {
         'import/no-unresolved': 'off',
