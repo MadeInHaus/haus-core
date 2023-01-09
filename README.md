@@ -64,7 +64,7 @@ rollup -c --bundleConfigAsCjs
 
 ```json:haus-ui-core/package.json
 {
-  "name": "@haus-ui/core",
+  "name": "@madeinhaus/ui/core",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
