@@ -43,8 +43,8 @@ Using Turborepo simplifes managing your design system monorepo, as you can have 
 This Turborepo includes the following packages and applications:
 
 - `apps/docs`: Component documentation site with Storybook
-- `packages/@haus-ui/core`: Core React components
-- `packages/@haus-ui/utils`: Shared React utilities
+- `packages/haus-ui-core`: Core React components
+- `packages/haus-ui-utils`: Shared React utilities
 
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
 
@@ -64,7 +64,7 @@ rollup -c --bundleConfigAsCjs
 
 ```json:haus-ui-core/package.json
 {
-  "name": "@madeinhaus/ui/core",
+  "name": "@madeinhaus/ui",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
