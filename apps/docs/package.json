@@ -9,7 +9,7 @@
         "clean": "rm -rf .turbo && rm -rf node_modules"
     },
     "dependencies": {
-        "@haus-ui/core": "*",
+        "@madeinhaus/ui": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
