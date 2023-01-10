@@ -1,0 +1,36 @@
+import { Carousel } from '@madeinhaus/ui';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+<Meta title="Components/Carousel" component={Carousel} />
+
+export const Template = ({ children, ...args }) => (
+    <Button {...args}>{children}</Button>
+);
+
+# Carousel
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+
+## Props
+
+<ArgsTable story="Default" />
+
+## Examples
+
+<Canvas>
+    <Story
+        name="Default"
+        argTypes={{
+            variant: {
+                options: ['primary', 'secondary'],
+                control: { type: 'radio' },
+            },
+        }}
+        args={{
+            children: 'Hello World',
+            variant: 'primary',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
