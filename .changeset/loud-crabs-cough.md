@@ -1,0 +1,5 @@
+---
+"@madeinhaus/hooks": minor
+---
+
+Initialize
