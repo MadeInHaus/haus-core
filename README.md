@@ -1,6 +1,6 @@
-# Turborepo Design System Starter
+# Haus UI
 
-This guide explains how to use a React design system starter powered by:
+Powered by:
 
 - 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
@@ -36,7 +36,7 @@ yarn install
 
 [Turborepo](https://turbo.build/repo) is a high-performance build system for JavaScript and TypeScript codebases. It was designed after the workflows used by massive software engineering organizations to ship code at scale. Turborepo abstracts the complex configuration needed for monorepos and provides fast, incremental builds with zero-configuration remote caching.
 
-Using Turborepo simplifes managing your design system monorepo, as you can have a single lint, build, test, and release process for all packages. [Learn more](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software) about how monorepos improve your development workflow.
+Using Turborepo simplifies managing your design system monorepo, as you can have a single lint, build, test, and release process for all packages. [Learn more](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software) about how monorepos improve your development workflow.
 
 ## Apps & Packages
 
@@ -194,10 +194,6 @@ turbo run build --filter=docs^... && changeset publish
 ```
 
 Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `haus-ui` as the npm organization. To change this, do the following:
-
-- Rename folders in `packages/*` to replace `haus-ui` with your desired scope
-- Search and replace `haus-ui` with your desired scope
-- Re-run `yarn install`
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 
