@@ -17,7 +17,28 @@ module.exports = {
                         find: '@madeinhaus/ui',
                         replacement: path.resolve(
                             __dirname,
-                            '../../../packages/haus-ui-core/'
+                            '../../../packages/ui/'
+                        ),
+                    },
+                    {
+                        find: '@madeinhaus/contentful',
+                        replacement: path.resolve(
+                            __dirname,
+                            '../../../packages/contentful/'
+                        ),
+                    },
+                    {
+                        find: '@madeinhaus/utils',
+                        replacement: path.resolve(
+                            __dirname,
+                            '../../../packages/utils/'
+                        ),
+                    },
+                    {
+                        find: '@madeinhaus/hooks',
+                        replacement: path.resolve(
+                            __dirname,
+                            '../../../packages/hooks/'
                         ),
                     },
                 ],
