@@ -119,7 +119,7 @@ Storybook provides us with an interactive UI playground for our components. This
 
 - Use Vite to bundle stories instantly (in milliseconds)
 - Automatically find any stories inside the `stories/` folder
-- Support using module path aliases like `@madeinhaus/ui` for imports
+- Support using module path aliases like `@madeinhaus/core` for imports
 - Write MDX for component documentation pages
 
 For example, here's the included Story for our `Button` component:
