@@ -43,9 +43,7 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 This Turborepo includes the following packages and applications:
 
 - `apps/docs`: Component documentation site with Storybook
-- `packages/ui`: Core React components
-- `packages/contentful`: Contentful specific components
-- `packages/hooks`: Shared React hooks
+- `packages/core`: Core shared react components and hooks
 - `packages/utils`: Shared React utilities
 
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
