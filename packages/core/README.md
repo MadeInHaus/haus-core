@@ -9,5 +9,5 @@ npm i @madeinhaus/core
 **Usage**:
 
 ```javascript
-import { ImgOptimized } from '@madeinhaus/core';
+import { ContentfulImg } from '@madeinhaus/core';
 ```
