@@ -10,7 +10,7 @@ type Source = {
     orientation?: string;
 };
 
-export interface ImgOptimizedProps {
+export interface ContentfulImgProps {
     alt: string;
     className?: string;
     customSources?: Source[];
@@ -47,7 +47,7 @@ function negotiatedFallback(ogSrc: String) {
     return ogSrc.replace(`//images.ctfassets.net`, `/api/images/cdn`);
 }
 
-export const ImgOptimized = memo(
+export const ContentfulImg = memo(
     ({
         alt = '',
         className,
@@ -59,7 +59,7 @@ export const ImgOptimized = memo(
         decoding,
         src: ogSrc,
         ...rest
-    }: ImgOptimizedProps) => {
+    }: ContentfulImgProps) => {
         const hasNoFallbackCustomSource =
             customSources?.length &&
             customSources.length > 0 &&
@@ -67,7 +67,7 @@ export const ImgOptimized = memo(
 
         hasNoFallbackCustomSource &&
             console.warn(
-                'ImgOptimized.js: For optimization purposes, it is *highly recommended* that you include a fallback custom source with no breakpoint.'
+                'ContentfulImg: For optimization purposes, it is *highly recommended* that you include a fallback custom source with no breakpoint.'
             );
 
         // Round with to nearest integer to keep Contentful's Image API happy
@@ -82,57 +82,39 @@ export const ImgOptimized = memo(
 
         return (
             <picture>
-                {sources.map(
-                    (
-                        {
-                            breakpoint,
-                            orientation,
-                            imageWidth,
-                            src: breakpointSrc,
-                        },
-                        i
-                    ) => {
-                        // Max image values at 2560px and round width to nearest integer to keep Contentful's Image API happy
-                        const w = Math.round(Math.min(imageWidth, 2560));
+                {sources.map(({ breakpoint, orientation, imageWidth, src: breakpointSrc }, i) => {
+                    // Max image values at 2560px and round width to nearest integer to keep Contentful's Image API happy
+                    const w = Math.round(Math.min(imageWidth, 2560));
 
-                        return (
-                            <Fragment key={i}>
-                                <source
-                                    media={
-                                        orientation
-                                            ? `(orientation: ${orientation})`
-                                            : breakpoint
-                                            ? `(min-width: ${String(
-                                                  breakpoint
-                                              )}px)`
-                                            : undefined
-                                    }
-                                    srcSet={`${
-                                        breakpointSrc ?? ogSrc
-                                    }?w=${w}&fm=webp&q=${quality}`}
-                                    type="image/webp"
-                                />
-                                <source
-                                    media={
-                                        orientation
-                                            ? `(orientation: ${orientation})`
-                                            : breakpoint
-                                            ? `(min-width: ${breakpoint}px)`
-                                            : undefined
-                                    }
-                                    srcSet={`${
-                                        breakpointSrc ?? ogSrc
-                                    }?w=${w}&q=${quality}`}
-                                />
-                            </Fragment>
-                        );
-                    }
-                )}
+                    return (
+                        <Fragment key={i}>
+                            <source
+                                media={
+                                    orientation
+                                        ? `(orientation: ${orientation})`
+                                        : breakpoint
+                                        ? `(min-width: ${String(breakpoint)}px)`
+                                        : undefined
+                                }
+                                srcSet={`${breakpointSrc ?? ogSrc}?w=${w}&fm=webp&q=${quality}`}
+                                type="image/webp"
+                            />
+                            <source
+                                media={
+                                    orientation
+                                        ? `(orientation: ${orientation})`
+                                        : breakpoint
+                                        ? `(min-width: ${breakpoint}px)`
+                                        : undefined
+                                }
+                                srcSet={`${breakpointSrc ?? ogSrc}?w=${w}&q=${quality}`}
+                            />
+                        </Fragment>
+                    );
+                })}
                 <img
                     alt={alt}
-                    src={negotiatedFallback(
-                        `${ogSrc}?w=${fallbackWidth}&q=${fallbackQuality}`
-                    )}
+                    src={negotiatedFallback(`${ogSrc}?w=${fallbackWidth}&q=${fallbackQuality}`)}
                     className={className}
                     draggable={draggable}
                     loading={priority ? 'eager' : loading}
@@ -146,5 +128,3 @@ export const ImgOptimized = memo(
         );
     }
 );
-
-ImgOptimized.displayName = 'ImgOptimized';

@@ -14,10 +14,17 @@ module.exports = {
             resolve: {
                 alias: [
                     {
-                        find: '@madeinhaus/ui',
+                        find: '@madeinhaus/core',
                         replacement: path.resolve(
                             __dirname,
-                            '../../../packages/haus-ui-core/'
+                            '../../../packages/core/'
+                        ),
+                    },
+                    {
+                        find: '@madeinhaus/utils',
+                        replacement: path.resolve(
+                            __dirname,
+                            '../../../packages/utils/'
                         ),
                     },
                 ],

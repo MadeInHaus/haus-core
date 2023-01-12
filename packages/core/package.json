@@ -1,6 +1,6 @@
 {
-    "name": "@madeinhaus/ui",
-    "version": "0.1.0",
+    "name": "@madeinhaus/core",
+    "version": "0.0.0",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
