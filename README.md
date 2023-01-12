@@ -66,7 +66,7 @@ rollup -c --bundleConfigAsCjs
 
 ```json:ui/package.json
 {
-  "name": "@haus-ui/core",
+  "name": "@madeinhaus/core",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -75,7 +75,7 @@ rollup -c --bundleConfigAsCjs
 }
 ```
 
-Run `yarn build` to confirm compilation is working correctly. You should see a folder `ui/dist` which contains the compiled output.
+Run `yarn build` to confirm compilation is working correctly. You should see a folder `core/dist` which contains the compiled output.
 
 ```bash
 ui
@@ -86,9 +86,9 @@ ui
 
 ## Components
 
-Each file inside of `ui/src` is a component inside our design system. For example:
+Each file inside of `core/src` is a component inside our design system. For example:
 
-```tsx:ui/src/Button/index.tsx
+```tsx:core/src/ui/Button/index.tsx
 import * as React from "react";
 import cx from "classnames";
 import styles from "./Button.module.scss";
@@ -107,7 +107,7 @@ export function Button({ children, variant }: ButtonProps) {
 
 When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
 
-```tsx:ui/src/index.ts
+```tsx:core/src/index.ts
 import * as React from "react";
 export { Button, type ButtonProps } from "./Button";
 // Add new component exports here
