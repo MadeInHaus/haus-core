@@ -2,6 +2,9 @@
     "name": "@haus-ui/docs",
     "version": "0.0.0",
     "private": true,
+    "engines": {
+        "node": "16.x"
+    },
     "scripts": {
         "dev": "start-storybook -p 6006",
         "build": "build-storybook --docs",
