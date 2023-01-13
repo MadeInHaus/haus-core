@@ -18,7 +18,10 @@
     "@changesets/cli": "^2.22.0",
     "@madeinhaus/prettier-config": "1.2.1",
     "eslint": "^8.15.0",
+    "next": "^13.1.2",
     "prettier": "^2.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "turbo": "latest"
   }
 }
