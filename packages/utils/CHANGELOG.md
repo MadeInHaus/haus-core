@@ -1,5 +1,11 @@
 # @madeinhaus/utils
 
+## 0.3.0
+
+### Minor Changes
+
+- 25f26ba: Rewrite function to make it less buggy
+
 ## 0.2.0
 
 ### Minor Changes
