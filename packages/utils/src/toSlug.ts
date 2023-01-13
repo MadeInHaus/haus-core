@@ -5,14 +5,17 @@
  * @return {string} The slugified string.
  */
 export function toSlug(str: string): string {
-    let s = str;
-    if (!s) {
+    if (!str) {
         return '';
     }
-    s = s.toLowerCase().trim();
-    s = s.replace(/ & /g, ' and ');
-    s = s.replace(/[ ]+/g, '-');
-    s = s.replace(/[-]+/g, '-');
-    s = s.replace(/[^a-z0-9-]+/g, '');
-    return s;
+    return str
+        .trim()
+        .normalize('NFKD') // Decompose the string
+        .replace(/\p{Diacritic}/gu, '') // Remove diacritics
+        .toLocaleLowerCase('en-US') // Convert to lowercase
+        .replace(/\s+/g, '-') // Replace whitespaces with "-"
+        .replace(/[^a-z0-9-]+/g, '') // Remove all non-alphanumeric chars
+        .replace(/-+/g, '-') // Replace multiple "-" with single "-"
+        .replace(/^-+/g, '') // Trim "-" from start of text
+        .replace(/-+$/g, ''); // Trim "-" from end of text
 }
