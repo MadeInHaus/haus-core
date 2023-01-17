@@ -2,7 +2,7 @@
 
 export { Button, type ButtonProps } from './ui/Button';
 export { Masonry, type MasonryProps } from './ui/Masonry';
-export { Video, type VideoProps } from './ui/Video';
+export { TexturalVideo, type TexturalVideoProps } from './ui/TexturalVideo';
 export { ContentfulImg, type ContentfulImgProps } from './ui/ContentfulImg';
 
 /* Hooks */
