@@ -19,6 +19,9 @@ export const TexturalVideo = ({
 }: TexturalVideoProps) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
+    // Ref: https://developer.chrome.com/blog/play-request-was-interrupted/
+    const playPromise = videoRef.current && videoRef.current.play();
+
     const intersection = useIntersection(videoRef, {
         root: null,
         rootMargin: '0px',
@@ -26,19 +29,25 @@ export const TexturalVideo = ({
     });
 
     function playVideo() {
-        try {
-            videoRef.current?.play();
-        } catch (e) {
-            console.warn(e);
-        }
+        playPromise &&
+            playPromise
+                .then(() => {
+                    videoRef.current?.play();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
     }
 
     function pauseVideo() {
-        try {
-            videoRef.current?.pause();
-        } catch (e) {
-            console.warn(e);
-        }
+        playPromise &&
+            playPromise
+                .then(() => {
+                    videoRef.current?.pause();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
     }
 
     useEffect(() => {
@@ -51,6 +60,7 @@ export const TexturalVideo = ({
         if (!intersecting) {
             pauseVideo();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [intersection]);
 
     return (
