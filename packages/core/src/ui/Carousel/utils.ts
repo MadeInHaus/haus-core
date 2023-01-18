@@ -46,11 +46,6 @@ export function getCSSValues(container: HTMLElement) {
     };
 }
 
-// Real modulo
-export function modulo(a: number, b: number): number {
-    return ((a % b) + b) % b;
-}
-
 // Get the last item of an array
 export function last(array: any[]) {
     return typeof array !== 'undefined' && Array.isArray(array)

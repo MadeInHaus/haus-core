@@ -1,5 +1,6 @@
 // From https://github.com/ai/easings.net/blob/master/src/easings/easingsFunctions.ts
 
+// eslint-disable-next-line no-unused-vars
 export type EasingFunction = (progress: number) => number;
 
 interface EasingDictionary {
@@ -32,7 +33,7 @@ const bounceOut: EasingFunction = function (x) {
 	}
 };
 
-const easings: EasingDictionary = {
+export const easings: EasingDictionary = {
 	linear: (x) => x,
 	easeInQuad: function (x) {
 		return x * x;
@@ -149,5 +150,3 @@ const easings: EasingDictionary = {
 			: (1 + bounceOut(2 * x - 1)) / 2;
 	},
 };
-
-export default easings;

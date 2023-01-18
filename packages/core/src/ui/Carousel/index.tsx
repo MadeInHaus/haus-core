@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import cx from 'classnames';
 
-import easings, { EasingFunction } from './easings';
-import { getCSSValues, hermite, sign, modulo, last } from './utils';
+import type { EasingFunction } from '@madeinhaus/utils';
+
+import { easings, modulo } from '@madeinhaus/utils';
+import { getCSSValues, hermite, sign, last } from './utils';
 
 import styles from './Carousel.module.scss';
 
@@ -26,7 +28,7 @@ const CarouselItem = ({ Wrapper, isDisabled, className, children }: CarouselItem
 
 export type CarouselRef = {
     refresh: () => void;
-    moveIntoView: (index: number) => void;
+    moveIntoView: (index: number) => void; // eslint-disable-line no-unused-vars
 };
 
 export interface CarouselProps {
@@ -38,9 +40,9 @@ export interface CarouselProps {
     activeItemIndex?: number;
     as?: React.ElementType<any>;
     childAs?: React.ElementType<any>;
-    onPress?: (event: PointerEvent) => void;
+    onPress?: (event: PointerEvent) => void; // eslint-disable-line no-unused-vars
     onDrag?: () => void;
-    onSnap?: (index: number) => void;
+    onSnap?: (index: number) => void; // eslint-disable-line no-unused-vars
     className?: string;
     itemClassName?: string;
     style?: React.CSSProperties;
@@ -87,7 +89,7 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
     const activeItemIndexInternal = React.useRef<number>(activeItemIndex);
     const offset = React.useRef<number>(0);
 
-    const [isDisabled, setIsDisabled] = React.useState(false);
+    const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
     const items = React.useMemo<React.ReactNode[]>(
         () =>
