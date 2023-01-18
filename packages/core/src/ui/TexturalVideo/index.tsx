@@ -17,6 +17,10 @@ export const TexturalVideo = ({
     poster,
     ...rest
 }: TexturalVideoProps) => {
+    if (isTransparent && !mp4) {
+        console.warn('TexturalVideo: Safari requires mp4 format for transparent vidoes.');
+    }
+
     const videoRef = useRef<HTMLVideoElement>(null);
 
     // Ref: https://developer.chrome.com/blog/play-request-was-interrupted/

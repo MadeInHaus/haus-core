@@ -10,7 +10,7 @@
         "dist/**"
     ],
     "scripts": {
-        "build": "rollup -c --bundleConfigAsCjs",
+        "build": "rm -rf dist && rollup -c --bundleConfigAsCjs",
         "dev": "rollup -c -w --bundleConfigAsCjs",
         "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
