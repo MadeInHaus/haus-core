@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { useIntersection } from '../../hooks/useIntersection';
+import * as React from 'react';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
@@ -21,26 +21,23 @@ export const TexturalVideo = ({
 }: TexturalVideoProps) => {
     if (isTransparent && !(mp4 && webm)) {
         console.warn(
-            'TexturalVideo: Please make sure you have both webm and mp4 formats for cross-browser support for transparent vidoes.'
+            'TexturalVideo: Please make sure you have both webm and mp4 formats for cross-browser support for transparent videos.'
         );
     }
 
-    const videoRef = useRef<HTMLVideoElement>(null);
-
-    // Ref: https://developer.chrome.com/blog/play-request-was-interrupted/
-    const playPromise = videoRef.current && videoRef.current.play();
-
-    const intersection = useIntersection(videoRef, {
-        root: null,
-        rootMargin: '0px',
+    const [isIntersecting, videoRef, videoEl] = useIntersectionObserver<HTMLVideoElement>({
+        once: false,
         threshold,
     });
+
+    // Ref: https://developer.chrome.com/blog/play-request-was-interrupted/
+    const playPromise = videoEl.current && videoEl.current.play();
 
     function playVideo() {
         playPromise &&
             playPromise
                 .then(() => {
-                    videoRef.current?.play();
+                    videoEl.current?.play();
                 })
                 .catch(error => {
                     console.error(error);
@@ -51,25 +48,21 @@ export const TexturalVideo = ({
         playPromise &&
             playPromise
                 .then(() => {
-                    videoRef.current?.pause();
+                    videoEl.current?.pause();
                 })
                 .catch(error => {
                     console.error(error);
                 });
     }
 
-    useEffect(() => {
-        const intersecting = intersection?.isIntersecting;
-
-        if (intersecting) {
+    React.useEffect(() => {
+        if (isIntersecting) {
             playVideo();
-        }
-
-        if (!intersecting) {
+        } else {
             pauseVideo();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [intersection]);
+    }, [isIntersecting]);
 
     return (
         <video
