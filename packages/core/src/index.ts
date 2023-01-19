@@ -8,4 +8,4 @@ export { ContentfulImg, type ContentfulImgProps } from './ui/ContentfulImg';
 /* Hooks */
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 export { usePrevious } from './hooks/usePrevious';
-export { useIntersection } from './hooks/useIntersection';
+export { useIntersectionObserver } from './hooks/useIntersectionObserver';
