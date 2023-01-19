@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.2.0
+
+### Minor Changes
+
+- a9e3d65: Add Textural Video component
+
 ## 0.1.1
 
 ### Patch Changes
