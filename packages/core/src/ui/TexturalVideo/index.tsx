@@ -17,11 +17,12 @@ export const TexturalVideo = ({
     poster,
     threshold = 0,
     title,
-
     ...rest
 }: TexturalVideoProps) => {
-    if (isTransparent && !mp4) {
-        console.warn('TexturalVideo: Safari requires mp4 format for transparent vidoes.');
+    if (isTransparent && !(mp4 && webm)) {
+        console.warn(
+            'TexturalVideo: Please make sure you have both webm and mp4 formats for cross-browser support for transparent vidoes.'
+        );
     }
 
     const videoRef = useRef<HTMLVideoElement>(null);
