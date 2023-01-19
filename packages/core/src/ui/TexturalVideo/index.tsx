@@ -1,20 +1,23 @@
 import React, { useRef, useEffect } from 'react';
-import { useIntersection } from 'react-use';
+import { useIntersection } from '../../hooks/useIntersection';
 
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
     isTransparent?: boolean;
     mp4?: string;
     webm?: string;
+    threshold: number;
 }
 
 export const TexturalVideo = ({
     className,
-    title,
     isTransparent = false,
     mp4,
     webm,
     poster,
+    threshold = 0,
+    title,
+
     ...rest
 }: TexturalVideoProps) => {
     if (isTransparent && !mp4) {
@@ -29,7 +32,7 @@ export const TexturalVideo = ({
     const intersection = useIntersection(videoRef, {
         root: null,
         rootMargin: '0px',
-        threshold: 0,
+        threshold,
     });
 
     function playVideo() {
