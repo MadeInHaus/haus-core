@@ -29,11 +29,8 @@ import * as React from 'react';
     );
 */
 
-type IntersectionObserverOptions = {
+interface IntersectionObserverOptions extends IntersectionObserverInit {
     once?: boolean;
-    root?: Element | Document | null;
-    rootMargin?: string;
-    threshold?: number | number[];
 };
 
 type IntersectionObserverResult = readonly [
