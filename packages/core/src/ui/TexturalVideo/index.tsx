@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useIntersection } from '../../hooks/useIntersection';
+import { useIntersection } from '@madeinhaus/core';
 
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
