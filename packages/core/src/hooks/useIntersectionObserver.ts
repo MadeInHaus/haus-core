@@ -33,23 +33,23 @@ interface IntersectionObserverOptions extends IntersectionObserverInit {
     once?: boolean;
 };
 
-type IntersectionObserverResult = readonly [
+type IntersectionObserverResult<ElementType> = readonly [
     boolean,
-    (el: Element | null) => void, // eslint-disable-line no-unused-vars
-    React.MutableRefObject<Element | null>
+    (el: ElementType | null) => void, // eslint-disable-line no-unused-vars
+    React.MutableRefObject<ElementType | null>
 ];
 
-export const useIntersectionObserver = ({
+export const useIntersectionObserver = <ElementType extends Element>({
     once = true,
     root,
     rootMargin,
     threshold,
-}: IntersectionObserverOptions = {}): IntersectionObserverResult => {
+}: IntersectionObserverOptions = {}): IntersectionObserverResult<ElementType> => {
     const [inView, setInView] = React.useState<boolean>(false);
     const observer = React.useRef<IntersectionObserver | null>(null);
-    const elRef = React.useRef<Element | null>(null);
+    const elRef = React.useRef<ElementType | null>(null);
     const fnRef = React.useCallback(
-        (el: Element | null) => {
+        (el: ElementType | null) => {
             if (el) {
                 observer.current = new IntersectionObserver(
                     ([{ isIntersecting }]) => {
