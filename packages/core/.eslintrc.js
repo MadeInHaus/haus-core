@@ -11,9 +11,14 @@ module.exports = {
         'import/no-unresolved': 'off',
         'no-empty': 'off',
         'no-unused-vars': 'warn',
-        'no-undef': 'warn',
         'react-hooks/exhaustive-deps': 'warn',
         'react-hooks/rules-of-hooks': 'error',
         'react/display-name': 'off',
     },
+    overrides: [
+        {
+            files: ['*.ts', '*.tsx'],
+            rules: { 'no-undef': 'off' },
+        },
+    ],
 };
