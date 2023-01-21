@@ -127,11 +127,11 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
             const indexNeighbor = modulo(i - dir, totalItems);
             const currHalf = getItemWidth(index) / 2;
             const nextHalf = getItemWidth(indexNeighbor) / 2;
-            return dir * (gap.current ?? 0 + currHalf + nextHalf);
+            return dir * ((gap.current ?? 0) + currHalf + nextHalf);
         } else {
             const indexNeighbor = modulo(i - Math.max(dir, 0), totalItems);
             const width = getItemWidth(indexNeighbor);
-            return dir * (gap.current ?? 0 + width);
+            return dir * ((gap.current ?? 0) + width);
         }
     };
 
@@ -278,7 +278,7 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
             const x2 = x1 + width;
             position(index, x1, x2);
             index = modulo(index + 1, items.length);
-            x1 = x2 + gap.current;
+            x1 = x2 + (gap.current ?? 0);
             if (failSafeCounter++ >= 50000) {
                 console.log('[positionRight] fail safe triggered', {
                     index,
@@ -297,7 +297,7 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
             const x1 = x2 - width;
             position(index, x1, x2);
             index = modulo(index - 1, items.length);
-            x2 = x1 - gap.current;
+            x2 = x1 - (gap.current ?? 0);
             if (failSafeCounter++ >= 50000) {
                 console.log('[positionLeft] fail safe triggered', {
                     index,
@@ -316,8 +316,8 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
         const index = activeItemIndexInternal.current;
         const { x1, x2 } = getItemPosition(index);
         position(index, x1, x2);
-        positionRight(modulo(index + 1, items.length), x2 + gap.current);
-        positionLeft(modulo(index - 1, items.length), x1 - gap.current);
+        positionRight(modulo(index + 1, items.length), x2 + (gap.current ?? 0));
+        positionLeft(modulo(index - 1, items.length), x1 - (gap.current ?? 0));
         visibleItemsPrev.forEach(index => {
             if (!visibleItems.current.has(index)) {
                 const node = container.current?.childNodes[index] as HTMLElement;
