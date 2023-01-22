@@ -1,4 +1,4 @@
-export { toSlug } from './toSlug';
-export { modulo } from './modulo';
-export { easings } from './easings';
-export type { EasingFunction } from './easings';
+export { toSlug } from './url';
+export { last, mappable } from './array';
+export { sign, clamp, modulo } from './math';
+export { type EasingFunction, easings } from './easings';
