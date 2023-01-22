@@ -30,7 +30,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 ## Examples
 
 <Canvas>
-    <Story name="Default" args={{ snap: true }}>
+    <Story
+        name="Default"
+        args={{
+            snap: true,
+            style: {
+                '--carousel-gap': '1rem',
+                '--carousel-item-width': '500px',
+                '--carousel-snap-position': 0,
+                '--carousel-autoscroll': 0,
+                '--carousel-disabled': 0,
+            },
+        }}
+    >
         {Template.bind({})}
     </Story>
 </Canvas>
