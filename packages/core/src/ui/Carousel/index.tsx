@@ -29,20 +29,35 @@ export type CarouselRef = {
 };
 
 export interface CarouselProps {
-    snap?: boolean;
+    /** The item's alignment axis */
     align?: 'start' | 'center';
+    /** Damping factor for the inertia effect */
     damping?: number;
+    /** Disable item snapping */
+    disableSnap?: boolean;
+    /** Enable vertical scrolling */
     enableVerticalScroll?: boolean;
+    /** Enable navigation gestures */
     enableNavigationGestures?: boolean;
+    /** The index of the initial active item */
     activeItemIndex?: number;
+    /** The carousel's container element (default: ul) */
     as?: React.ElementType<any>;
+    /** The carousel's item wrapper element (default: li) */
     childAs?: React.ElementType<any>;
+    /** Called when the user presses on the carousel */
     onPress?: (event: PointerEvent) => void; // eslint-disable-line no-unused-vars
+    /** Called when the user starts dragging the carousel */
     onDrag?: () => void;
+    /** Called when the carousel snaps to an item */
     onSnap?: (index: number) => void; // eslint-disable-line no-unused-vars
+    /** The carousel's container class name */
     className?: string;
+    /** The carousel's item wrapper class name */
     itemClassName?: string;
+    /** The carousel's container style */
     style?: React.CSSProperties;
+    /** The carousel's items */
     children: React.ReactNode;
 }
 
@@ -54,9 +69,9 @@ type WheelDataValue = { t: number; d: number; dt?: number };
 
 export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
     const {
-        snap = false,
         align = 'start',
         damping = 200,
+        disableSnap = false,
         enableVerticalScroll = false,
         enableNavigationGestures = false,
         activeItemIndex = 0,
@@ -70,6 +85,8 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
         style,
         children,
     } = props;
+
+    const snap = !disableSnap;
 
     const container = React.useRef<HTMLElement>();
     const containerWidth = React.useRef<number>(0);
