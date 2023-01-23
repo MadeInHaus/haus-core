@@ -1,5 +1,5 @@
 {
-    "include": [".", "../utils/src/easings.ts"],
+    "include": ["."],
     "exclude": ["dist", "build", "node_modules"],
     "compilerOptions": {
         "jsx": "react-jsx",
