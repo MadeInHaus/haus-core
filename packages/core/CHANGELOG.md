@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.3.0
+
+### Minor Changes
+
+- d76a031: Add Carousel component
+
 ## 0.2.0
 
 ### Minor Changes
