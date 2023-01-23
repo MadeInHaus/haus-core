@@ -27,21 +27,19 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
     align="center"
     style={{
         position: 'relative',
-        'color': '#383',
-        'fontSize': '20px',
-        'fontWeight': '500',
-        'fontFamily': '"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif',
-        'paddingBottom': '2rem',
+        color: '#383',
+        fontSize: '20px',
+        fontWeight: '500',
+        fontFamily: '"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif',
+        paddingBottom: '2rem',
         '--carousel-gap': '0.5ch',
         '--carousel-autoscroll': -0.075,
         '--carousel-snap-position': '50%',
     }}
 >
-    {'A merry-go-round is a large circular platform at a fairground on which there are model animals or vehicles for people to sit on or in as it turns round.'
-        .split(' ')
-        .map((word, index) => {
-            return word;
-        })}
+    {'🎶 You spin me right round baby right round like a record baby right round round round 🎶 You spin me right round baby right round like a record baby right round round round'.split(
+        ' '
+    )}
 </Carousel>
 
 ## Getting started
@@ -52,7 +50,7 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
 
 ## CSS Variables
 
-Responsive props are passed to the carousel as CSS variables. Define these on the carousel's container element or on one of its ancestors.
+Responsive props are passed to the carousel via CSS variables. Define these on the carousel's container element or on one of its ancestors.
 
 -   **`--carousel-gap`** _(length value, default: 0)_ - The gap between carousel items.
 -   **`--carousel-item-width`** _(length value, default: 0)_ - The width of the carousel items. Set this to a length value !== 0 if _all items_ are the same width. This helps with performance because the carousel doesn't have to measure the width of each item.
@@ -61,7 +59,7 @@ Responsive props are passed to the carousel as CSS variables. Define these on th
 -   **`--carousel-disabled`** _(0 or 1, default: 0)_ - Set this to 1 to disable the carousel (disables all carousel JS and all internal carousel CSS). Useful e.g. if on large screens you want to layout items on a (static) grid and on small screens in a carousel.
 
 Length values can be any valid CSS length value, e.g. `1rem`, `100px`, `50%`, `calc(var(--grid-margin) * 2)`.
-Relative length values are computed relative to the width of the carousel's container.
+Relative length values are resolved relative to the width of the carousel's container.
 
 ## Props
 
