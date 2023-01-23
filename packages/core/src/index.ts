@@ -4,6 +4,7 @@ export { Button, type ButtonProps } from './ui/Button';
 export { Masonry, type MasonryProps } from './ui/Masonry';
 export { TexturalVideo, type TexturalVideoProps } from './ui/TexturalVideo';
 export { ContentfulImg, type ContentfulImgProps } from './ui/ContentfulImg';
+export { Carousel, type CarouselProps } from './ui/Carousel';
 
 /* Hooks */
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';

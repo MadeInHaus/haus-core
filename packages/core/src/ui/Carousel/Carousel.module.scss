@@ -1,0 +1,21 @@
+:where(.root:not([class~='disabled'])) {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    touch-action: pan-y;
+}
+
+:where(.root:not([class~='disabled']) > .item) {
+    grid-area: 1 / -1;
+    width: fit-content;
+    will-change: transform;
+    transform: translate3d(-200%, 0, 0);
+    user-select: none;
+    list-style: none;
+
+    img {
+        pointer-events: none;
+    }
+}

@@ -1,0 +1,96 @@
+import { Carousel } from '@madeinhaus/core';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+<Meta title="UI/Carousel" component={Carousel} />
+
+export const Template = ({ children, ...args }) => (
+    <Carousel {...args}>
+        {[...new Array(20)].map((_, index) => {
+            const height = Math.floor(250 + Math.random() * 250);
+            return (
+                <img
+                    key={index}
+                    width={500}
+                    height={height}
+                    src={`https://picsum.photos/500/${height}?random=${index}`}
+                />
+            );
+        })}
+    </Carousel>
+);
+
+# Carousel
+
+A simple, responsive, infinite carousel component with zero dependencies. It supports touch gestures, mouse dragging and mouse wheels. It can also be used as a autoscrolling ticker.
+
+<Carousel
+    align="center"
+    style={{
+        position: 'relative',
+        color: '#383',
+        fontSize: '20px',
+        fontWeight: '500',
+        fontFamily: '"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif',
+        paddingBottom: '2rem',
+        '--carousel-gap': '0.5ch',
+        '--carousel-autoscroll': -0.075,
+        '--carousel-snap-position': '50%',
+    }}
+>
+    {'🎶 You spin me right round baby right round like a record baby right round round round 🎶 You spin me right round baby right round like a record baby right round round round'.split(
+        ' '
+    )}
+</Carousel>
+
+## Getting started
+
+`npm install @madeinhaus/core`
+
+`import { Carousel } from '@madeinhaus/core';`
+
+## CSS Variables
+
+Responsive props are passed to the carousel via CSS variables. Define these on the carousel's container element or on one of its ancestors.
+
+-   **`--carousel-gap`** _(length value, default: 0)_ - The gap between carousel items.
+-   **`--carousel-item-width`** _(length value, default: 0)_ - The width of the carousel items. Set this to a length value !== 0 if _all items_ are the same width. This helps with performance because the carousel doesn't have to measure the width of each item.
+-   **`--carousel-snap-position`** _(length value, default: 0)_ - If snapping is enabled, this defines the position (measured from the left edge of the carousel's container) that an item snaps to. Use this in combination with the `align` prop to snap the left edge (`align="start"`) or the center (`align="center"`) of an item to this position.
+-   **`--carousel-autoscroll`** _(number, default: 0)_ - Set this to a value !== 0 to turn the carousel into an autoscrolling ticker. The value is the speed in px/ms. Values between +/- 0.1 and 0.2 work best. Negative values make the carousel scroll to the left, positive values to the right.
+-   **`--carousel-disabled`** _(0 or 1, default: 0)_ - Set this to 1 to disable the carousel (disables all carousel JS and all internal carousel CSS). Useful e.g. if on large screens you want to layout items on a (static) grid and on small screens in a carousel.
+
+Length values can be any valid CSS length value, e.g. `1rem`, `100px`, `50%`, `calc(var(--grid-margin) * 2)`.
+Relative length values are resolved relative to the width of the carousel's container.
+
+## Props
+
+<ArgsTable story="Default" />
+
+## Example
+
+<Canvas>
+    <Story
+        name="Default"
+        argTypes={{
+            align: {
+                options: ['start', 'center'],
+                control: { type: 'select' },
+            },
+        }}
+        args={{
+            align: 'start',
+            damping: 200,
+            disableSnap: false,
+            enableVerticalScroll: false,
+            enableNavigationGestures: false,
+            style: {
+                '--carousel-gap': '1rem',
+                '--carousel-item-width': '500px',
+                '--carousel-snap-position': 0,
+                '--carousel-autoscroll': 0,
+                '--carousel-disabled': 0,
+            },
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
