@@ -1,4 +1,4 @@
-# Haus UI
+# Haus Core
 
 Powered by:
 
@@ -6,7 +6,7 @@ Powered by:
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
 - 🛠 [Rollup](https://rollupjs.org/guide/en/) — A module bundler for JavaScript
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
-- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
+- 📖 [Storybook](https://storybook.js.org/) — Component environment powered by Vite
 
 As well as a few others tools preconfigured:
 
@@ -19,8 +19,8 @@ As well as a few others tools preconfigured:
 ## Clone the repo
 
 ```bash
-git clone https://github.com/MadeInHaus/haus-ui.git
-cd haus-ui
+git clone https://github.com/MadeInHaus/haus-core.git
+cd haus-core
 yarn install
 ```
 
