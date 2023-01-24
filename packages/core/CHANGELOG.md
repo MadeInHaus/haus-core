@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.4.0
+
+### Minor Changes
+
+- 1be8cfc: Renamed repo & documentation updates
+
 ## 0.3.0
 
 ### Minor Changes
