@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.5.0
+
+### Minor Changes
+
+- a73969c: Update dependencies
+
 ## 0.4.0
 
 ### Minor Changes
