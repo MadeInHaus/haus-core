@@ -4,7 +4,9 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 <Meta title="UI/Button" component={Button} />
 
 export const Template = ({ children, ...args }) => (
-    <Button {...args}>{children}</Button>
+    <Button key={JSON.stringify(args)} {...args}>
+        {children}
+    </Button>
 );
 
 # Button
@@ -21,6 +23,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
     <Story
         name="Default"
         argTypes={{
+            onClick: { action: 'clicked' },
             variant: {
                 options: ['primary', 'secondary'],
                 control: { type: 'radio' },

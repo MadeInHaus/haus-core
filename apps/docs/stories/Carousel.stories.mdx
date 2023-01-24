@@ -4,7 +4,7 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 <Meta title="UI/Carousel" component={Carousel} />
 
 export const Template = ({ children, ...args }) => (
-    <Carousel {...args}>
+    <Carousel key={JSON.stringify(args)} {...args}>
         {[...new Array(20)].map((_, index) => {
             const height = Math.floor(250 + Math.random() * 250);
             return (
@@ -30,7 +30,8 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
         color: '#383',
         fontSize: '20px',
         fontWeight: '500',
-        fontFamily: '"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif',
+        fontFamily:
+            '"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif',
         paddingBottom: '2rem',
         '--carousel-gap': '0.5ch',
         '--carousel-autoscroll': -0.075,
