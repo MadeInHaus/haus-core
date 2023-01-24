@@ -2,12 +2,7 @@ const path = require('path');
 
 module.exports = {
     stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.tsx'],
-    addons: [
-        '@storybook/addon-actions',
-        '@storybook/addon-docs',
-        '@storybook/addon-essentials',
-        '@storybook/addon-links',
-    ],
+    addons: ['@storybook/addon-actions', '@storybook/addon-essentials', '@storybook/addon-links'],
     framework: '@storybook/react',
     core: {
         builder: '@storybook/builder-vite',
