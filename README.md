@@ -123,7 +123,7 @@ Storybook provides us with an interactive UI playground for our components. This
 For example, here's the included Story for our `Button` component:
 
 ```js:apps/docs/stories/button.stories.mdx
-import { Button } from "@haus-ui/core/src";
+import { Button } from "@madeinhaus/core";
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 
 <Meta title="UI/Button" component={Button} />
@@ -192,7 +192,7 @@ When you push your code to GitHub, the [GitHub Action](https://github.com/change
 turbo run build --filter=docs^... && changeset publish
 ```
 
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `haus-ui` as the npm organization. To change this, do the following:
+Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `madeinhaus` as the npm organization. To change this, do the following:
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 
