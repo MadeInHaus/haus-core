@@ -1,4 +1,4 @@
-# Haus UI
+# Haus Core
 
 Powered by:
 
@@ -6,7 +6,7 @@ Powered by:
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
 - 🛠 [Rollup](https://rollupjs.org/guide/en/) — A module bundler for JavaScript
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
-- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
+- 📖 [Storybook](https://storybook.js.org/) — Component environment powered by Vite
 
 As well as a few others tools preconfigured:
 
@@ -19,8 +19,8 @@ As well as a few others tools preconfigured:
 ## Clone the repo
 
 ```bash
-git clone https://github.com/MadeInHaus/haus-ui.git
-cd haus-ui
+git clone https://github.com/MadeInHaus/haus-core.git
+cd haus-core
 yarn install
 ```
 
@@ -123,7 +123,7 @@ Storybook provides us with an interactive UI playground for our components. This
 For example, here's the included Story for our `Button` component:
 
 ```js:apps/docs/stories/button.stories.mdx
-import { Button } from "@haus-ui/core/src";
+import { Button } from "@madeinhaus/core";
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 
 <Meta title="UI/Button" component={Button} />
@@ -192,7 +192,7 @@ When you push your code to GitHub, the [GitHub Action](https://github.com/change
 turbo run build --filter=docs^... && changeset publish
 ```
 
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `haus-ui` as the npm organization. To change this, do the following:
+Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `madeinhaus` as the npm organization. To change this, do the following:
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 

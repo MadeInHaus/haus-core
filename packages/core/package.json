@@ -43,10 +43,10 @@
     "description": "Haus UI",
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/MadeInHaus/haus-ui.git"
+        "url": "git+ssh://git@github.com/MadeInHaus/haus-core.git"
     },
     "bugs": {
-        "url": "https://github.com/MadeInHaus/haus-ui/issues"
+        "url": "https://github.com/MadeInHaus/haus-core/issues"
     },
-    "homepage": "https://github.com/MadeInHaus/haus-ui#readme"
+    "homepage": "https://github.com/MadeInHaus/haus-core#readme"
 }
