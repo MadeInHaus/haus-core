@@ -25,6 +25,8 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
 
 <Carousel
     align="center"
+    as="div"
+    childAs="span"
     style={{
         position: 'relative',
         color: '#383',
@@ -67,6 +69,12 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
 -   To center the active item in the container, set the `align` prop to `center`
     and `--carousel-snap-position` to `50%`. The default is to align the left edge of the
     active item with the left edge of the container.
+-   The children you pass to the carousel are internally wrapped, by default in a `<li>`
+    element. If you want to use a different element, pass it as the `childAs` prop.
+    To style the wrapper element, use the `itemClassName` prop. Example:
+    `<Carousel childAs="span" itemClassName={styles.itemWrapper}>`.
+-   See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/core/src/ui/Carousel/Carousel.module.scss)
+    for the default CSS applied to the container and the item wrappers.
 
 ## CSS Variables
 
