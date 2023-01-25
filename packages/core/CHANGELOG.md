@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.6.0
+
+### Minor Changes
+
+- f453f73: Docs: Add known issues, tips, and document imperative methods
+
 ## 0.5.0
 
 ### Minor Changes
