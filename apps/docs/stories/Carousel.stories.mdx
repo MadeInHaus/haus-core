@@ -49,6 +49,25 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
 
 `import { Carousel } from '@madeinhaus/core';`
 
+## Known Issues
+
+-   The carousel is not accessible. It doesn't support keyboard navigation and it doesn't
+    announce its state to screen readers.
+-   The carousel can currently not be used as a controlled component. Even though it has a
+    `activeItemIndex` prop, it is not used to control the active item (it can only be used to
+    initialize the active item on mount). Instead, use `moveIntoView(index)` to programmatically
+    move a specific item into view.
+-   The carousel may run into an infinite loop in certain conditions. This has only been
+    observed on iPhones with 120Hz displays (13+) while quickly swiping left and right.
+    The issue is duct-tape-fixed so that the carousel doesn't get stuck in an infinite loop anymore,
+    but the actual bug has not been identified yet.
+
+## Tips
+
+-   To center the active item in the container, set the `align` prop to `center`
+    and `--carousel-snap-position` to `50%`. The default is to align the left edge of the
+    active item with the left edge of the container.
+
 ## CSS Variables
 
 Responsive props are passed to the carousel via CSS variables. Define these on the carousel's container element or on one of its ancestors.
@@ -61,6 +80,13 @@ Responsive props are passed to the carousel via CSS variables. Define these on t
 
 Length values can be any valid CSS length value, e.g. `1rem`, `100px`, `50%`, `calc(var(--grid-margin) * 2)`.
 Relative length values are resolved relative to the width of the carousel's container.
+
+## Imperative Methods
+
+You may use the following methods via ref to programmatically control the carousel:
+
+-   **`moveIntoView(index)`** - Programmatically move the item at the given index into view.
+-   **`refresh()`** - Re-render the carousel. Useful if any of the CSS variables have changed programmatically (not triggered by resize).
 
 ## Props
 
