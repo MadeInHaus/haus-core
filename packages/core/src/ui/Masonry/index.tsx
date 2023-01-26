@@ -1,7 +1,7 @@
 // Stolen & Rewritten from https://github.com/paulcollett/react-masonry-css
 
 import React, { useState, useEffect } from 'react';
-import { useWindowSize } from 'react-use';
+import { useWindowSize } from '../../hooks/useWindowSize';
 import cx from 'classnames';
 
 import styles from './Masonry.module.scss';
@@ -25,9 +25,7 @@ export const Masonry = ({
     children,
     ...rest
 }: MasonryProps) => {
-    const [columnCount, setColumnCount] = useState(
-        breakpointCols?.default || DEFAULT_COLUMNS
-    );
+    const [columnCount, setColumnCount] = useState(breakpointCols?.default || DEFAULT_COLUMNS);
 
     const { width: windowWidth } = useWindowSize();
 
