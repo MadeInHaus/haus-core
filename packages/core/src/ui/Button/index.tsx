@@ -1,15 +1,15 @@
 import * as React from 'react';
-import cx from 'classnames';
 import styles from './Button.module.scss';
 
 export interface ButtonProps {
+    '';
     children: React.ReactNode;
     variant: 'primary' | 'secondary';
 }
 
 export function Button({ children, variant = 'primary', ...rest }: ButtonProps) {
     return (
-        <button className={cx(styles.root, styles[variant])} {...rest}>
+        <button className={[styles.root, styles[variant]].filter(Boolean).join(' ')} {...rest}>
             {children}
         </button>
     );

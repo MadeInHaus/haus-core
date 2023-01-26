@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import cx from 'classnames';
-
 import { type EasingFunction, easings, modulo, clamp, sign, last } from '@madeinhaus/utils';
 
 import styles from './Carousel.module.scss';
@@ -17,7 +15,7 @@ const CarouselItem = ({ Wrapper, isDisabled, className, children }: CarouselItem
     const props = isDisabled
         ? { className }
         : {
-              className: cx(styles.item, className),
+              className: [styles.item, className].filter(Boolean).join(' '),
               onDragStart: (e: React.DragEvent<HTMLElement>) => e.preventDefault(),
           };
     return <Wrapper {...props}>{children}</Wrapper>;
@@ -886,7 +884,7 @@ export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref
         <Container
             ref={container}
             onPointerDown={isDisabled ? null : handlePointerDown}
-            className={cx(styles.root, className)}
+            className={[styles.root, className].filter(Boolean).join(' ')}
             style={style}
         >
             {items}

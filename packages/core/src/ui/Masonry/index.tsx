@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useWindowSize } from '../../hooks/useWindowSize';
-import cx from 'classnames';
 
 import styles from './Masonry.module.scss';
 
@@ -95,7 +94,7 @@ export const Masonry = ({
     }, [windowWidth]);
 
     return (
-        <div {...rest} className={cx(className, styles.root)}>
+        <div {...rest} className={[styles.root, className].filter(Boolean).join(' ')}>
             {renderColumns()}
         </div>
     );
