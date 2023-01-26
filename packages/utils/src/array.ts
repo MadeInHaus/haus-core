@@ -8,9 +8,3 @@ export function last(array: any[]) {
 export function mappable(size: number): number[] {
     return new Array(size).fill(0).map((_, i) => i);
 }
-
-// Remove any falsy values in an array and then join them
-// Use to join classNames
-export function join(array: string[]) {
-    return array.filter(Boolean).join(' ');
-}

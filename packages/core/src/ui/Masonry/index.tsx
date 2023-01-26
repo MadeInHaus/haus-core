@@ -1,7 +1,7 @@
 // Stolen & Rewritten from https://github.com/paulcollett/react-masonry-css
 
 import React, { useState, useEffect } from 'react';
-import { join } from '@madeinhaus/utils';
+import { joinClassNames } from '../../utils';
 import { useWindowSize } from '../../hooks/useWindowSize';
 
 import styles from './Masonry.module.scss';
@@ -95,7 +95,7 @@ export const Masonry = ({
     }, [windowWidth]);
 
     return (
-        <div {...rest} className={join([styles.root, className])}>
+        <div {...rest} className={joinClassNames(styles.root, className)}>
             {renderColumns()}
         </div>
     );

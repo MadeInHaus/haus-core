@@ -98,7 +98,7 @@ export interface ButtonProps {
 
 export function Button({ children, variant }: ButtonProps) {
   return (
-    <button className={join([styles.root, styles[variant]])}>{children}</button>
+    <button className={join(styles.root, styles[variant])}>{children}</button>
   );
 }
 ```
