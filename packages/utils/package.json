@@ -23,11 +23,13 @@
         "eslint-config-next": "^13.1.5",
         "eslint-config-turbo": "^0.0.7",
         "eslint-plugin-react": "^7.32.1",
-        "react": "^18.2.0",
         "tsup": "^6.5.0",
         "typescript": "^4.9.4"
     },
     "publishConfig": {
         "access": "public"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0"
     }
 }
