@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.7.0
+
+### Minor Changes
+
+- ae75a23: Use peer depenencies, remove classnames lib
+
 ## 0.6.0
 
 ### Minor Changes
