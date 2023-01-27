@@ -8,7 +8,6 @@ export interface ButtonProps {
 }
 
 export function Button({ children, variant = 'primary', ...rest }: ButtonProps) {
-    console.log(joinClassNames(styles.root, styles[variant]));
     return (
         <button className={joinClassNames(styles.root, styles[variant])} {...rest}>
             {children}
