@@ -21,14 +21,11 @@
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@types/react": "^18.0.27",
         "@types/react-dom": "^18.0.10",
-        "classnames": "^2.3.2",
         "eslint": "^8.32.0",
         "eslint-config-next": "^13.1.5",
         "eslint-config-turbo": "^0.0.7",
         "eslint-plugin-react": "^7.32.1",
         "postcss": "^8.4.21",
-        "react": "^18.2.0",
-        "react-use": "^17.4.0",
         "rollup": "^3.10.1",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-typescript2": "^0.34.1",
@@ -38,9 +35,8 @@
     "publishConfig": {
         "access": "public"
     },
-    "dependencies": {},
     "author": "",
-    "description": "Haus UI",
+    "description": "Haus Core",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/MadeInHaus/haus-core.git"
@@ -48,5 +44,8 @@
     "bugs": {
         "url": "https://github.com/MadeInHaus/haus-core/issues"
     },
-    "homepage": "https://github.com/MadeInHaus/haus-core#readme"
+    "homepage": "https://github.com/MadeInHaus/haus-core#readme",
+    "peerDependencies": {
+        "react": "^18.2.0"
+    }
 }
