@@ -18,7 +18,11 @@ export const Template = ({ children, ...args }) => (
 
 # Portal
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+The `Portal` component is a React component that provides a way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
+
+It uses the `ReactDOM.createPortal` API to create a portal and `useEffect` hook to set the target DOM node using the `selector` prop. If the target DOM node is not found, the component will return `null`.
+
+In this example, the Portal component will look for a DOM node with an id of `__portal__`.
 
 ## Props
 
@@ -35,6 +39,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
                     Hello World <br /> <small>From Portal</small>
                 </h2>
             ),
+            selector: '#__portal__',
         }}
     >
         {Template.bind({})}
