@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { joinClassNames } from '../../utils';
 import styles from './Accordion.module.scss';
 
@@ -28,7 +28,7 @@ const Accordion = ({ children, className }: AccordionSharedProps) => {
     );
 };
 
-const AccordionButton = ({ children, className }: AccordionSharedProps) => {
+const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     const { setOpenIndices } = React.useContext(AccordionContext);
     const { index } = React.useContext(AccordionItemContext);
 
@@ -41,11 +41,12 @@ const AccordionButton = ({ children, className }: AccordionSharedProps) => {
     };
 
     return (
-        <div className={joinClassNames(styles.item, className)}>
-            <button className={styles.button} onClick={() => handleSelectMultiple(index)}>
-                {children}
-            </button>
-        </div>
+        <button
+            className={joinClassNames(styles.trigger, className)}
+            onClick={() => handleSelectMultiple(index)}
+        >
+            {children}
+        </button>
     );
 };
 
@@ -58,17 +59,31 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
 };
 
 const AccordionContent = ({ children, className }: AccordionSharedProps) => {
+    const [height, setHeight] = useState<number>(0);
+    const ref = React.useRef<HTMLDivElement>(null);
+
     const { openIndices } = React.useContext(AccordionContext);
     const { index } = React.useContext(AccordionItemContext);
+
+    const isOpen = openIndices.includes(index);
+
+    useEffect(() => {
+        if (isOpen) {
+            setHeight(ref.current!.scrollHeight);
+        } else {
+            setHeight(0);
+        }
+    }, [isOpen]);
+
     return (
-        <div className={joinClassNames(styles.content, className)}>
-            {openIndices.includes(index) && children}
+        <div ref={ref} style={{ height }} className={joinClassNames(styles.content, className)}>
+            {children}
         </div>
     );
 };
 
 Accordion.Root = Accordion;
-Accordion.Button = AccordionButton;
+Accordion.Trigger = AccordionTrigger;
 Accordion.Item = AccordionItem;
 Accordion.Content = AccordionContent;
 

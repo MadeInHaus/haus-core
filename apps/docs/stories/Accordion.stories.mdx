@@ -1,9 +1,10 @@
 import { Accordion } from '@madeinhaus/core';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { styled } from '@storybook/theming';
 
 <Meta title="UI/Accordion" component={Accordion} />
 
-export const Template = ({ children, ...args }) => {
+export const Template = () => {
     const items = [
         {
             heading: 'lorem ipsum 1',
@@ -31,13 +32,36 @@ export const Template = ({ children, ...args }) => {
                 'Vivamus luctus velit quis magna congue, a faucibus nisl tincidunt. Sed auctor orci vel enim blandit, eu consectetur elit viverra. Aliquam erat volutpat. Sed quis sem vel massa scelerisque suscipit. Proin euismod, dolor id molestie sollicitudin, nulla turpis placerat leo, non convallis ligula nulla non mi.',
         },
     ];
+    const StyledItem = styled(Accordion.Item)`
+        width: 300px;
+    `;
+    const StyledTrigger = styled(Accordion.Trigger)`
+        background-color: firebrick;
+        border-bottom: 1px solid white;
+        color: white;
+        padding: 10px;
+        width: 100%;
+        transition: background-color 0.3s ease-in-out;
+        &:hover {
+            background-color: darkred;
+        }
+    `;
+    const StyledContent = styled(Accordion.Content)`
+        transition: height 0.3s ease-in-out;
+    `;
+    const StyleChildren = styled.div`
+        border-bottom: 1px solid firebrick;
+        padding: 10px;
+    `;
     return (
         <Accordion.Root>
             {items.map(({ heading, paragraph }, index) => (
-                <Accordion.Item key={index} index={index}>
-                    <Accordion.Button>{heading}</Accordion.Button>
-                    <Accordion.Content>{paragraph}</Accordion.Content>
-                </Accordion.Item>
+                <StyledItem key={index} index={index}>
+                    <StyledTrigger>{heading}</StyledTrigger>
+                    <StyledContent>
+                        <StyleChildren>{paragraph}</StyleChildren>
+                    </StyledContent>
+                </StyledItem>
             ))}
         </Accordion.Root>
     );

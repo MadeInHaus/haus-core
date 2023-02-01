@@ -1,2 +1,14 @@
-.root {
+.trigger {
+    font: inherit;
+    appearance: none;
+    padding: 0;
+    border: none;
+    color: currentcolor;
+    background-color: inherit;
+    user-select: none;
+    cursor: pointer;
+}
+
+.content {
+    overflow: hidden;
 }
