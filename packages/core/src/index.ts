@@ -4,6 +4,7 @@ export { Button, type ButtonProps } from './ui/Button';
 export { Masonry, type MasonryProps } from './ui/Masonry';
 export { TexturalVideo, type TexturalVideoProps } from './ui/TexturalVideo';
 export { Carousel, type CarouselProps } from './ui/Carousel';
+export { Accordion, type AccordionItemProps } from './ui/Accordion';
 
 /* Hooks */
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';

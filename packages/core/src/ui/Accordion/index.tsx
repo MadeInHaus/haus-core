@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 import { joinClassNames } from '../../utils';
 import styles from './Accordion.module.scss';
 
@@ -16,12 +16,21 @@ const AccordionContext = createContext({
     setOpenIndices: (updateFn: (prevOpenIndices: number[]) => number[]) => {},
 });
 
+const AccordionItemContext = createContext({ index: 0 });
+
 const Accordion = ({ children, className }: AccordionSharedProps) => {
-    return <section className={joinClassNames(styles.root, className)}>{children}</section>;
+    const [openIndices, setOpenIndices] = useState<number[]>([]);
+
+    return (
+        <AccordionContext.Provider value={{ openIndices, setOpenIndices }}>
+            <section className={joinClassNames(styles.root, className)}>{children}</section>
+        </AccordionContext.Provider>
+    );
 };
 
-const AccordionButton = ({ children, className, index }: AccordionItemProps) => {
+const AccordionButton = ({ children, className }: AccordionSharedProps) => {
     const { setOpenIndices } = React.useContext(AccordionContext);
+    const { index } = React.useContext(AccordionItemContext);
 
     const handleSelectMultiple = (index: number) => {
         setOpenIndices((prevOpenIndices: number[]) => {
@@ -41,10 +50,19 @@ const AccordionButton = ({ children, className, index }: AccordionItemProps) => 
 };
 
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const { openIndices } = React.useContext(AccordionContext);
     return (
-        <div className={joinClassNames(styles.item, className)}>
-            {openIndices.includes(index) && <div className={styles.content}>{children}</div>}
+        <AccordionItemContext.Provider value={{ index }}>
+            <div className={joinClassNames(styles.item, className)}>{children}</div>
+        </AccordionItemContext.Provider>
+    );
+};
+
+const AccordionContent = ({ children, className }: AccordionSharedProps) => {
+    const { openIndices } = React.useContext(AccordionContext);
+    const { index } = React.useContext(AccordionItemContext);
+    return (
+        <div className={joinClassNames(styles.content, className)}>
+            {openIndices.includes(index) && children}
         </div>
     );
 };
@@ -52,5 +70,6 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
 Accordion.Root = Accordion;
 Accordion.Button = AccordionButton;
 Accordion.Item = AccordionItem;
+Accordion.Content = AccordionContent;
 
 export { Accordion };
