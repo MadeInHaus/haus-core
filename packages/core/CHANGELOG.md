@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.8.0
+
+### Minor Changes
+
+- 9b04b91: Portal Component
+
 ## 0.7.0
 
 ### Minor Changes
