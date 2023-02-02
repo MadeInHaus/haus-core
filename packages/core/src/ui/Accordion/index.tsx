@@ -15,13 +15,20 @@ export interface AccordionItemProps extends AccordionSharedProps {
     index: number;
 }
 
-const AccordionContext = createContext({
+// eslint-disable-next-line no-unused-vars
+type SetOPenIndices = (updateFn: (prevOpenIndices: number[]) => number[]) => void;
+
+const AccordionContext = createContext<{
+    type: 'single' | 'multiple';
+    openIndices: number[];
+    setOpenIndices: SetOPenIndices;
+}>({
     type: 'multiple',
-    openIndices: [] as number[],
-    setOpenIndices: (updateFn: (prevOpenIndices: number[]) => number[]) => {},
+    openIndices: [],
+    setOpenIndices: () => {},
 });
 
-const AccordionItemContext = createContext({ index: 0 });
+const AccordionItemContext = createContext<{ index: number }>({ index: 0 });
 
 const Accordion = ({ children, className, type = 'multiple' }: AccordionRootProps) => {
     const [openIndices, setOpenIndices] = useState<number[]>([]);
@@ -33,28 +40,31 @@ const Accordion = ({ children, className, type = 'multiple' }: AccordionRootProp
     );
 };
 
+const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
+    setOpenIndices(() => [index]);
+};
+
+const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
+    setOpenIndices((prevOpenIndices: number[]) => {
+        return prevOpenIndices.includes(index)
+            ? prevOpenIndices.filter((select: number) => select !== index)
+            : [...prevOpenIndices, index];
+    });
+};
+
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     const { setOpenIndices, type } = React.useContext(AccordionContext);
     const { index } = React.useContext(AccordionItemContext);
 
-    const handleSelectSingle = (index: number) => {
-        setOpenIndices(() => [index]);
-    };
-
-    const handleSelectMultiple = (index: number) => {
-        setOpenIndices((prevOpenIndices: number[]) => {
-            return prevOpenIndices.includes(index)
-                ? prevOpenIndices.filter((select: number) => select !== index)
-                : [...prevOpenIndices, index];
-        });
-    };
-
-    const handleSelect = type === 'single' ? handleSelectSingle : handleSelectMultiple;
-
     return (
         <button
             className={joinClassNames(styles.trigger, className)}
-            onClick={() => handleSelect(index)}
+            onClick={() =>
+                (type === 'single' ? handleSelectSingle : handleSelectMultiple)(
+                    index,
+                    setOpenIndices
+                )
+            }
         >
             {children}
         </button>
