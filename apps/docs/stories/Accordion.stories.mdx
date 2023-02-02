@@ -31,9 +31,9 @@ const items = [
 
 <Meta title="UI/Accordion" component={Accordion} />
 
-export const Template = () => {
+export const Template = ({ ...args }) => {
     return (
-        <Accordion.Root>
+        <Accordion.Root key={JSON.stringify(args)} {...args}>
             {items.map(({ heading, paragraph }, index) => (
                 <Accordion.Item key={index} index={index}>
                     <Accordion.Trigger>{heading}</Accordion.Trigger>
@@ -45,7 +45,7 @@ export const Template = () => {
         </Accordion.Root>
     );
 };
-export const StyledTemplate = () => {
+export const StyledTemplate = ({ ...args }) => {
     const StyledRoot = styled(Accordion.Root)`
         width: 300px;
     `;
@@ -70,7 +70,7 @@ export const StyledTemplate = () => {
         padding: 10px 16px;
     `;
     return (
-        <StyledRoot>
+        <StyledRoot key={JSON.stringify(args)} {...args}>
             {items.map(({ heading, paragraph }, index) => (
                 <StyledItem key={index} index={index}>
                     <StyledTrigger>{heading}</StyledTrigger>
@@ -81,6 +81,12 @@ export const StyledTemplate = () => {
             ))}
         </StyledRoot>
     );
+};
+const argTypes = {
+    type: {
+        options: ['single', 'multiple'],
+        control: { type: 'select' },
+    },
 };
 
 # Accordion
@@ -94,6 +100,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 ## Examples
 
 <Canvas>
-    <Story name="Default">{Template.bind({})}</Story>
-    <Story name="With Style And Animation">{StyledTemplate.bind({})}</Story>
+    <Story name="Default" argTypes={argTypes}>
+        {Template.bind({})}
+    </Story>
+    <Story name="With Style And Animation" argTypes={argTypes}>
+        {StyledTemplate.bind({})}
+    </Story>
 </Canvas>

@@ -7,30 +7,39 @@ export interface AccordionSharedProps {
     className?: string;
 }
 
+export interface AccordionRootProps extends AccordionSharedProps {
+    type?: 'single' | 'multiple';
+}
+
 export interface AccordionItemProps extends AccordionSharedProps {
     index: number;
 }
 
 const AccordionContext = createContext({
+    type: 'multiple',
     openIndices: [] as number[],
     setOpenIndices: (updateFn: (prevOpenIndices: number[]) => number[]) => {},
 });
 
 const AccordionItemContext = createContext({ index: 0 });
 
-const Accordion = ({ children, className }: AccordionSharedProps) => {
+const Accordion = ({ children, className, type = 'multiple' }: AccordionRootProps) => {
     const [openIndices, setOpenIndices] = useState<number[]>([]);
 
     return (
-        <AccordionContext.Provider value={{ openIndices, setOpenIndices }}>
+        <AccordionContext.Provider value={{ openIndices, setOpenIndices, type }}>
             <section className={className}>{children}</section>
         </AccordionContext.Provider>
     );
 };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
-    const { setOpenIndices } = React.useContext(AccordionContext);
+    const { setOpenIndices, type } = React.useContext(AccordionContext);
     const { index } = React.useContext(AccordionItemContext);
+
+    const handleSelectSingle = (index: number) => {
+        setOpenIndices(() => [index]);
+    };
 
     const handleSelectMultiple = (index: number) => {
         setOpenIndices((prevOpenIndices: number[]) => {
@@ -40,10 +49,12 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
         });
     };
 
+    const handleSelect = type === 'single' ? handleSelectSingle : handleSelectMultiple;
+
     return (
         <button
             className={joinClassNames(styles.trigger, className)}
-            onClick={() => handleSelectMultiple(index)}
+            onClick={() => handleSelect(index)}
         >
             {children}
         </button>
