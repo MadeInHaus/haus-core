@@ -9,6 +9,7 @@ export interface AccordionSharedProps {
 
 export interface AccordionRootProps extends AccordionSharedProps {
     type?: 'single' | 'multiple';
+    id: string;
 }
 
 export interface AccordionItemProps extends AccordionSharedProps {
@@ -19,10 +20,12 @@ export interface AccordionItemProps extends AccordionSharedProps {
 type SetOPenIndices = (updateFn: (prevOpenIndices: number[]) => number[]) => void;
 
 const AccordionContext = createContext<{
+    id?: string;
     type: 'single' | 'multiple';
     openIndices: number[];
     setOpenIndices: SetOPenIndices;
 }>({
+    id: undefined,
     type: 'multiple',
     openIndices: [],
     setOpenIndices: () => {},
@@ -30,18 +33,20 @@ const AccordionContext = createContext<{
 
 const AccordionItemContext = createContext<{ index: number }>({ index: 0 });
 
-const Accordion = ({ children, className, type = 'multiple' }: AccordionRootProps) => {
+const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRootProps) => {
     const [openIndices, setOpenIndices] = useState<number[]>([]);
 
     return (
-        <AccordionContext.Provider value={{ openIndices, setOpenIndices, type }}>
+        <AccordionContext.Provider value={{ id, openIndices, setOpenIndices, type }}>
             <section className={className}>{children}</section>
         </AccordionContext.Provider>
     );
 };
 
 const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
-    setOpenIndices(() => [index]);
+    setOpenIndices((prevOpenIndices: number[]) => {
+        return prevOpenIndices.includes(index) ? [] : [index];
+    });
 };
 
 const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
@@ -53,11 +58,16 @@ const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => 
 };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
-    const { setOpenIndices, type } = React.useContext(AccordionContext);
+    const { id, openIndices, setOpenIndices, type } = React.useContext(AccordionContext);
     const { index } = React.useContext(AccordionItemContext);
+
+    const isOpen = openIndices.includes(index);
 
     return (
         <button
+            aria-expanded={isOpen}
+            aria-controls={`accordion-trigger-${id}-${index}`}
+            id={`accordion-button-${id}-${index}`}
             className={joinClassNames(styles.trigger, className)}
             onClick={() =>
                 (type === 'single' ? handleSelectSingle : handleSelectMultiple)(
@@ -83,7 +93,7 @@ const AccordionContent = ({ children, className }: AccordionSharedProps) => {
     const [height, setHeight] = useState<number>(0);
     const ref = React.useRef<HTMLDivElement>(null);
 
-    const { openIndices } = React.useContext(AccordionContext);
+    const { id, openIndices } = React.useContext(AccordionContext);
     const { index } = React.useContext(AccordionItemContext);
 
     const isOpen = openIndices.includes(index);
@@ -97,7 +107,13 @@ const AccordionContent = ({ children, className }: AccordionSharedProps) => {
     }, [isOpen]);
 
     return (
-        <div ref={ref} style={{ height }} className={joinClassNames(styles.content, className)}>
+        <div
+            ref={ref}
+            aria-labelledby={`accordion-button-${id}-${index}`}
+            id={`accordion-trigger-${id}-${index}`}
+            style={{ height }}
+            className={joinClassNames(styles.content, className)}
+        >
             {children}
         </div>
     );
