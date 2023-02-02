@@ -23,7 +23,7 @@ const Accordion = ({ children, className }: AccordionSharedProps) => {
 
     return (
         <AccordionContext.Provider value={{ openIndices, setOpenIndices }}>
-            <section className={joinClassNames(styles.root, className)}>{children}</section>
+            <section className={className}>{children}</section>
         </AccordionContext.Provider>
     );
 };
@@ -53,7 +53,7 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
     return (
         <AccordionItemContext.Provider value={{ index }}>
-            <div className={joinClassNames(styles.item, className)}>{children}</div>
+            <div className={className}>{children}</div>
         </AccordionItemContext.Provider>
     );
 };

@@ -1,40 +1,55 @@
 import { Accordion } from '@madeinhaus/core';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import { styled } from '@storybook/theming';
+const items = [
+    {
+        heading: 'Voluptate velit',
+        paragraph:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel malesuada velit. Cras vel dolor at magna commodo congue at a sapien. Proin euismod enim ut sem viverra, at malesuada est tincidunt. Integer euismod justo eu dolor bibendum, vel fringilla ligula posuere.',
+    },
+    {
+        heading: 'Vel fringilla',
+        paragraph:
+            'Aliquam erat volutpat. Sed malesuada, diam a faucibus blandit, risus metus sollicitudin erat, id suscipit libero lectus eu leo. Aliquam erat volutpat. Curabitur ac tortor et nulla blandit porttitor a eget libero. Nullam viverra malesuada magna non bibendum.',
+    },
+    {
+        heading: 'Enim lobortis',
+        paragraph:
+            'Nam congue euismod urna vel luctus. Sed vitae velit a nulla tempor viverra. Integer aliquam dolor vel ligula commodo laoreet. Integer in risus at risus bibendum aliquet. Aliquam erat volutpat. Proin faucibus varius enim, a ullamcorper nisi blandit at.',
+    },
+    {
+        heading: 'Metus vulputate',
+        paragraph:
+            'Suspendisse potenti. Praesent faucibus blandit enim, a condimentum nisi rutrum id. Donec congue elit vel turpis suscipit, eget placerat dui feugiat. Curabitur vitae tellus id orci congue tempor. Nullam euismod egestas nibh, vel scelerisque libero aliquet vel.',
+    },
+    {
+        heading: 'Mauris augue',
+        paragraph:
+            'Vivamus luctus velit quis magna congue, a faucibus nisl tincidunt. Sed auctor orci vel enim blandit, eu consectetur elit viverra. Aliquam erat volutpat. Sed quis sem vel massa scelerisque suscipit. Proin euismod, dolor id molestie sollicitudin, nulla turpis placerat leo, non convallis ligula nulla non mi.',
+    },
+];
 
 <Meta title="UI/Accordion" component={Accordion} />
 
 export const Template = () => {
-    const items = [
-        {
-            heading: 'lorem ipsum 1',
-            paragraph:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel malesuada velit. Cras vel dolor at magna commodo congue at a sapien. Proin euismod enim ut sem viverra, at malesuada est tincidunt. Integer euismod justo eu dolor bibendum, vel fringilla ligula posuere.',
-        },
-        {
-            heading: 'lorem ipsum 2',
-            paragraph:
-                'Aliquam erat volutpat. Sed malesuada, diam a faucibus blandit, risus metus sollicitudin erat, id suscipit libero lectus eu leo. Aliquam erat volutpat. Curabitur ac tortor et nulla blandit porttitor a eget libero. Nullam viverra malesuada magna non bibendum.',
-        },
-        {
-            heading: 'lorem ipsum 3',
-            paragraph:
-                'Nam congue euismod urna vel luctus. Sed vitae velit a nulla tempor viverra. Integer aliquam dolor vel ligula commodo laoreet. Integer in risus at risus bibendum aliquet. Aliquam erat volutpat. Proin faucibus varius enim, a ullamcorper nisi blandit at.',
-        },
-        {
-            heading: 'lorem ipsum 4',
-            paragraph:
-                'Suspendisse potenti. Praesent faucibus blandit enim, a condimentum nisi rutrum id. Donec congue elit vel turpis suscipit, eget placerat dui feugiat. Curabitur vitae tellus id orci congue tempor. Nullam euismod egestas nibh, vel scelerisque libero aliquet vel.',
-        },
-        {
-            heading: 'lorem ipsum 5',
-            paragraph:
-                'Vivamus luctus velit quis magna congue, a faucibus nisl tincidunt. Sed auctor orci vel enim blandit, eu consectetur elit viverra. Aliquam erat volutpat. Sed quis sem vel massa scelerisque suscipit. Proin euismod, dolor id molestie sollicitudin, nulla turpis placerat leo, non convallis ligula nulla non mi.',
-        },
-    ];
-    const StyledItem = styled(Accordion.Item)`
+    return (
+        <Accordion.Root>
+            {items.map(({ heading, paragraph }, index) => (
+                <Accordion.Item key={index} index={index}>
+                    <Accordion.Trigger>{heading}</Accordion.Trigger>
+                    <Accordion.Content>
+                        <div>{paragraph}</div>
+                    </Accordion.Content>
+                </Accordion.Item>
+            ))}
+        </Accordion.Root>
+    );
+};
+export const StyledTemplate = () => {
+    const StyledRoot = styled(Accordion.Root)`
         width: 300px;
     `;
+    const StyledItem = styled(Accordion.Item)``;
     const StyledTrigger = styled(Accordion.Trigger)`
         background-color: firebrick;
         border-bottom: 1px solid white;
@@ -54,7 +69,7 @@ export const Template = () => {
         padding: 10px;
     `;
     return (
-        <Accordion.Root>
+        <StyledRoot>
             {items.map(({ heading, paragraph }, index) => (
                 <StyledItem key={index} index={index}>
                     <StyledTrigger>{heading}</StyledTrigger>
@@ -63,7 +78,7 @@ export const Template = () => {
                     </StyledContent>
                 </StyledItem>
             ))}
-        </Accordion.Root>
+        </StyledRoot>
     );
 };
 
@@ -79,4 +94,5 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 
 <Canvas>
     <Story name="Default">{Template.bind({})}</Story>
+    <Story name="With Style And Animation">{StyledTemplate.bind({})}</Story>
 </Canvas>
