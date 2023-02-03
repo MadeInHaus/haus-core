@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { joinClassNames } from '../../utils';
 import styles from './Accordion.module.scss';
 
@@ -58,33 +58,25 @@ const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => 
 };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
-    const { id, openIndices, setOpenIndices, type } = React.useContext(AccordionContext);
-    const { index } = React.useContext(AccordionItemContext);
-
-    const isOpen = openIndices.includes(index);
-
-    return (
-        <button
-            aria-expanded={isOpen}
-            aria-controls={`accordion-trigger-${id}-${index}`}
-            id={`accordion-button-${id}-${index}`}
-            className={joinClassNames(styles.trigger, className)}
-            onClick={() =>
-                (type === 'single' ? handleSelectSingle : handleSelectMultiple)(
-                    index,
-                    setOpenIndices
-                )
-            }
-        >
-            {children}
-        </button>
-    );
+    return <summary className={joinClassNames(styles.trigger, className)}>{children}</summary>;
 };
 
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
+    const { setOpenIndices, type } = useContext(AccordionContext);
+
     return (
         <AccordionItemContext.Provider value={{ index }}>
-            <div className={className}>{children}</div>
+            <details
+                onToggle={() =>
+                    (type === 'single' ? handleSelectSingle : handleSelectMultiple)(
+                        index,
+                        setOpenIndices
+                    )
+                }
+                className={className}
+            >
+                {children}
+            </details>
         </AccordionItemContext.Provider>
     );
 };
@@ -93,8 +85,8 @@ const AccordionContent = ({ children, className }: AccordionSharedProps) => {
     const [height, setHeight] = useState<number>(0);
     const ref = React.useRef<HTMLDivElement>(null);
 
-    const { id, openIndices } = React.useContext(AccordionContext);
-    const { index } = React.useContext(AccordionItemContext);
+    const { id, openIndices } = useContext(AccordionContext);
+    const { index } = useContext(AccordionItemContext);
 
     const isOpen = openIndices.includes(index);
 
