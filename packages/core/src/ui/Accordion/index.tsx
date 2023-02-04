@@ -23,58 +23,125 @@ const AccordionContext = createContext<{
     id?: string;
     type: 'single' | 'multiple';
     openIndices: number[];
-    setOpenIndices: SetOPenIndices;
+    setOpenIndices: React.Dispatch<React.SetStateAction<number[]>>;
+    animation: Animation | null;
+    setAnimation: React.Dispatch<React.SetStateAction<Animation | null>>;
+    isClosing: boolean;
+    setIsClosing: React.Dispatch<React.SetStateAction<boolean>>;
+    isExpanding: boolean;
+    setIsExpanding: React.Dispatch<React.SetStateAction<boolean>>;
+    detailsRef: HTMLElement | null;
+    setDetailsRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+    summaryRef: HTMLElement | null;
+    setSummaryRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+    contentRef: HTMLElement | null;
+    setContentRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }>({
     id: undefined,
     type: 'multiple',
     openIndices: [],
     setOpenIndices: () => {},
+    animation: null,
+    setAnimation: () => {},
+    isClosing: false,
+    setIsClosing: () => {},
+    isExpanding: false,
+    setIsExpanding: () => {},
+    detailsRef: null,
+    setDetailsRef: () => {},
+    summaryRef: null,
+    setSummaryRef: () => {},
+    contentRef: null,
+    setContentRef: () => {},
 });
 
 const AccordionItemContext = createContext<{ index: number }>({ index: 0 });
 
 const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRootProps) => {
     const [openIndices, setOpenIndices] = useState<number[]>([]);
+    const [animation, setAnimation] = useState<Animation | null>(null);
+    const [isClosing, setIsClosing] = useState(false);
+    const [isExpanding, setIsExpanding] = useState(false);
+    const [detailsRef, setDetailsRef] = useState<HTMLElement | null>(null);
+    const [summaryRef, setSummaryRef] = useState<HTMLElement | null>(null);
+    const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
 
     return (
-        <AccordionContext.Provider value={{ id, openIndices, setOpenIndices, type }}>
+        <AccordionContext.Provider
+            value={{
+                animation,
+                setAnimation,
+                isClosing,
+                setIsClosing,
+                isExpanding,
+                setIsExpanding,
+                openIndices,
+                setOpenIndices,
+                detailsRef,
+                setDetailsRef,
+                summaryRef,
+                setSummaryRef,
+                contentRef,
+                setContentRef,
+                id,
+                type,
+            }}
+        >
             <section className={className}>{children}</section>
         </AccordionContext.Provider>
     );
 };
 
-const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
-    setOpenIndices((prevOpenIndices: number[]) => {
-        return prevOpenIndices.includes(index) ? [] : [index];
-    });
-};
+// const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
+//     setOpenIndices((prevOpenIndices: number[]) => {
+//         return prevOpenIndices.includes(index) ? [] : [index];
+//     });
+// };
 
-const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
-    setOpenIndices((prevOpenIndices: number[]) => {
-        return prevOpenIndices.includes(index)
-            ? prevOpenIndices.filter((select: number) => select !== index)
-            : [...prevOpenIndices, index];
-    });
-};
+// const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
+//     setOpenIndices((prevOpenIndices: number[]) => {
+//         return prevOpenIndices.includes(index)
+//             ? prevOpenIndices.filter((select: number) => select !== index)
+//             : [...prevOpenIndices, index];
+//     });
+// };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
-    return <summary className={joinClassNames(styles.trigger, className)}>{children}</summary>;
+    const summaryRef = React.useRef<HTMLElement>(null);
+
+    const { setSummaryRef } = useContext(AccordionContext);
+
+    useEffect(() => {
+        setSummaryRef(summaryRef.current);
+    }, [setSummaryRef]);
+
+    const handleClick = () => {
+        console.log('Summary Click', summaryRef?.current);
+    };
+
+    return (
+        <summary
+            ref={summaryRef}
+            onClick={handleClick}
+            className={joinClassNames(styles.trigger, className)}
+        >
+            {children}
+        </summary>
+    );
 };
 
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const { setOpenIndices, type } = useContext(AccordionContext);
+    const { setDetailsRef } = useContext(AccordionContext);
+
+    const detailsRef = React.useRef<HTMLDetailsElement>(null);
+
+    useEffect(() => {
+        setDetailsRef(detailsRef.current);
+    }, [setDetailsRef]);
 
     return (
         <AccordionItemContext.Provider value={{ index }}>
-            <details
-                onToggle={() =>
-                    (type === 'single' ? handleSelectSingle : handleSelectMultiple)(
-                        index,
-                        setOpenIndices
-                    )
-                }
-                className={className}
-            >
+            <details ref={detailsRef} className={joinClassNames(styles.item, className)}>
                 {children}
             </details>
         </AccordionItemContext.Provider>
@@ -82,30 +149,16 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
 };
 
 const AccordionContent = ({ children, className }: AccordionSharedProps) => {
-    const [height, setHeight] = useState<number>(0);
-    const ref = React.useRef<HTMLDivElement>(null);
+    const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { id, openIndices } = useContext(AccordionContext);
-    const { index } = useContext(AccordionItemContext);
-
-    const isOpen = openIndices.includes(index);
+    const { setContentRef } = useContext(AccordionContext);
 
     useEffect(() => {
-        if (isOpen) {
-            setHeight(ref.current!.scrollHeight);
-        } else {
-            setHeight(0);
-        }
-    }, [isOpen]);
+        setContentRef(contentRef.current);
+    }, [setContentRef]);
 
     return (
-        <div
-            ref={ref}
-            aria-labelledby={`accordion-button-${id}-${index}`}
-            id={`accordion-trigger-${id}-${index}`}
-            style={{ height }}
-            className={joinClassNames(styles.content, className)}
-        >
+        <div ref={contentRef} className={className}>
             {children}
         </div>
     );
