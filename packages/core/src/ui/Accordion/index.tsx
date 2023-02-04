@@ -24,6 +24,15 @@ const AccordionContext = createContext<{
     type: 'single' | 'multiple';
     openIndices: number[];
     setOpenIndices: React.Dispatch<React.SetStateAction<number[]>>;
+}>({
+    id: undefined,
+    type: 'multiple',
+    openIndices: [],
+    setOpenIndices: () => {},
+});
+
+const AccordionItemContext = createContext<{
+    index: number;
     animation: Animation | null | undefined;
     setAnimation: React.Dispatch<React.SetStateAction<Animation | null | undefined>>;
     isClosing: boolean;
@@ -35,10 +44,7 @@ const AccordionContext = createContext<{
     contentEl: HTMLElement | null;
     setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }>({
-    id: undefined,
-    type: 'multiple',
-    openIndices: [],
-    setOpenIndices: () => {},
+    index: 0,
     animation: null,
     setAnimation: () => {},
     isClosing: false,
@@ -51,31 +57,15 @@ const AccordionContext = createContext<{
     setContentEl: () => {},
 });
 
-const AccordionItemContext = createContext<{ index: number }>({ index: 0 });
-
 const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRootProps) => {
     const [openIndices, setOpenIndices] = useState<number[]>([]);
-    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
-    const [isClosing, setIsClosing] = useState(false);
-    const [isExpanding, setIsExpanding] = useState(false);
-    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
     return (
         <AccordionContext.Provider
             value={{
-                animation,
-                setAnimation,
-                isClosing,
-                setIsClosing,
-                isExpanding,
-                setIsExpanding,
                 openIndices,
                 setOpenIndices,
-                detailsEl,
-                setDetailsEl,
-                contentEl,
-                setContentEl,
+
                 id,
                 type,
             }}
@@ -111,7 +101,7 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
         isExpanding,
         setIsExpanding,
         contentEl,
-    } = useContext(AccordionContext);
+    } = useContext(AccordionItemContext);
 
     console.log({ isClosing, isExpanding });
 
@@ -211,7 +201,11 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 };
 
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const { setDetailsEl } = useContext(AccordionContext);
+    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
+    const [isClosing, setIsClosing] = useState(false);
+    const [isExpanding, setIsExpanding] = useState(false);
+    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
+    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
@@ -221,7 +215,21 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
     }, [detailsRef]);
 
     return (
-        <AccordionItemContext.Provider value={{ index }}>
+        <AccordionItemContext.Provider
+            value={{
+                index,
+                animation,
+                setAnimation,
+                isClosing,
+                setIsClosing,
+                isExpanding,
+                setIsExpanding,
+                detailsEl,
+                setDetailsEl,
+                contentEl,
+                setContentEl,
+            }}
+        >
             <details ref={detailsRef} className={joinClassNames(styles.item, className)}>
                 {children}
             </details>
@@ -232,7 +240,7 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
 const AccordionContent = ({ children, className }: AccordionSharedProps) => {
     const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { setContentEl } = useContext(AccordionContext);
+    const { setContentEl } = useContext(AccordionItemContext);
 
     useEffect(() => {
         setContentEl(contentRef.current);
