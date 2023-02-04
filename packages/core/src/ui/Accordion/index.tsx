@@ -75,19 +75,19 @@ const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRoot
     );
 };
 
-// const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
-//     setOpenIndices((prevOpenIndices: number[]) => {
-//         return prevOpenIndices.includes(index) ? [] : [index];
-//     });
-// };
+const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
+    setOpenIndices((prevOpenIndices: number[]) => {
+        return prevOpenIndices.includes(index) ? [] : [index];
+    });
+};
 
-// const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
-//     setOpenIndices((prevOpenIndices: number[]) => {
-//         return prevOpenIndices.includes(index)
-//             ? prevOpenIndices.filter((select: number) => select !== index)
-//             : [...prevOpenIndices, index];
-//     });
-// };
+const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
+    setOpenIndices((prevOpenIndices: number[]) => {
+        return prevOpenIndices.includes(index)
+            ? prevOpenIndices.filter((select: number) => select !== index)
+            : [...prevOpenIndices, index];
+    });
+};
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     const summaryRef = React.useRef<HTMLElement>(null);
@@ -230,7 +230,7 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
                 setContentEl,
             }}
         >
-            <details ref={detailsRef} className={joinClassNames(styles.item, className)}>
+            <details ref={detailsRef} className={className}>
                 {children}
             </details>
         </AccordionItemContext.Provider>
