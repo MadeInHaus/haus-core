@@ -23,7 +23,6 @@ export interface AccordionItemProps extends AccordionSharedProps {
     index: number;
 }
 
-// eslint-disable-next-line no-unused-vars
 type SetOPenIndices = (updateFn: (prevOpenIndices: number[]) => number[]) => void;
 
 const AccordionContext = createContext<{
@@ -38,28 +37,30 @@ const AccordionContext = createContext<{
     setOpenIndices: () => {},
 });
 
+enum AnimationState {
+    IDLE = 'idle',
+    EXPANDING = 'expanding',
+    SHRINKING = 'shrinking',
+}
+
 const AccordionItemContext = createContext<{
     index: number;
     animation: Animation | null | undefined;
     setAnimation: React.Dispatch<React.SetStateAction<Animation | null | undefined>>;
-    isClosing: boolean;
-    setIsClosing: React.Dispatch<React.SetStateAction<boolean>>;
-    isExpanding: boolean;
-    setIsExpanding: React.Dispatch<React.SetStateAction<boolean>>;
-    detailsEl: HTMLDetailsElement | null;
-    setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
+    animationState: 'idle' | 'expanding' | 'shrinking';
+    setAnimationState: React.Dispatch<React.SetStateAction<'idle' | 'expanding' | 'shrinking'>>;
+    summaryEl: HTMLSummaryElement | null;
+    setSummaryEl: React.Dispatch<React.SetStateAction<HTMLSummaryElement | null>>;
     contentEl: HTMLDivElement | null;
     setContentEl: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 }>({
     index: 0,
     animation: null,
     setAnimation: () => {},
-    isClosing: false,
-    setIsClosing: () => {},
-    isExpanding: false,
-    setIsExpanding: () => {},
-    detailsEl: null,
-    setDetailsEl: () => {},
+    animationState: AnimationState.IDLE,
+    setAnimationState: () => {},
+    summaryEl: null,
+    setSummaryEl: () => {},
     contentEl: null,
     setContentEl: () => {},
 });
@@ -96,86 +97,61 @@ const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRoot
 //     });
 // };
 
+const animationOptions = {
+    duration: 300,
+    easing: 'ease-in-out',
+};
+
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
+    const { setSummaryEl } = useContext(AccordionItemContext);
+
     const summaryRef = React.useRef<HTMLSummaryElement>(null);
 
-    const {
-        animation,
-        setAnimation,
-        detailsEl,
-        isClosing,
-        setIsClosing,
-        isExpanding,
-        setIsExpanding,
-        contentEl,
-    } = useContext(AccordionItemContext);
+    useEffect(() => {
+        setSummaryEl(summaryRef.current);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [summaryRef]);
 
-    console.log({ isClosing, isExpanding });
+    return (
+        <summary ref={summaryRef} className={joinClassNames(styles.trigger, className)}>
+            {children}
+        </summary>
+    );
+};
 
-    const handleExpand = () => {
-        console.log('Expand');
-        setIsExpanding(true);
+const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
+    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
+    const [animationState, setAnimationState] = useState<'idle' | 'expanding' | 'shrinking'>(
+        AnimationState.IDLE
+    );
 
-        const startHeight = detailsEl?.offsetHeight || 0;
-        const endHeight = (summaryRef.current?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
+    const [summaryEl, setSummaryEl] = useState<HTMLSummaryElement | null>(null);
+    const [contentEl, setContentEl] = useState<HTMLDivElement | null>(null);
 
-        if (animation) {
-            animation.cancel();
-        }
+    const detailsRef = React.useRef<HTMLDetailsElement>(null);
+    const detailsEl = detailsRef.current;
 
-        const expandAnimation = detailsEl?.animate(
-            {
-                height: [`${startHeight}px`, `${endHeight}px`],
-            },
-            {
-                duration: 300,
-                easing: 'ease-in-out',
-            }
+    // const handleSelect = () =>
+    //     (type === 'single' ? handleSelectSingle : handleSelectMultiple)(index, setOpenIndices);
+
+    const handleAnimateHeight = ({
+        startHeight,
+        endHeight,
+        open,
+    }: {
+        startHeight: number;
+        endHeight: number;
+        open: boolean;
+    }) => {
+        const animation = detailsEl!.animate(
+            { height: [`${startHeight}px`, `${endHeight}px`] },
+            animationOptions
         );
 
-        setAnimation(expandAnimation);
+        setAnimation(animation);
 
-        if (!expandAnimation) {
-            return;
-        }
-
-        expandAnimation.onfinish = () => onAnimationFinish(true);
-        expandAnimation.oncancel = () => setIsExpanding(false);
-
-        console.log({ startHeight, endHeight });
-    };
-
-    const handleShrink = () => {
-        console.log('Shrink');
-        setIsClosing(true);
-
-        const startHeight = detailsEl?.offsetHeight || 0;
-        const endHeight = (summaryRef?.current && summaryRef.current.offsetHeight) || 0;
-
-        if (animation) {
-            animation.cancel();
-        }
-
-        const shrinkAnimation = detailsEl?.animate(
-            {
-                height: [`${startHeight}px`, `${endHeight}px`],
-            },
-            {
-                duration: 300,
-                easing: 'ease-in-out',
-            }
-        );
-
-        setAnimation(shrinkAnimation);
-
-        if (!shrinkAnimation) {
-            return;
-        }
-
-        shrinkAnimation.onfinish = () => onAnimationFinish(false);
-        shrinkAnimation.oncancel = () => setIsClosing(false);
-
-        console.log({ startHeight, endHeight });
+        animation.onfinish = () => onAnimationFinish(open);
+        animation.oncancel = () => setAnimationState(AnimationState.IDLE);
     };
 
     function onAnimationFinish(open: boolean) {
@@ -188,61 +164,55 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
         detailsEl.style.overflow = '';
 
         setAnimation(null);
-        setIsClosing(false);
-        setIsExpanding(false);
+        setAnimationState(AnimationState.IDLE);
     }
 
-    const handleOpen = () => {
-        if (!detailsEl) {
-            return;
+    const handleExpand = () => {
+        console.log('Expand');
+        setAnimationState(AnimationState.EXPANDING);
+
+        if (animation) {
+            animation.cancel();
         }
 
-        detailsEl.style.height = `${detailsEl?.offsetHeight}px`;
-        detailsEl.open = true;
+        const startHeight = detailsEl?.offsetHeight || 0;
+        const endHeight = (summaryEl?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
+
+        handleAnimateHeight({ startHeight, endHeight, open: true });
+    };
+
+    const handleShrink = () => {
+        console.log('Shrink');
+        setAnimationState(AnimationState.SHRINKING);
+
+        if (animation) {
+            animation.cancel();
+        }
+
+        const startHeight = detailsEl?.offsetHeight || 0;
+        const endHeight = summaryEl?.offsetHeight || 0;
+
+        handleAnimateHeight({ startHeight, endHeight, open: false });
+    };
+
+    const handleOpen = () => {
+        detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
+        detailsEl!.open = true;
 
         requestAnimationFrame(() => handleExpand());
     };
 
-    const handleClick = () => {
-        if (!detailsEl) {
-            return;
-        }
+    const handleToggle = () => {
+        detailsEl!.style.overflow = 'hidden';
 
-        detailsEl.style.overflow = 'hidden';
-
-        if (isClosing || !detailsEl.open) {
+        if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
             handleOpen();
         }
 
-        if (isExpanding || detailsEl.open) {
+        if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
             handleShrink();
         }
     };
-
-    return (
-        <summary
-            ref={summaryRef}
-            onClick={handleClick}
-            className={joinClassNames(styles.trigger, className)}
-        >
-            {children}
-        </summary>
-    );
-};
-
-const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
-    const [isClosing, setIsClosing] = useState(false);
-    const [isExpanding, setIsExpanding] = useState(false);
-    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLDivElement | null>(null);
-
-    const detailsRef = React.useRef<HTMLDetailsElement>(null);
-
-    useEffect(() => {
-        setDetailsEl(detailsRef.current);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [detailsRef]);
 
     return (
         <AccordionItemContext.Provider
@@ -250,17 +220,15 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
                 index,
                 animation,
                 setAnimation,
-                isClosing,
-                setIsClosing,
-                isExpanding,
-                setIsExpanding,
-                detailsEl,
-                setDetailsEl,
+                animationState,
+                setAnimationState,
+                summaryEl,
+                setSummaryEl,
                 contentEl,
                 setContentEl,
             }}
         >
-            <details ref={detailsRef} className={className}>
+            <details ref={detailsRef} onToggle={handleToggle} className={className}>
                 {children}
             </details>
         </AccordionItemContext.Provider>
