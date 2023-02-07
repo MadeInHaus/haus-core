@@ -9,3 +9,8 @@
     user-select: none;
     cursor: pointer;
 }
+
+.item {
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}

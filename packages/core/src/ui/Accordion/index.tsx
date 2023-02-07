@@ -23,42 +23,22 @@ export interface AccordionItemProps extends AccordionSharedProps {
     index: number;
 }
 
-type SetOPenIndices = (updateFn: (prevOpenIndices: number[]) => number[]) => void;
-
 const AccordionContext = createContext<{
     id?: string;
     type: 'single' | 'multiple';
-    openIndices: number[];
-    setOpenIndices: React.Dispatch<React.SetStateAction<number[]>>;
 }>({
     id: undefined,
     type: 'multiple',
-    openIndices: [],
-    setOpenIndices: () => {},
 });
-
-enum AnimationState {
-    IDLE = 'idle',
-    EXPANDING = 'expanding',
-    SHRINKING = 'shrinking',
-}
 
 const AccordionItemContext = createContext<{
     index: number;
-    animation: Animation | null | undefined;
-    setAnimation: React.Dispatch<React.SetStateAction<Animation | null | undefined>>;
-    animationState: 'idle' | 'expanding' | 'shrinking';
-    setAnimationState: React.Dispatch<React.SetStateAction<'idle' | 'expanding' | 'shrinking'>>;
     summaryEl: HTMLSummaryElement | null;
     setSummaryEl: React.Dispatch<React.SetStateAction<HTMLSummaryElement | null>>;
     contentEl: HTMLDivElement | null;
     setContentEl: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 }>({
     index: 0,
-    animation: null,
-    setAnimation: () => {},
-    animationState: AnimationState.IDLE,
-    setAnimationState: () => {},
     summaryEl: null,
     setSummaryEl: () => {},
     contentEl: null,
@@ -66,14 +46,9 @@ const AccordionItemContext = createContext<{
 });
 
 const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRootProps) => {
-    const [openIndices, setOpenIndices] = useState<number[]>([]);
-
     return (
         <AccordionContext.Provider
             value={{
-                openIndices,
-                setOpenIndices,
-
                 id,
                 type,
             }}
@@ -81,25 +56,6 @@ const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRoot
             <section className={className}>{children}</section>
         </AccordionContext.Provider>
     );
-};
-
-// const handleSelectSingle = (index: number, setOpenIndices: SetOPenIndices) => {
-//     setOpenIndices((prevOpenIndices: number[]) => {
-//         return prevOpenIndices.includes(index) ? [] : [index];
-//     });
-// };
-
-// const handleSelectMultiple = (index: number, setOpenIndices: SetOPenIndices) => {
-//     setOpenIndices((prevOpenIndices: number[]) => {
-//         return prevOpenIndices.includes(index)
-//             ? prevOpenIndices.filter((select: number) => select !== index)
-//             : [...prevOpenIndices, index];
-//     });
-// };
-
-const animationOptions = {
-    duration: 300,
-    easing: 'ease-in-out',
 };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
@@ -120,97 +76,36 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 };
 
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
-    const [animationState, setAnimationState] = useState<'idle' | 'expanding' | 'shrinking'>(
-        AnimationState.IDLE
-    );
-
+    const [open, setOpen] = useState<boolean>(false);
+    const [height, setHeight] = useState<number>(0);
     const [summaryEl, setSummaryEl] = useState<HTMLSummaryElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLDivElement | null>(null);
 
-    const detailsRef = React.useRef<HTMLDetailsElement>(null);
-    const detailsEl = detailsRef.current;
-
-    // const handleSelect = () =>
-    //     (type === 'single' ? handleSelectSingle : handleSelectMultiple)(index, setOpenIndices);
-
-    const handleAnimateHeight = ({
-        startHeight,
-        endHeight,
-        open,
-    }: {
-        startHeight: number;
-        endHeight: number;
-        open: boolean;
-    }) => {
-        const animation = detailsEl!.animate(
-            { height: [`${startHeight}px`, `${endHeight}px`] },
-            animationOptions
-        );
-
-        setAnimation(animation);
-
-        animation.onfinish = () => onAnimationFinish(open);
-        animation.oncancel = () => setAnimationState(AnimationState.IDLE);
-    };
-
-    function onAnimationFinish(open: boolean) {
-        if (!detailsEl) {
-            return;
-        }
-
-        detailsEl.open = open;
-        detailsEl.style.height = '';
-        detailsEl.style.overflow = '';
-
-        setAnimation(null);
-        setAnimationState(AnimationState.IDLE);
-    }
-
-    const handleExpand = () => {
-        console.log('Expand');
-        setAnimationState(AnimationState.EXPANDING);
-
-        if (animation) {
-            animation.cancel();
-        }
-
-        const startHeight = detailsEl?.offsetHeight || 0;
-        const endHeight = (summaryEl?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
-
-        handleAnimateHeight({ startHeight, endHeight, open: true });
-    };
-
-    const handleShrink = () => {
-        console.log('Shrink');
-        setAnimationState(AnimationState.SHRINKING);
-
-        if (animation) {
-            animation.cancel();
-        }
-
-        const startHeight = detailsEl?.offsetHeight || 0;
-        const endHeight = summaryEl?.offsetHeight || 0;
-
-        handleAnimateHeight({ startHeight, endHeight, open: false });
-    };
+    useEffect(() => {
+        setHeight(summaryEl?.offsetHeight || 0);
+    }, [summaryEl]);
 
     const handleOpen = () => {
-        detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
-        detailsEl!.open = true;
+        const height = (summaryEl?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
 
-        requestAnimationFrame(() => handleExpand());
+        setHeight(height);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        const height = summaryEl?.offsetHeight || 0;
+
+        setHeight(height);
+        setOpen(false);
     };
 
     const handleToggle = () => {
-        detailsEl!.style.overflow = 'hidden';
-
-        if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
+        if (!open) {
             handleOpen();
         }
 
-        if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
-            handleShrink();
+        if (open) {
+            handleClose();
         }
     };
 
@@ -218,17 +113,18 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
         <AccordionItemContext.Provider
             value={{
                 index,
-                animation,
-                setAnimation,
-                animationState,
-                setAnimationState,
                 summaryEl,
                 setSummaryEl,
                 contentEl,
                 setContentEl,
             }}
         >
-            <details ref={detailsRef} onToggle={handleToggle} className={className}>
+            <details
+                className={joinClassNames(styles.item, className)}
+                onToggle={handleToggle}
+                open={open}
+                style={{ height: `${height}px` }}
+            >
                 {children}
             </details>
         </AccordionItemContext.Provider>
