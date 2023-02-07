@@ -2,129 +2,185 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { joinClassNames } from '../../utils';
 import styles from './Accordion.module.scss';
 
-interface HTMLSummaryElement extends HTMLElement {}
-
-declare var HTMLSummaryElement: {
-    prototype: HTMLSummaryElement;
-    new (): HTMLSummaryElement;
-};
-
 export interface AccordionSharedProps {
     children: React.ReactNode;
     className?: string;
 }
 
-export interface AccordionRootProps extends AccordionSharedProps {
-    type?: 'single' | 'multiple';
-    id: string;
-}
+export interface AccordionRootProps extends AccordionSharedProps {}
 
 export interface AccordionItemProps extends AccordionSharedProps {
     index: number;
 }
 
-const AccordionContext = createContext<{
-    id?: string;
-    type: 'single' | 'multiple';
-}>({
-    id: undefined,
-    type: 'multiple',
-});
+enum AnimationState {
+    IDLE = 'idle',
+    EXPANDING = 'expanding',
+    SHRINKING = 'shrinking',
+}
 
 const AccordionItemContext = createContext<{
     index: number;
-    summaryEl: HTMLSummaryElement | null;
-    setSummaryEl: React.Dispatch<React.SetStateAction<HTMLSummaryElement | null>>;
-    contentEl: HTMLDivElement | null;
-    setContentEl: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+    animation: Animation | null | undefined;
+    setAnimation: React.Dispatch<React.SetStateAction<Animation | null | undefined>>;
+    animationState: AnimationState;
+    setAnimationState: React.Dispatch<React.SetStateAction<AnimationState>>;
+    detailsEl: HTMLDetailsElement | null;
+    setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
+    contentEl: HTMLElement | null;
+    setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }>({
     index: 0,
-    summaryEl: null,
-    setSummaryEl: () => {},
+    animation: null,
+    setAnimation: () => {},
+    animationState: AnimationState.IDLE,
+    setAnimationState: () => {},
+    detailsEl: null,
+    setDetailsEl: () => {},
     contentEl: null,
     setContentEl: () => {},
 });
 
-const Accordion = ({ children, className, id, type = 'multiple' }: AccordionRootProps) => {
-    return (
-        <AccordionContext.Provider
-            value={{
-                id,
-                type,
-            }}
-        >
-            <section className={className}>{children}</section>
-        </AccordionContext.Provider>
-    );
+const Accordion = ({ children, className }: AccordionRootProps) => {
+    return <section className={className}>{children}</section>;
+};
+
+const animationOptions = {
+    duration: 300,
+    easing: 'ease-in-out',
 };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
-    const { setSummaryEl } = useContext(AccordionItemContext);
+    const summaryRef = React.useRef<HTMLElement>(null);
 
-    const summaryRef = React.useRef<HTMLSummaryElement>(null);
+    const { animation, setAnimation, detailsEl, animationState, setAnimationState, contentEl } =
+        useContext(AccordionItemContext);
 
-    useEffect(() => {
-        setSummaryEl(summaryRef.current);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [summaryRef]);
+    console.log({ animationState });
+
+    const handleAnimateHeight = ({
+        animationState,
+        startHeight,
+        endHeight,
+        open,
+    }: {
+        animationState: AnimationState;
+        startHeight: number;
+        endHeight: number;
+        open: boolean;
+    }) => {
+        setAnimationState(animationState);
+
+        if (animation) {
+            animation.cancel();
+        }
+
+        const _animation = detailsEl?.animate(
+            { height: [`${startHeight}px`, `${endHeight}px`] },
+            animationOptions
+        );
+
+        setAnimation(_animation);
+
+        _animation!.onfinish = () => onAnimationFinish(open);
+        _animation!.oncancel = () => setAnimationState(AnimationState.IDLE);
+
+        console.log({ startHeight, endHeight });
+    };
+
+    const handleShrink = () => {
+        setAnimationState(AnimationState.SHRINKING);
+
+        const startHeight = detailsEl?.offsetHeight ?? 0;
+        const endHeight = (summaryRef?.current && summaryRef.current.offsetHeight) || 0;
+
+        handleAnimateHeight({
+            animationState: AnimationState.SHRINKING,
+            startHeight,
+            endHeight,
+            open: false,
+        });
+    };
+
+    const handleExpand = () => {
+        const startHeight = detailsEl?.offsetHeight ?? 0;
+        const endHeight = (summaryRef.current?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
+
+        handleAnimateHeight({
+            animationState: AnimationState.EXPANDING,
+            startHeight,
+            endHeight,
+            open: true,
+        });
+    };
+
+    function onAnimationFinish(open: boolean) {
+        detailsEl!.open = open;
+        detailsEl!.style.height = '';
+        detailsEl!.style.overflow = '';
+
+        setAnimation(null);
+        setAnimationState(AnimationState.IDLE);
+    }
+
+    const handleOpen = () => {
+        detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
+        detailsEl!.open = true;
+
+        requestAnimationFrame(() => handleExpand());
+    };
+
+    const handleClick = () => {
+        detailsEl!.style.overflow = 'hidden';
+
+        if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
+            handleOpen();
+        }
+
+        if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
+            handleShrink();
+        }
+    };
 
     return (
-        <summary ref={summaryRef} className={joinClassNames(styles.trigger, className)}>
+        <summary
+            ref={summaryRef}
+            onClick={handleClick}
+            className={joinClassNames(styles.trigger, className)}
+        >
             {children}
         </summary>
     );
 };
 
 const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const [open, setOpen] = useState<boolean>(false);
-    const [height, setHeight] = useState<number>(0);
-    const [summaryEl, setSummaryEl] = useState<HTMLSummaryElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLDivElement | null>(null);
+    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
+
+    const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
+    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
+    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
+
+    const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
-        setHeight(summaryEl?.offsetHeight || 0);
-    }, [summaryEl]);
-
-    const handleOpen = () => {
-        const height = (summaryEl?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
-
-        setHeight(height);
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        const height = summaryEl?.offsetHeight || 0;
-
-        setHeight(height);
-        setOpen(false);
-    };
-
-    const handleToggle = () => {
-        if (!open) {
-            handleOpen();
-        }
-
-        if (open) {
-            handleClose();
-        }
-    };
+        setDetailsEl(detailsRef.current);
+    }, []);
 
     return (
         <AccordionItemContext.Provider
             value={{
                 index,
-                summaryEl,
-                setSummaryEl,
+                animation,
+                setAnimation,
+                animationState,
+                setAnimationState,
+                detailsEl,
+                setDetailsEl,
                 contentEl,
                 setContentEl,
             }}
         >
-            <details
-                className={joinClassNames(styles.item, className)}
-                onToggle={handleToggle}
-                open={open}
-                style={{ height: `${height}px` }}
-            >
+            <details ref={detailsRef} className={className}>
                 {children}
             </details>
         </AccordionItemContext.Provider>
@@ -138,8 +194,7 @@ const AccordionContent = ({ children, className }: AccordionSharedProps) => {
 
     useEffect(() => {
         setContentEl(contentRef.current);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [contentRef]);
+    }, []);
 
     return (
         <div ref={contentRef} className={className}>
