@@ -115,6 +115,7 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     };
 
     function onAnimationFinish(open: boolean) {
+        console.log('onAnimationFinish');
         detailsEl!.open = open;
         detailsEl!.style.height = '';
         detailsEl!.style.overflow = '';
@@ -125,7 +126,6 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 
     const handleOpen = () => {
         detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
-        detailsEl!.open = true;
 
         requestAnimationFrame(() => handleExpand());
     };
