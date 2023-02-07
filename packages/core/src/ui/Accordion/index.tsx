@@ -126,11 +126,13 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 
     const handleOpen = () => {
         detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
+        detailsEl!.open = true;
 
         requestAnimationFrame(() => handleExpand());
     };
 
-    const handleClick = () => {
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
         detailsEl!.style.overflow = 'hidden';
 
         if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
