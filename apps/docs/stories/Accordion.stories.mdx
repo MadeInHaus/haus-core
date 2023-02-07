@@ -33,7 +33,7 @@ const items = [
 
 export const Template = ({ ...args }) => {
     return (
-        <Accordion.Root key={JSON.stringify(args)} {...args}>
+        <Accordion.Root key={JSON.stringify(args)} id="basic" {...args}>
             {items.map(({ heading, paragraph }, index) => (
                 <Accordion.Item key={index} index={index}>
                     <Accordion.Trigger>{heading}</Accordion.Trigger>
@@ -70,7 +70,7 @@ export const StyledTemplate = ({ ...args }) => {
         padding: 10px 16px;
     `;
     return (
-        <StyledRoot key={JSON.stringify(args)} {...args}>
+        <StyledRoot key={JSON.stringify(args)} id="styled" {...args}>
             {items.map(({ heading, paragraph }, index) => (
                 <StyledItem key={index} index={index}>
                     <StyledTrigger>{heading}</StyledTrigger>
@@ -82,7 +82,17 @@ export const StyledTemplate = ({ ...args }) => {
         </StyledRoot>
     );
 };
-const argTypes = {};
+const argTypes = {
+    animationOptions: {
+        control: {
+            type: 'object',
+        },
+    },
+};
+const defaultAnimationOptions = {
+    duration: 300,
+    easing: 'ease-in-out',
+};
 
 # Accordion
 
@@ -95,10 +105,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
 ## Examples
 
 <Canvas>
-    <Story name="Default" argTypes={argTypes}>
+    <Story
+        name="Default"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
         {Template.bind({})}
     </Story>
-    <Story name="With Style" argTypes={argTypes}>
+    <Story
+        name="With Style"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
         {StyledTemplate.bind({})}
     </Story>
 </Canvas>

@@ -7,7 +7,9 @@ export interface AccordionSharedProps {
     className?: string;
 }
 
-export interface AccordionRootProps extends AccordionSharedProps {}
+export interface AccordionRootProps extends AccordionSharedProps {
+    animationOptions: OptionalEffectTiming;
+}
 
 export interface AccordionItemProps extends AccordionSharedProps {
     index: number;
@@ -18,6 +20,17 @@ enum AnimationState {
     EXPANDING = 'expanding',
     SHRINKING = 'shrinking',
 }
+
+const defaultAnimationOptions = {
+    duration: 300,
+    easing: 'ease-in-out',
+};
+
+const AccordionContext = createContext<{
+    animationOptions: OptionalEffectTiming;
+}>({
+    animationOptions: defaultAnimationOptions,
+});
 
 const AccordionItemContext = createContext<{
     index: number;
@@ -41,22 +54,28 @@ const AccordionItemContext = createContext<{
     setContentEl: () => {},
 });
 
-const Accordion = ({ children, className }: AccordionRootProps) => {
-    return <section className={className}>{children}</section>;
-};
-
-const animationOptions = {
-    duration: 300,
-    easing: 'ease-in-out',
+const Accordion = ({
+    children,
+    className,
+    animationOptions = defaultAnimationOptions,
+}: AccordionRootProps) => {
+    return (
+        <AccordionContext.Provider
+            value={{
+                animationOptions,
+            }}
+        >
+            <section className={className}>{children}</section>
+        </AccordionContext.Provider>
+    );
 };
 
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     const summaryRef = React.useRef<HTMLElement>(null);
 
+    const { animationOptions } = useContext(AccordionContext);
     const { animation, setAnimation, detailsEl, animationState, setAnimationState, contentEl } =
         useContext(AccordionItemContext);
-
-    console.log({ animationState });
 
     const handleAnimateHeight = ({
         animationState,
