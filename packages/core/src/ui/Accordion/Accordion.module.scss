@@ -1,5 +1,5 @@
 .trigger {
-    display: inline-block;
+    list-style: none;
     font: inherit;
     appearance: none;
     padding: 0;
@@ -8,4 +8,9 @@
     background-color: inherit;
     user-select: none;
     cursor: pointer;
+
+    &::marker, /* Latest Chrome, Edge, Firefox */ 
+    &::-webkit-details-marker /* Safari */ {
+        display: none;
+    }
 }
