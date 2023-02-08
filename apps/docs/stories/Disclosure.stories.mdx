@@ -1,4 +1,4 @@
-import { Accordion } from '@madeinhaus/core';
+import { Disclosure } from '@madeinhaus/core';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import { styled } from '@storybook/theming';
 const items = [
@@ -10,47 +10,47 @@ const items = [
     {
         heading: 'Vel fringilla',
         paragraph:
-            'Aliquam erat volutpat. Sed malesuada, diam a faucibus blandit, risus metus sollicitudin erat, id suscipit libero lectus eu leo. Aliquam erat volutpat. Curabitur ac tortor et nulla blandit porttitor a eget libero. Nullam viverra malesuada magna non bibendum.',
+            'Aliquam erat volutpat. Sed malesuada, diam a faucibus blandit, risus metus sollicitudin erat, id suscipit libero lectus eu leo. Aliquam erat volutpat.',
     },
     {
         heading: 'Enim lobortis',
         paragraph:
-            'Nam congue euismod urna vel luctus. Sed vitae velit a nulla tempor viverra. Integer aliquam dolor vel ligula commodo laoreet. Integer in risus at risus bibendum aliquet. Aliquam erat volutpat. Proin faucibus varius enim, a ullamcorper nisi blandit at.',
+            'Nam congue euismod urna vel luctus. Sed vitae velit a nulla tempor viverra. Integer aliquam dolor vel ligula commodo laoreet. Integer in risus at risus bibendum aliquet. Aliquam erat volutpat. Proin faucibus varius enim, a ullamcorper nisi blandit at. Curabitur ac tortor et nulla blandit porttitor a eget libero. Nullam viverra malesuada magna non bibendum.',
     },
     {
         heading: 'Metus vulputate',
         paragraph:
-            'Suspendisse potenti. Praesent faucibus blandit enim, a condimentum nisi rutrum id. Donec congue elit vel turpis suscipit, eget placerat dui feugiat. Curabitur vitae tellus id orci congue tempor. Nullam euismod egestas nibh, vel scelerisque libero aliquet vel.',
+            'Suspendisse potenti. Praesent faucibus blandit enim, a condimentum nisi rutrum id. Donec congue elit vel turpis suscipit, eget placerat dui feugiat',
     },
     {
         heading: 'Mauris augue',
         paragraph:
-            'Vivamus luctus velit quis magna congue, a faucibus nisl tincidunt. Sed auctor orci vel enim blandit, eu consectetur elit viverra. Aliquam erat volutpat. Sed quis sem vel massa scelerisque suscipit. Proin euismod, dolor id molestie sollicitudin, nulla turpis placerat leo, non convallis ligula nulla non mi.',
+            'Vivamus luctus velit quis magna congue, a faucibus nisl tincidunt. Sed auctor orci vel enim blandit, eu consectetur elit viverra. Aliquam erat volutpat. Sed quis sem vel massa scelerisque suscipit. Proin euismod, dolor id molestie sollicitudin, nulla turpis placerat leo, non convallis ligula nulla non mi. Curabitur vitae tellus id orci congue tempor. Nullam euismod egestas nibh, vel scelerisque libero aliquet vel.',
     },
 ];
 
-<Meta title="UI/Accordion" component={Accordion} />
+<Meta title="UI/Disclosure" component={Disclosure} />
 
 export const Template = ({ ...args }) => {
     return (
-        <Accordion.Root key={JSON.stringify(args)} id="basic" {...args}>
+        <Disclosure.Root key={JSON.stringify(args)} {...args}>
             {items.map(({ heading, paragraph }, index) => (
-                <Accordion.Item key={index} index={index}>
-                    <Accordion.Trigger>{heading}</Accordion.Trigger>
-                    <Accordion.Content>
+                <Disclosure.Details key={index} index={index}>
+                    <Disclosure.Summary>{heading}</Disclosure.Summary>
+                    <Disclosure.Content>
                         <div>{paragraph}</div>
-                    </Accordion.Content>
-                </Accordion.Item>
+                    </Disclosure.Content>
+                </Disclosure.Details>
             ))}
-        </Accordion.Root>
+        </Disclosure.Root>
     );
 };
 export const StyledTemplate = ({ ...args }) => {
-    const StyledRoot = styled(Accordion.Root)`
+    const StyledRoot = styled(Disclosure.Root)`
         width: 300px;
     `;
-    const StyledItem = styled(Accordion.Item)``;
-    const StyledTrigger = styled(Accordion.Trigger)`
+    const StyledItem = styled(Disclosure.Details)``;
+    const StyledSummary = styled(Disclosure.Summary)`
         background-color: firebrick;
         border-bottom: 1px solid white;
         color: white;
@@ -62,7 +62,7 @@ export const StyledTemplate = ({ ...args }) => {
             background-color: darkred;
         }
     `;
-    const StyledContent = styled(Accordion.Content)`
+    const StyledContent = styled(Disclosure.Content)`
         background-color: lightsalmon;
     `;
     const StyleChildren = styled.div`
@@ -70,10 +70,10 @@ export const StyledTemplate = ({ ...args }) => {
         padding: 10px 16px;
     `;
     return (
-        <StyledRoot key={JSON.stringify(args)} id="styled" {...args}>
+        <StyledRoot key={JSON.stringify(args)} {...args}>
             {items.map(({ heading, paragraph }, index) => (
                 <StyledItem key={index}>
-                    <StyledTrigger>{heading}</StyledTrigger>
+                    <StyledSummary>{heading}</StyledSummary>
                     <StyledContent>
                         <StyleChildren>{paragraph}</StyleChildren>
                     </StyledContent>
@@ -94,7 +94,7 @@ const defaultAnimationOptions = {
     easing: 'ease-in-out',
 };
 
-# Accordion
+# Disclosure
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
 

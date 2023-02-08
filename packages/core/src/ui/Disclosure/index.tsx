@@ -1,17 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { joinClassNames } from '../../utils';
-import styles from './Accordion.module.scss';
+import styles from './Disclosure.module.scss';
 
-export interface AccordionSharedProps {
+export interface DisclosureSharedProps {
     children: React.ReactNode;
     className?: string;
 }
 
-export interface AccordionRootProps extends AccordionSharedProps {
+export interface DisclosureRootProps extends DisclosureSharedProps {
     animationOptions: OptionalEffectTiming;
 }
 
-export interface AccordionItemProps extends AccordionSharedProps {
+export interface DisclosureItemProps extends DisclosureSharedProps {
     index: number;
 }
 
@@ -26,13 +26,13 @@ const defaultAnimationOptions = {
     easing: 'ease-in-out',
 };
 
-const AccordionContext = createContext<{
+const DisclosureContext = createContext<{
     animationOptions: OptionalEffectTiming;
 }>({
     animationOptions: defaultAnimationOptions,
 });
 
-const AccordionItemContext = createContext<{
+const DisclosureItemContext = createContext<{
     detailsEl: HTMLDetailsElement | null;
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
     contentEl: HTMLElement | null;
@@ -44,31 +44,31 @@ const AccordionItemContext = createContext<{
     setContentEl: () => {},
 });
 
-const Accordion = ({
+const Disclosure = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
-}: AccordionRootProps) => {
+}: DisclosureRootProps) => {
     return (
-        <AccordionContext.Provider
+        <DisclosureContext.Provider
             value={{
                 animationOptions,
             }}
         >
             <section className={className}>{children}</section>
-        </AccordionContext.Provider>
+        </DisclosureContext.Provider>
     );
 };
 
 // Inspired by: https://css-tricks.com/how-to-animate-the-details-element-using-waapi/
-const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
+const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const summaryRef = React.useRef<HTMLElement>(null);
 
     const [animation, setAnimation] = useState<Animation | null | undefined>(null);
     const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
 
-    const { animationOptions } = useContext(AccordionContext);
-    const { detailsEl, contentEl } = useContext(AccordionItemContext);
+    const { animationOptions } = useContext(DisclosureContext);
+    const { detailsEl, contentEl } = useContext(DisclosureItemContext);
 
     const handleAnimateHeight = ({
         animationState,
@@ -162,7 +162,7 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     );
 };
 
-const AccordionItem = ({ children, className }: AccordionItemProps) => {
+const DisclosureDetails = ({ children, className }: DisclosureItemProps) => {
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
@@ -173,7 +173,7 @@ const AccordionItem = ({ children, className }: AccordionItemProps) => {
     }, []);
 
     return (
-        <AccordionItemContext.Provider
+        <DisclosureItemContext.Provider
             value={{
                 detailsEl,
                 setDetailsEl,
@@ -184,14 +184,14 @@ const AccordionItem = ({ children, className }: AccordionItemProps) => {
             <details ref={detailsRef} className={className}>
                 {children}
             </details>
-        </AccordionItemContext.Provider>
+        </DisclosureItemContext.Provider>
     );
 };
 
-const AccordionContent = ({ children, className }: AccordionSharedProps) => {
+const DisclosureContent = ({ children, className }: DisclosureSharedProps) => {
     const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { setContentEl } = useContext(AccordionItemContext);
+    const { setContentEl } = useContext(DisclosureItemContext);
 
     useEffect(() => {
         setContentEl(contentRef.current);
@@ -204,9 +204,9 @@ const AccordionContent = ({ children, className }: AccordionSharedProps) => {
     );
 };
 
-Accordion.Root = Accordion;
-Accordion.Item = React.memo(AccordionItem);
-Accordion.Trigger = AccordionTrigger;
-Accordion.Content = AccordionContent;
+Disclosure.Root = Disclosure;
+Disclosure.Details = React.memo(DisclosureDetails);
+Disclosure.Summary = DisclosureSummary;
+Disclosure.Content = DisclosureContent;
 
-export { Accordion };
+export { Disclosure };
