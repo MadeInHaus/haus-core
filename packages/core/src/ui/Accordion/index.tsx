@@ -145,9 +145,7 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 
         if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
             handleOpen();
-        }
-
-        if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
+        } else if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
             handleShrink();
         }
     };
