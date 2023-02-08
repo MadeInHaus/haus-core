@@ -60,6 +60,7 @@ const Accordion = ({
     );
 };
 
+// Inspired by: https://css-tricks.com/how-to-animate-the-details-element-using-waapi/
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     const summaryRef = React.useRef<HTMLElement>(null);
 
@@ -123,14 +124,14 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
         });
     };
 
-    function onAnimationFinish(open: boolean) {
+    const onAnimationFinish = (open: boolean) => {
         detailsEl!.open = open;
         detailsEl!.style.height = '';
         detailsEl!.style.overflow = '';
 
         setAnimation(null);
         setAnimationState(AnimationState.IDLE);
-    }
+    };
 
     const handleOpen = () => {
         detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
@@ -204,8 +205,8 @@ const AccordionContent = ({ children, className }: AccordionSharedProps) => {
 };
 
 Accordion.Root = Accordion;
+Accordion.Item = React.memo(AccordionItem);
 Accordion.Trigger = AccordionTrigger;
-Accordion.Item = AccordionItem;
 Accordion.Content = AccordionContent;
 
 export { Accordion };
