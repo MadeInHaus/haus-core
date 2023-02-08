@@ -33,21 +33,11 @@ const AccordionContext = createContext<{
 });
 
 const AccordionItemContext = createContext<{
-    index: number;
-    animation: Animation | null | undefined;
-    setAnimation: React.Dispatch<React.SetStateAction<Animation | null | undefined>>;
-    animationState: AnimationState;
-    setAnimationState: React.Dispatch<React.SetStateAction<AnimationState>>;
     detailsEl: HTMLDetailsElement | null;
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
     contentEl: HTMLElement | null;
     setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }>({
-    index: 0,
-    animation: null,
-    setAnimation: () => {},
-    animationState: AnimationState.IDLE,
-    setAnimationState: () => {},
     detailsEl: null,
     setDetailsEl: () => {},
     contentEl: null,
@@ -73,9 +63,11 @@ const Accordion = ({
 const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     const summaryRef = React.useRef<HTMLElement>(null);
 
+    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
+    const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
+
     const { animationOptions } = useContext(AccordionContext);
-    const { animation, setAnimation, detailsEl, animationState, setAnimationState, contentEl } =
-        useContext(AccordionItemContext);
+    const { detailsEl, contentEl } = useContext(AccordionItemContext);
 
     const handleAnimateHeight = ({
         animationState,
@@ -103,8 +95,6 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
 
         _animation!.onfinish = () => onAnimationFinish(open);
         _animation!.oncancel = () => setAnimationState(AnimationState.IDLE);
-
-        console.log({ startHeight, endHeight });
     };
 
     const handleShrink = () => {
@@ -134,7 +124,6 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     };
 
     function onAnimationFinish(open: boolean) {
-        console.log('onAnimationFinish');
         detailsEl!.open = open;
         detailsEl!.style.height = '';
         detailsEl!.style.overflow = '';
@@ -174,10 +163,7 @@ const AccordionTrigger = ({ children, className }: AccordionSharedProps) => {
     );
 };
 
-const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
-    const [animation, setAnimation] = useState<Animation | null | undefined>(null);
-
-    const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
+const AccordionItem = ({ children, className }: AccordionItemProps) => {
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
@@ -190,11 +176,6 @@ const AccordionItem = ({ children, className, index }: AccordionItemProps) => {
     return (
         <AccordionItemContext.Provider
             value={{
-                index,
-                animation,
-                setAnimation,
-                animationState,
-                setAnimationState,
                 detailsEl,
                 setDetailsEl,
                 contentEl,

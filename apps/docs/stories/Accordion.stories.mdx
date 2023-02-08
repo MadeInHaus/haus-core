@@ -72,7 +72,7 @@ export const StyledTemplate = ({ ...args }) => {
     return (
         <StyledRoot key={JSON.stringify(args)} id="styled" {...args}>
             {items.map(({ heading, paragraph }, index) => (
-                <StyledItem key={index} index={index}>
+                <StyledItem key={index}>
                     <StyledTrigger>{heading}</StyledTrigger>
                     <StyledContent>
                         <StyleChildren>{paragraph}</StyleChildren>
