@@ -49,20 +49,16 @@ export const Template = ({ ...args }) => {
 export const RenderPropTemplate = ({ ...args }) => {
     return (
         <Disclosure.Root key={JSON.stringify(args)} {...args}>
-            {items.map(({ heading, paragraph }, index) => (
+            {items.map(({ paragraph }, index) => (
                 <Disclosure.Details key={index} index={index}>
-                    {({ isOpen }) =>
-                        console.log(isOpen) || (
-                            <>
-                                <Disclosure.Summary>
-                                    {isOpen ? `Close ${heading}` : `Open ${heading}`}
-                                </Disclosure.Summary>
-                                <Disclosure.Content>
-                                    <div>{paragraph}</div>
-                                </Disclosure.Content>
-                            </>
-                        )
-                    }
+                    {({ isOpen }) => (
+                        <>
+                            <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
+                            <Disclosure.Content>
+                                <div>{paragraph}</div>
+                            </Disclosure.Content>
+                        </>
+                    )}
                 </Disclosure.Details>
             ))}
         </Disclosure.Root>
