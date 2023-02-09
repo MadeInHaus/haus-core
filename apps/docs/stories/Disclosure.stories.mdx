@@ -1,0 +1,199 @@
+import { Disclosure } from '@madeinhaus/core';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { styled } from '@storybook/theming';
+const items = [
+    {
+        heading: 'Voluptate velit',
+        paragraph:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel malesuada velit. Cras vel dolor at magna commodo congue at a sapien. Proin euismod enim ut sem viverra, at malesuada est tincidunt. Integer euismod justo eu dolor bibendum, vel fringilla ligula posuere.',
+    },
+    {
+        heading: 'Vel fringilla',
+        paragraph:
+            'Aliquam erat volutpat. Sed malesuada, diam a faucibus blandit, risus metus sollicitudin erat, id suscipit libero lectus eu leo. Aliquam erat volutpat.',
+    },
+    {
+        heading: 'Enim lobortis',
+        paragraph:
+            'Nam congue euismod urna vel luctus. Sed vitae velit a nulla tempor viverra. Integer aliquam dolor vel ligula commodo laoreet. Integer in risus at risus bibendum aliquet. Aliquam erat volutpat. Proin faucibus varius enim, a ullamcorper nisi blandit at. Curabitur ac tortor et nulla blandit porttitor a eget libero. Nullam viverra malesuada magna non bibendum.',
+    },
+    {
+        heading: 'Metus vulputate',
+        paragraph:
+            'Suspendisse potenti. Praesent faucibus blandit enim, a condimentum nisi rutrum id. Donec congue elit vel turpis suscipit, eget placerat dui feugiat',
+    },
+    {
+        heading: 'Mauris augue',
+        paragraph:
+            'Vivamus luctus velit quis magna congue, a faucibus nisl tincidunt. Sed auctor orci vel enim blandit, eu consectetur elit viverra. Aliquam erat volutpat. Sed quis sem vel massa scelerisque suscipit. Proin euismod, dolor id molestie sollicitudin, nulla turpis placerat leo, non convallis ligula nulla non mi. Curabitur vitae tellus id orci congue tempor. Nullam euismod egestas nibh, vel scelerisque libero aliquet vel.',
+    },
+];
+
+<Meta title="UI/Disclosure" component={Disclosure} />
+
+export const Template = ({ ...args }) => {
+    return (
+        <Disclosure.Root key={JSON.stringify(args)} {...args}>
+            {items.map(({ heading, paragraph }, index) => (
+                <Disclosure.Details key={index} index={index}>
+                    <Disclosure.Summary>{heading}</Disclosure.Summary>
+                    <Disclosure.Content>
+                        <div>{paragraph}</div>
+                    </Disclosure.Content>
+                </Disclosure.Details>
+            ))}
+        </Disclosure.Root>
+    );
+};
+
+export const RenderPropTemplate = ({ ...args }) => {
+    return (
+        <Disclosure.Root key={JSON.stringify(args)} {...args}>
+            {items.map(({ paragraph }, index) => (
+                <Disclosure.Details key={index} index={index}>
+                    {({ isOpen }) => (
+                        <>
+                            <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
+                            <Disclosure.Content>
+                                <div>{paragraph}</div>
+                            </Disclosure.Content>
+                        </>
+                    )}
+                </Disclosure.Details>
+            ))}
+        </Disclosure.Root>
+    );
+};
+export const StyledTemplate = ({ ...args }) => {
+    const StyledRoot = styled(Disclosure.Root)`
+        width: 300px;
+    `;
+    const StyledDetails = styled(Disclosure.Details)``;
+    const StyledSummary = styled(Disclosure.Summary)`
+        background-color: firebrick;
+        border-bottom: 1px solid white;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+        width: 100%;
+        transition: background-color 0.3s ease-in-out;
+        &:hover {
+            background-color: darkred;
+        }
+    `;
+    const StyledContent = styled(Disclosure.Content)`
+        background-color: lightsalmon;
+    `;
+    const StyleChildren = styled.div`
+        border-bottom: 1px solid white;
+        padding: 10px 16px;
+    `;
+    return (
+        <StyledRoot key={JSON.stringify(args)} {...args}>
+            {items.map(({ heading, paragraph }, index) => (
+                <StyledDetails key={index}>
+                    <StyledSummary>{heading}</StyledSummary>
+                    <StyledContent>
+                        <StyleChildren>{paragraph}</StyleChildren>
+                    </StyledContent>
+                </StyledDetails>
+            ))}
+        </StyledRoot>
+    );
+};
+const argTypes = {
+    animationOptions: {
+        control: {
+            type: 'object',
+        },
+    },
+};
+const defaultAnimationOptions = {
+    duration: 300,
+    easing: 'ease-in-out',
+};
+
+# Disclosure
+
+WAAPI animated disclosure component consisting of a root, details, summary, and content. Disclosure.Root takes an animationOptions prop, which is an OptionalEffectTiming object. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/AnimationEffectTimingProperties) for more information.
+
+The Disclosure.Details optionally returns a render prop with an isOpen boolean. This can be used to conditionally render the Disclosure.Summary and Disclosure.Content.
+
+## Basic Usage
+
+```jsx
+import { Disclosure } from '@madeinhaus/core';
+
+function Example() {
+    return (
+        <Disclosure.Root
+            animationOptions={{
+                duration: 100,
+                easing: 'ease-out',
+            }}
+        >
+            <Disclosure.Details>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+        </Disclosure.Root>
+    );
+}
+```
+
+## Usage With Render Prop
+
+```jsx
+import { Disclosure } from '@madeinhaus/core';
+
+function Example() {
+    return (
+        <Disclosure.Root>
+            <Disclosure.Details>
+                {({ isOpen }) => (
+                    <>
+                        <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
+                        <Disclosure.Content>Content</Disclosure.Content>
+                    </>
+                )}
+            </Disclosure.Details>
+        </Disclosure.Root>
+    );
+}
+```
+
+## Props
+
+<ArgsTable story="Default" />
+
+## Examples
+
+<Canvas>
+    <Story
+        name="Default"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+    <Story
+        name="With Style"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
+        {StyledTemplate.bind({})}
+    </Story>
+    <Story
+        name="With isOpen Render Prop"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
+        {RenderPropTemplate.bind({})}
+    </Story>
+</Canvas>
