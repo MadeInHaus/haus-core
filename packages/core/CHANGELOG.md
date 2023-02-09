@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.10.0
+
+### Minor Changes
+
+- 9ccf811: Added Disclosure Component
+
 ## 0.9.0
 
 ### Minor Changes
