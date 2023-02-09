@@ -1,5 +1,11 @@
 # @madeinhaus/utils
 
+## 0.6.0
+
+### Minor Changes
+
+- 439e015: Add useImagePreload hook and preloadImage util
+
 ## 0.5.0
 
 ### Minor Changes

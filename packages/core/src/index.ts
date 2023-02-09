@@ -10,6 +10,7 @@ export { Disclosure, type DisclosureItemProps } from './ui/Disclosure';
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 export { usePrevious } from './hooks/usePrevious';
 export { useIntersectionObserver } from './hooks/useIntersectionObserver';
+export { useImagePreload } from './hooks/useImagePreload';
 
 /* Misc */
 export { ContentfulImg, type ContentfulImgProps } from './misc/ContentfulImg';

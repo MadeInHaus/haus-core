@@ -19,3 +19,22 @@ export function toSlug(str: string): string {
         .replace(/^-+/g, '') // Trim "-" from start of text
         .replace(/-+$/g, ''); // Trim "-" from end of text
 }
+
+/**
+ * Preload an image.
+ *
+ * @param {string} url The image's URL.
+ * @return {Promise<HTMLImageElement>} A promise that resolves to the preloaded image.
+ */
+export function preloadImage(url: string): Promise<HTMLImageElement> {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.src = url;
+        if (img.complete && img.naturalWidth && img.naturalHeight) {
+            resolve(img);
+        } else {
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(img);
+        }
+    });
+}
