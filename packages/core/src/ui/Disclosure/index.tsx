@@ -11,7 +11,8 @@ export interface DisclosureRootProps extends DisclosureSharedProps {
     animationOptions: OptionalEffectTiming;
 }
 
-export interface DisclosureItemProps {
+export interface DisclosureDetailProps {
+    animationOptions?: OptionalEffectTiming | null;
     children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
     className?: string;
 }
@@ -34,12 +35,14 @@ const DisclosureContext = createContext<{
 });
 
 const DisclosureItemContext = createContext<{
+    animationOptions?: OptionalEffectTiming | null;
     detailsEl: HTMLDetailsElement | null;
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
     contentEl: HTMLElement | null;
     setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
+    animationOptions: defaultAnimationOptions,
     detailsEl: null,
     setDetailsEl: () => {},
     contentEl: null,
@@ -53,13 +56,38 @@ const Disclosure = ({
     animationOptions = defaultAnimationOptions,
 }: DisclosureRootProps) => {
     return (
-        <DisclosureContext.Provider
-            value={{
-                animationOptions,
-            }}
-        >
+        <DisclosureContext.Provider value={{ animationOptions }}>
             <section className={className}>{children}</section>
         </DisclosureContext.Provider>
+    );
+};
+
+const DisclosureDetails = ({ animationOptions, children, className }: DisclosureDetailProps) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
+    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
+
+    const detailsRef = React.useRef<HTMLDetailsElement>(null);
+
+    useEffect(() => {
+        setDetailsEl(detailsRef.current);
+    }, []);
+
+    return (
+        <DisclosureItemContext.Provider
+            value={{
+                animationOptions,
+                detailsEl,
+                setDetailsEl,
+                contentEl,
+                setContentEl,
+                setIsOpen,
+            }}
+        >
+            <details ref={detailsRef} className={className}>
+                {typeof children === 'function' ? children({ isOpen }) : children}
+            </details>
+        </DisclosureItemContext.Provider>
     );
 };
 
@@ -70,8 +98,16 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const [animation, setAnimation] = useState<Animation | null | undefined>(null);
     const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
 
-    const { animationOptions } = useContext(DisclosureContext);
-    const { detailsEl, contentEl, setIsOpen } = useContext(DisclosureItemContext);
+    const { animationOptions: rootAnimationOptions } = useContext(DisclosureContext);
+
+    const {
+        animationOptions: itemAnimationOptions,
+        detailsEl,
+        contentEl,
+        setIsOpen,
+    } = useContext(DisclosureItemContext);
+
+    const animationOptions = itemAnimationOptions ?? rootAnimationOptions;
 
     const handleAnimateHeight = ({
         animationState,
@@ -163,34 +199,6 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
         >
             {children}
         </summary>
-    );
-};
-
-const DisclosureDetails = ({ children, className }: DisclosureItemProps) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
-
-    const detailsRef = React.useRef<HTMLDetailsElement>(null);
-
-    useEffect(() => {
-        setDetailsEl(detailsRef.current);
-    }, []);
-
-    return (
-        <DisclosureItemContext.Provider
-            value={{
-                detailsEl,
-                setDetailsEl,
-                contentEl,
-                setContentEl,
-                setIsOpen,
-            }}
-        >
-            <details ref={detailsRef} className={className}>
-                {typeof children === 'function' ? children({ isOpen }) : children}
-            </details>
-        </DisclosureItemContext.Provider>
     );
 };
 

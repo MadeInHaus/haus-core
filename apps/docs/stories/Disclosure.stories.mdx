@@ -35,7 +35,7 @@ export const Template = ({ ...args }) => {
     return (
         <Disclosure.Root key={JSON.stringify(args)} {...args}>
             {items.map(({ heading, paragraph }, index) => (
-                <Disclosure.Details key={index} index={index}>
+                <Disclosure.Details key={index}>
                     <Disclosure.Summary>{heading}</Disclosure.Summary>
                     <Disclosure.Content>
                         <div>{paragraph}</div>
@@ -50,7 +50,7 @@ export const RenderPropTemplate = ({ ...args }) => {
     return (
         <Disclosure.Root key={JSON.stringify(args)} {...args}>
             {items.map(({ paragraph }, index) => (
-                <Disclosure.Details key={index} index={index}>
+                <Disclosure.Details key={index}>
                     {({ isOpen }) => (
                         <>
                             <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
@@ -63,6 +63,16 @@ export const RenderPropTemplate = ({ ...args }) => {
             ))}
         </Disclosure.Root>
     );
+};
+export const TemplateWithNoRoot = ({ animationOptions }) => {
+    return items.map(({ heading, paragraph }, index) => (
+        <Disclosure.Details key={index} animationOptions={animationOptions}>
+            <Disclosure.Summary>{heading}</Disclosure.Summary>
+            <Disclosure.Content>
+                <div>{paragraph}</div>
+            </Disclosure.Content>
+        </Disclosure.Details>
+    ));
 };
 export const StyledTemplate = ({ ...args }) => {
     const StyledRoot = styled(Disclosure.Root)`
@@ -179,15 +189,6 @@ function Example() {
         {Template.bind({})}
     </Story>
     <Story
-        name="With Style"
-        argTypes={argTypes}
-        args={{
-            animationOptions: defaultAnimationOptions,
-        }}
-    >
-        {StyledTemplate.bind({})}
-    </Story>
-    <Story
         name="With isOpen Render Prop"
         argTypes={argTypes}
         args={{
@@ -195,5 +196,26 @@ function Example() {
         }}
     >
         {RenderPropTemplate.bind({})}
+    </Story>
+    <Story
+        name="With No Root Wrapper"
+        argTypes={argTypes}
+        args={{
+            animationOptions: {
+                duration: 150,
+                easing: 'linear',
+            },
+        }}
+    >
+        {TemplateWithNoRoot.bind({})}
+    </Story>
+    <Story
+        name="With Style"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
+        {StyledTemplate.bind({})}
     </Story>
 </Canvas>
