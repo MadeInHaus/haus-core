@@ -172,6 +172,36 @@ function Example() {
 }
 ```
 
+## Usage Without Root Wrapper
+
+```jsx
+import { Disclosure } from '@madeinhaus/core';
+
+function Example() {
+    const animationOptions = {
+        duration: 100,
+        easing: 'ease-out',
+    };
+
+    return (
+        <>
+            <Disclosure.Details animationOptions={animationOptions}>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+            <Disclosure.Details animationOptions={animationOptions}>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+            <Disclosure.Details animationOptions={animationOptions}>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+        </>
+    );
+}
+```
+
 ## Props
 
 <ArgsTable story="Default" />
@@ -202,8 +232,8 @@ function Example() {
         argTypes={argTypes}
         args={{
             animationOptions: {
-                duration: 150,
-                easing: 'linear',
+                duration: 500,
+                easing: 'cubic-bezier(.48, .165, .325, .97)',
             },
         }}
     >
