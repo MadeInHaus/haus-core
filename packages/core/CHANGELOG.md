@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.11.0
+
+### Minor Changes
+
+- 039ab1b: Permit Disclosure Usage Without Root
+
 ## 0.10.0
 
 ### Minor Changes
