@@ -45,11 +45,34 @@ export const Template = ({ ...args }) => {
         </Disclosure.Root>
     );
 };
+
+export const RenderPropTemplate = ({ ...args }) => {
+    return (
+        <Disclosure.Root key={JSON.stringify(args)} {...args}>
+            {items.map(({ heading, paragraph }, index) => (
+                <Disclosure.Details key={index} index={index}>
+                    {({ isOpen }) =>
+                        console.log(isOpen) || (
+                            <>
+                                <Disclosure.Summary>
+                                    {isOpen ? `Close ${heading}` : `Open ${heading}`}
+                                </Disclosure.Summary>
+                                <Disclosure.Content>
+                                    <div>{paragraph}</div>
+                                </Disclosure.Content>
+                            </>
+                        )
+                    }
+                </Disclosure.Details>
+            ))}
+        </Disclosure.Root>
+    );
+};
 export const StyledTemplate = ({ ...args }) => {
     const StyledRoot = styled(Disclosure.Root)`
         width: 300px;
     `;
-    const StyledItem = styled(Disclosure.Details)``;
+    const StyledDetails = styled(Disclosure.Details)``;
     const StyledSummary = styled(Disclosure.Summary)`
         background-color: firebrick;
         border-bottom: 1px solid white;
@@ -72,12 +95,12 @@ export const StyledTemplate = ({ ...args }) => {
     return (
         <StyledRoot key={JSON.stringify(args)} {...args}>
             {items.map(({ heading, paragraph }, index) => (
-                <StyledItem key={index}>
+                <StyledDetails key={index}>
                     <StyledSummary>{heading}</StyledSummary>
                     <StyledContent>
                         <StyleChildren>{paragraph}</StyleChildren>
                     </StyledContent>
-                </StyledItem>
+                </StyledDetails>
             ))}
         </StyledRoot>
     );
@@ -122,5 +145,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl ege
         }}
     >
         {StyledTemplate.bind({})}
+    </Story>
+    <Story
+        name="With isOpen Render Prop"
+        argTypes={argTypes}
+        args={{
+            animationOptions: defaultAnimationOptions,
+        }}
+    >
+        {RenderPropTemplate.bind({})}
     </Story>
 </Canvas>

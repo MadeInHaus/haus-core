@@ -11,8 +11,9 @@ export interface DisclosureRootProps extends DisclosureSharedProps {
     animationOptions: OptionalEffectTiming;
 }
 
-export interface DisclosureItemProps extends DisclosureSharedProps {
-    index: number;
+export interface DisclosureItemProps {
+    children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
+    className?: string;
 }
 
 enum AnimationState {
@@ -37,11 +38,13 @@ const DisclosureItemContext = createContext<{
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
     contentEl: HTMLElement | null;
     setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     detailsEl: null,
     setDetailsEl: () => {},
     contentEl: null,
     setContentEl: () => {},
+    setIsOpen: () => {},
 });
 
 const Disclosure = ({
@@ -68,7 +71,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
 
     const { animationOptions } = useContext(DisclosureContext);
-    const { detailsEl, contentEl } = useContext(DisclosureItemContext);
+    const { detailsEl, contentEl, setIsOpen } = useContext(DisclosureItemContext);
 
     const handleAnimateHeight = ({
         animationState,
@@ -93,7 +96,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
         );
 
         setAnimation(_animation);
-
+        setIsOpen(open);
         _animation!.onfinish = () => onAnimationFinish(open);
         _animation!.oncancel = () => setAnimationState(AnimationState.IDLE);
     };
@@ -136,6 +139,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const handleOpen = () => {
         detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
         detailsEl!.open = true;
+        setIsOpen(true);
 
         requestAnimationFrame(() => handleExpand());
     };
@@ -163,6 +167,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 };
 
 const DisclosureDetails = ({ children, className }: DisclosureItemProps) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
@@ -179,10 +184,11 @@ const DisclosureDetails = ({ children, className }: DisclosureItemProps) => {
                 setDetailsEl,
                 contentEl,
                 setContentEl,
+                setIsOpen,
             }}
         >
             <details ref={detailsRef} className={className}>
-                {children}
+                {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
         </DisclosureItemContext.Provider>
     );
