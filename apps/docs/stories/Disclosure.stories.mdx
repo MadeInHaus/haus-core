@@ -119,7 +119,52 @@ const defaultAnimationOptions = {
 
 # Disclosure
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+WAAPI animated disclosure component consisting of a root, details, summary, and content. Disclosure.Root takes an animationOptions prop, which is an OptionalEffectTiming object. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/AnimationEffectTimingProperties) for more information.
+
+The Disclosure.Details optionally returns a render prop with an isOpen boolean. This can be used to conditionally render the Disclosure.Summary and Disclosure.Content.
+
+## Basic Usage
+
+```jsx
+import { Disclosure } from '@madeinhaus/core';
+
+function Example() {
+    return (
+        <Disclosure.Root
+            animationOptions={{
+                duration: 100,
+                easing: 'ease-out',
+            }}
+        >
+            <Disclosure.Details>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+        </Disclosure.Root>
+    );
+}
+```
+
+## Usage With Render Prop
+
+```jsx
+import { Disclosure } from '@madeinhaus/core';
+
+function Example() {
+    return (
+        <Disclosure.Root>
+            <Disclosure.Details>
+                {({ isOpen }) => (
+                    <>
+                        <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
+                        <Disclosure.Content>Content</Disclosure.Content>
+                    </>
+                )}
+            </Disclosure.Details>
+        </Disclosure.Root>
+    );
+}
+```
 
 ## Props
 
