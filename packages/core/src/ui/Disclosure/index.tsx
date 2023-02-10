@@ -34,7 +34,7 @@ const DisclosureContext = createContext<{
     animationOptions: defaultAnimationOptions,
 });
 
-const DisclosureItemContext = createContext<{
+const DisclosureDetailsContext = createContext<{
     animationOptions?: OptionalEffectTiming | null;
     detailsEl: HTMLDetailsElement | null;
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
@@ -67,6 +67,13 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
+    if (className) {
+        console.warn('%c Disclosure from @madeinhaus/core ↓ ', 'color: red; font-size: 14px');
+        console.warn(
+            'Use className to style the Disclosure.Details element, sparingly. To style the trigger, please apply style to Detail.Summary. To style the content within the Disclosure.Details, please apply styles to Disclosure.Content.'
+        );
+    }
+
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
@@ -74,7 +81,7 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
     }, []);
 
     return (
-        <DisclosureItemContext.Provider
+        <DisclosureDetailsContext.Provider
             value={{
                 animationOptions,
                 detailsEl,
@@ -87,7 +94,7 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
             <details ref={detailsRef} className={className}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
-        </DisclosureItemContext.Provider>
+        </DisclosureDetailsContext.Provider>
     );
 };
 
@@ -101,13 +108,13 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const { animationOptions: rootAnimationOptions } = useContext(DisclosureContext);
 
     const {
-        animationOptions: itemAnimationOptions,
+        animationOptions: detailsAnimationOptions,
         detailsEl,
         contentEl,
         setIsOpen,
-    } = useContext(DisclosureItemContext);
+    } = useContext(DisclosureDetailsContext);
 
-    const animationOptions = itemAnimationOptions ?? rootAnimationOptions;
+    const animationOptions = detailsAnimationOptions ?? rootAnimationOptions;
 
     const handleAnimateHeight = ({
         animationState,
@@ -195,7 +202,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
         <summary
             ref={summaryRef}
             onClick={handleClick}
-            className={joinClassNames(styles.trigger, className)}
+            className={joinClassNames(styles.summary, className)}
         >
             {children}
         </summary>
@@ -205,7 +212,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 const DisclosureContent = ({ children, className }: DisclosureSharedProps) => {
     const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { setContentEl } = useContext(DisclosureItemContext);
+    const { setContentEl } = useContext(DisclosureDetailsContext);
 
     useEffect(() => {
         setContentEl(contentRef.current);
