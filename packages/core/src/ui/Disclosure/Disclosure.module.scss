@@ -1,12 +1,6 @@
-.trigger {
+.summary {
     list-style: none;
-    font: inherit;
     appearance: none;
-    padding: 0;
-    border: none;
-    color: currentcolor;
-    background-color: inherit;
-    user-select: none;
     cursor: pointer;
 
     &::marker, /* Latest Chrome, Edge, Firefox */ 

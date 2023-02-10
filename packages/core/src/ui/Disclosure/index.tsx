@@ -34,7 +34,7 @@ const DisclosureContext = createContext<{
     animationOptions: defaultAnimationOptions,
 });
 
-const DisclosureItemContext = createContext<{
+const DisclosureDetailsContext = createContext<{
     animationOptions?: OptionalEffectTiming | null;
     detailsEl: HTMLDetailsElement | null;
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
@@ -74,7 +74,7 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
     }, []);
 
     return (
-        <DisclosureItemContext.Provider
+        <DisclosureDetailsContext.Provider
             value={{
                 animationOptions,
                 detailsEl,
@@ -87,7 +87,7 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
             <details ref={detailsRef} className={className}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
-        </DisclosureItemContext.Provider>
+        </DisclosureDetailsContext.Provider>
     );
 };
 
@@ -101,13 +101,13 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const { animationOptions: rootAnimationOptions } = useContext(DisclosureContext);
 
     const {
-        animationOptions: itemAnimationOptions,
+        animationOptions: detailsAnimationOptions,
         detailsEl,
         contentEl,
         setIsOpen,
-    } = useContext(DisclosureItemContext);
+    } = useContext(DisclosureDetailsContext);
 
-    const animationOptions = itemAnimationOptions ?? rootAnimationOptions;
+    const animationOptions = detailsAnimationOptions ?? rootAnimationOptions;
 
     const handleAnimateHeight = ({
         animationState,
@@ -195,7 +195,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
         <summary
             ref={summaryRef}
             onClick={handleClick}
-            className={joinClassNames(styles.trigger, className)}
+            className={joinClassNames(styles.summary, className)}
         >
             {children}
         </summary>
@@ -205,7 +205,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 const DisclosureContent = ({ children, className }: DisclosureSharedProps) => {
     const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { setContentEl } = useContext(DisclosureItemContext);
+    const { setContentEl } = useContext(DisclosureDetailsContext);
 
     useEffect(() => {
         setContentEl(contentRef.current);
