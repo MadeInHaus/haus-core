@@ -67,6 +67,13 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
+    if (className) {
+        console.warn('%c Disclosure from @madeinhaus/core ↓ ', 'color: red; font-size: 14px');
+        console.warn(
+            'Use className to style the Disclosure.Details element, sparingly. To style the trigger, please apply style to Detail.Summary. To style the content within the Disclosure.Details, please apply styles to Disclosure.Content.'
+        );
+    }
+
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
