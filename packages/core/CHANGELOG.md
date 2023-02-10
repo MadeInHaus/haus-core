@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.12.0
+
+### Minor Changes
+
+- 0180b02: Disclosure adjustments
+
 ## 0.11.0
 
 ### Minor Changes
