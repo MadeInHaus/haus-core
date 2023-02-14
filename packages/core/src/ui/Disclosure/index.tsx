@@ -67,19 +67,17 @@ const DisclosureDetails = ({
     animationOptions,
     children,
     className,
-    defaultOpen,
+    defaultOpen = false,
 }: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
-    const _defaultOpen = defaultOpen ?? false;
-
-    const [isOpen, setIsOpen] = useState<boolean>(_defaultOpen);
+    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
         if (detailsRef.current) {
-            detailsRef.current.open = _defaultOpen;
+            detailsRef.current.open = defaultOpen;
         }
     }, []);
 
