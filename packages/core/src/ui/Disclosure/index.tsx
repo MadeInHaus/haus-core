@@ -69,15 +69,19 @@ const DisclosureDetails = ({
     className,
     defaultOpen,
 }: DisclosureDetailProps) => {
-    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen ?? false);
+    const detailsRef = React.useRef<HTMLDetailsElement>(null);
+
+    const _defaultOpen = defaultOpen ?? false;
+
+    const [isOpen, setIsOpen] = useState<boolean>(_defaultOpen);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
-        if (detailsEl && defaultOpen) {
-            detailsEl.open = true;
+        if (detailsRef.current) {
+            detailsRef.current.open = _defaultOpen;
         }
-    }, [detailsEl]);
+    }, []);
 
     if (className) {
         console.warn('%c Disclosure from @madeinhaus/core ↓ ', 'color: red; font-size: 14px');
@@ -85,8 +89,6 @@ const DisclosureDetails = ({
             'Use className to style the Disclosure.Details element, sparingly. To style the trigger, please apply style to Detail.Summary. To style the content within the Disclosure.Details, please apply styles to Disclosure.Content.'
         );
     }
-
-    const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
         setDetailsEl(detailsRef.current);
