@@ -15,6 +15,7 @@ export interface DisclosureDetailProps {
     animationOptions?: OptionalEffectTiming | null;
     children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
     className?: string;
+    defaultOpen?: boolean;
 }
 
 enum AnimationState {
@@ -62,10 +63,21 @@ const Disclosure = ({
     );
 };
 
-const DisclosureDetails = ({ animationOptions, children, className }: DisclosureDetailProps) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+const DisclosureDetails = ({
+    animationOptions,
+    children,
+    className,
+    defaultOpen,
+}: DisclosureDetailProps) => {
+    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen ?? false);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (detailsEl && defaultOpen) {
+            detailsEl.open = true;
+        }
+    }, [detailsEl]);
 
     if (className) {
         console.warn('%c Disclosure from @madeinhaus/core ↓ ', 'color: red; font-size: 14px');
@@ -145,8 +157,6 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleShrink = () => {
-        setAnimationState(AnimationState.SHRINKING);
-
         const startHeight = detailsEl?.offsetHeight ?? 0;
         const endHeight = (summaryRef?.current && summaryRef.current.offsetHeight) || 0;
 

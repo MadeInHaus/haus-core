@@ -45,7 +45,6 @@ export const Template = ({ ...args }) => {
         </Disclosure.Root>
     );
 };
-
 export const RenderPropTemplate = ({ ...args }) => {
     return (
         <Disclosure.Root key={JSON.stringify(args)} {...args}>
@@ -73,6 +72,23 @@ export const TemplateWithNoRoot = ({ animationOptions }) => {
             </Disclosure.Content>
         </Disclosure.Details>
     ));
+};
+export const TemplateWithDefaultOpen = ({ animationOptions }) => {
+    return items.map(({ heading, paragraph }, index) => {
+        const isDefaultOpen = index === 0;
+        return (
+            <Disclosure.Details
+                defaultOpen={isDefaultOpen}
+                key={index}
+                animationOptions={animationOptions}
+            >
+                <Disclosure.Summary>{heading}</Disclosure.Summary>
+                <Disclosure.Content>
+                    <div>{paragraph}</div>
+                </Disclosure.Content>
+            </Disclosure.Details>
+        );
+    });
 };
 export const StyledTemplate = ({ ...args }) => {
     const StyledRoot = styled(Disclosure.Root)`
@@ -226,6 +242,9 @@ function Example() {
         }}
     >
         {RenderPropTemplate.bind({})}
+    </Story>
+    <Story name="With Default Open" argTypes={argTypes}>
+        {TemplateWithDefaultOpen.bind({})}
     </Story>
     <Story
         name="With No Root Wrapper"
