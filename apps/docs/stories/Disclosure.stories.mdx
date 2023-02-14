@@ -82,10 +82,14 @@ export const TemplateWithDefaultOpen = ({ animationOptions }) => {
                 key={index}
                 animationOptions={animationOptions}
             >
-                <Disclosure.Summary>{heading}</Disclosure.Summary>
-                <Disclosure.Content>
-                    <div>{paragraph}</div>
-                </Disclosure.Content>
+                {({ isOpen }) => (
+                    <>
+                        <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
+                        <Disclosure.Content>
+                            <div>{paragraph}</div>
+                        </Disclosure.Content>
+                    </>
+                )}
             </Disclosure.Details>
         );
     });
