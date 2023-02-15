@@ -15,6 +15,7 @@ export interface DisclosureDetailProps {
     animationOptions?: OptionalEffectTiming | null;
     children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
     className?: string;
+    defaultOpen?: boolean;
 }
 
 enum AnimationState {
@@ -62,10 +63,23 @@ const Disclosure = ({
     );
 };
 
-const DisclosureDetails = ({ animationOptions, children, className }: DisclosureDetailProps) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+const DisclosureDetails = ({
+    animationOptions,
+    children,
+    className,
+    defaultOpen = false,
+}: DisclosureDetailProps) => {
+    const detailsRef = React.useRef<HTMLDetailsElement>(null);
+
+    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (detailsRef.current) {
+            detailsRef.current.open = defaultOpen;
+        }
+    }, []);
 
     if (className) {
         console.warn('%c Disclosure from @madeinhaus/core ↓ ', 'color: red; font-size: 14px');
@@ -73,8 +87,6 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
             'Use className to style the Disclosure.Details element, sparingly. To style the trigger, please apply style to Detail.Summary. To style the content within the Disclosure.Details, please apply styles to Disclosure.Content.'
         );
     }
-
-    const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
         setDetailsEl(detailsRef.current);
@@ -145,8 +157,6 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleShrink = () => {
-        setAnimationState(AnimationState.SHRINKING);
-
         const startHeight = detailsEl?.offsetHeight ?? 0;
         const endHeight = (summaryRef?.current && summaryRef.current.offsetHeight) || 0;
 

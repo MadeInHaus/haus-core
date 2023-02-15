@@ -45,7 +45,6 @@ export const Template = ({ ...args }) => {
         </Disclosure.Root>
     );
 };
-
 export const RenderPropTemplate = ({ ...args }) => {
     return (
         <Disclosure.Root key={JSON.stringify(args)} {...args}>
@@ -73,6 +72,27 @@ export const TemplateWithNoRoot = ({ animationOptions }) => {
             </Disclosure.Content>
         </Disclosure.Details>
     ));
+};
+export const TemplateWithDefaultOpen = ({ animationOptions }) => {
+    return items.map(({ heading, paragraph }, index) => {
+        const isDefaultOpen = index === 0;
+        return (
+            <Disclosure.Details
+                defaultOpen={isDefaultOpen}
+                key={index}
+                animationOptions={animationOptions}
+            >
+                {({ isOpen }) => (
+                    <>
+                        <Disclosure.Summary>{isOpen ? 'Close' : 'Open'}</Disclosure.Summary>
+                        <Disclosure.Content>
+                            <div>{paragraph}</div>
+                        </Disclosure.Content>
+                    </>
+                )}
+            </Disclosure.Details>
+        );
+    });
 };
 export const StyledTemplate = ({ ...args }) => {
     const StyledRoot = styled(Disclosure.Root)`
@@ -202,6 +222,37 @@ function Example() {
 }
 ```
 
+## Usage With Default Open
+
+```jsx
+import { Disclosure } from '@madeinhaus/core';
+
+function Example() {
+    const animationOptions = {
+        duration: 100,
+        easing: 'ease-out',
+    };
+
+    return (
+        <>
+            {/* The first Disclosure.Details will be open by default. */}
+            <Disclosure.Details defaultOpen>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+            <Disclosure.Details>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+            <Disclosure.Details>
+                <Disclosure.Summary>Summary</Disclosure.Summary>
+                <Disclosure.Content>Content</Disclosure.Content>
+            </Disclosure.Details>
+        </>
+    );
+}
+```
+
 ## Props
 
 <ArgsTable story="Default" />
@@ -238,6 +289,9 @@ function Example() {
         }}
     >
         {TemplateWithNoRoot.bind({})}
+    </Story>
+    <Story name="With Default Open" argTypes={argTypes}>
+        {TemplateWithDefaultOpen.bind({})}
     </Story>
     <Story
         name="With Style"
