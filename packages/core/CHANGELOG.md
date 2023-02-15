@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.13.0
+
+### Minor Changes
+
+- 4fed649: Disclosure.Details Support for defaultOpen
+
 ## 0.12.0
 
 ### Minor Changes
