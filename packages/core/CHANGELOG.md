@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.14.0
+
+### Minor Changes
+
+- ecd1eb6: Repair ContentfulImg typos, ignore vscode directory
+
 ## 0.13.0
 
 ### Minor Changes
