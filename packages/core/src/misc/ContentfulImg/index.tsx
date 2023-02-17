@@ -26,8 +26,7 @@ const breakpoints = {
     small: 768,
     medium: 1024,
     large: 1440,
-    xLarge: 1440,
-    xxLarge: 1920,
+    xLarge: 1920,
 };
 
 function getDefaultCustomSources(ogSrc: string) {
@@ -120,8 +119,7 @@ export const ContentfulImg = memo(
                     loading={priority ? 'eager' : loading}
                     decoding={priority ? 'sync' : decoding}
                     // @ts-ignore:next-line
-                    // eslint-disable-next-line react/no-unknown-property
-                    fetchriority={priority ? 'high' : 'low'}
+                    fetchpriority={priority ? 'high' : 'low'}
                     {...rest}
                 />
             </picture>
