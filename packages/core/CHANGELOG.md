@@ -1,5 +1,15 @@
 # @madeinhaus/core
 
+## 0.15.0
+
+### Minor Changes
+
+- f06df51: Add declarationDir to tsconfig to get a dist/index.d.ts
+
+### Patch Changes
+
+- b6ad60d: No changes
+
 ## 0.14.0
 
 ### Minor Changes
