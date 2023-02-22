@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
@@ -9,7 +9,7 @@ export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoE
     threshold: number;
 }
 
-export const TexturalVideo = ({
+const TexturalVideo = ({
     className,
     isTransparent = false,
     mp4,
@@ -85,3 +85,5 @@ export const TexturalVideo = ({
         </video>
     );
 };
+
+export default TexturalVideo;

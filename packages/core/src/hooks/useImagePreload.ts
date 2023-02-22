@@ -6,7 +6,7 @@ type ImagePreloadResult = readonly [
     React.MutableRefObject<HTMLImageElement | null>
 ];
 
-export const useImagePreload = (): ImagePreloadResult => {
+const useImagePreload = (): ImagePreloadResult => {
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const imgRef = React.useRef<HTMLImageElement | null>(null);
     const handleLoad = React.useCallback(() => {
@@ -37,3 +37,5 @@ export const useImagePreload = (): ImagePreloadResult => {
     );
     return [loaded, fnRef, imgRef] as const;
 };
+
+export default useImagePreload;

@@ -240,4 +240,4 @@ Disclosure.Details = React.memo(DisclosureDetails);
 Disclosure.Summary = DisclosureSummary;
 Disclosure.Content = DisclosureContent;
 
-export { Disclosure };
+export default Disclosure;
