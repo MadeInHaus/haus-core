@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 0.15.1
+
+### Patch Changes
+
+- 9b9fba5: Fix timing issue with useIntersectionObserver
+
 ## 0.15.0
 
 ### Minor Changes
