@@ -29,13 +29,19 @@ import * as React from 'react';
     );
 */
 
+const cancelIdleCallbackNoop = () => {};
+const requestIdleCallbackNoop = (cb: IdleRequestCallback) => {
+    cb({ didTimeout: false, timeRemaining: () => 16 });
+    return 0;
+};
+
 interface IntersectionObserverOptions extends IntersectionObserverInit {
     once?: boolean;
-};
+}
 
 type IntersectionObserverResult<ElementType> = readonly [
     boolean,
-    (el: ElementType | null) => void, // eslint-disable-line no-unused-vars
+    (el: ElementType | null) => void,
     React.MutableRefObject<ElementType | null>
 ];
 
@@ -48,23 +54,25 @@ export const useIntersectionObserver = <ElementType extends Element>({
     const [inView, setInView] = React.useState<boolean>(false);
     const observer = React.useRef<IntersectionObserver | null>(null);
     const elRef = React.useRef<ElementType | null>(null);
+    const ircRef = React.useRef<number>(0);
     const fnRef = React.useCallback(
         (el: ElementType | null) => {
             if (el) {
-                observer.current = new IntersectionObserver(
-                    ([{ isIntersecting }]) => {
-                        setInView(isIntersecting);
-                        if (isIntersecting && once) {
-                            observer.current?.unobserve(el);
-                        }
-                    },
-                    { root, rootMargin, threshold }
-                );
-                observer.current.observe(el);
+                ircRef.current = (window.requestIdleCallback ?? requestIdleCallbackNoop)(() => {
+                    observer.current = new IntersectionObserver(
+                        ([{ isIntersecting }]) => {
+                            setInView(isIntersecting);
+                            if (isIntersecting && once) {
+                                observer.current?.disconnect();
+                            }
+                        },
+                        { root, rootMargin, threshold }
+                    );
+                    observer.current.observe(el);
+                });
             } else {
-                if (elRef.current) {
-                    observer.current?.unobserve(elRef.current);
-                }
+                observer.current?.disconnect();
+                (window.cancelIdleCallback ?? cancelIdleCallbackNoop)(ircRef.current);
             }
             elRef.current = el;
         },
