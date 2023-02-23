@@ -1,8 +1,6 @@
 {
     "name": "@madeinhaus/core",
     "version": "0.15.1",
-    "main": "dist/index.js",
-    "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
