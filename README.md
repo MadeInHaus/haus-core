@@ -123,7 +123,7 @@ Storybook provides us with an interactive UI playground for our components. This
 For example, here's the included Story for our `Button` component:
 
 ```js:apps/docs/stories/button.stories.mdx
-import { Button } from "@madeinhaus/core";
+import Button from '@madeinhaus/core/ui/Button';
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 
 <Meta title="UI/Button" component={Button} />
