@@ -22,5 +22,5 @@ export default {
             use: ['sass'],
         }),
     ],
-    external: ['react', 'react-dom'],
+    external: ['react', 'react/jsx-runtime'],
 };
