@@ -8,8 +8,8 @@
         "dist/**"
     ],
     "scripts": {
-        "build": "rm -rf dist && rollup -c --bundleConfigAsCjs",
-        "dev": "rollup -c -w --bundleConfigAsCjs",
+        "build": "rm -rf dist && rollup -c rollup.config.js --bundleConfigAsCjs",
+        "dev": "rollup -c -w rollup.config.js --bundleConfigAsCjs",
         "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
