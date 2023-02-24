@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 1.1.0
+
+### Minor Changes
+
+- 9047cde: Rollback
+
 ## 1.0.0
 
 ### Major Changes
