@@ -6,7 +6,7 @@ export interface PortalProps {
     children: React.ReactNode;
 }
 
-const Portal: React.FC<PortalProps> = ({ selector = '#__portal__', children }) => {
+export const Portal: React.FC<PortalProps> = ({ selector = '#__portal__', children }) => {
     const [element, setElement] = useState<Element | null>(null);
 
     useEffect(() => {
@@ -19,5 +19,3 @@ const Portal: React.FC<PortalProps> = ({ selector = '#__portal__', children }) =
 
     return null;
 };
-
-export default Portal;

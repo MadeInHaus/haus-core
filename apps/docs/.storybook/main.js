@@ -15,7 +15,7 @@ module.exports = {
                 alias: [
                     {
                         find: '@madeinhaus/core',
-                        replacement: path.resolve(__dirname, '../../../packages/core/dist'),
+                        replacement: path.resolve(__dirname, '../../../packages/core/'),
                     },
                     {
                         find: '@madeinhaus/utils',

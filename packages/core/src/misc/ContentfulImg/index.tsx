@@ -46,7 +46,7 @@ function negotiatedFallback(ogSrc: String) {
     return ogSrc.replace(`//images.ctfassets.net`, `/api/images/cdn`);
 }
 
-const ContentfulImg = memo(
+export const ContentfulImg = memo(
     ({
         alt = '',
         className,
@@ -126,5 +126,3 @@ const ContentfulImg = memo(
         );
     }
 );
-
-export default ContentfulImg;

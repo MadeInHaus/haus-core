@@ -67,7 +67,7 @@ type DragStartValue = { t: number; x: number };
 type DragRegisterValue = { t: number; x: number; dt: number; dx: number };
 type WheelDataValue = { t: number; d: number; dt?: number };
 
-const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
+export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
     const {
         align = 'start',
         damping = 200,
@@ -960,5 +960,3 @@ function hermite(
 }
 
 Carousel.displayName = 'Carousel';
-
-export default Carousel;

@@ -18,7 +18,7 @@ export interface MasonryProps {
 
 const DEFAULT_COLUMNS = 2;
 
-const Masonry = ({
+export const Masonry = ({
     breakpointCols,
     className,
     columnClassName,
@@ -100,5 +100,3 @@ const Masonry = ({
         </div>
     );
 };
-
-export default Masonry;
