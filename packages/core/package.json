@@ -2,7 +2,7 @@
     "name": "@madeinhaus/core",
     "version": "0.15.1",
     "types": "dist/index.d.ts",
-    "s/avatar/b8a6eb78f61663f7b8d7f6fc3f6b53c4ideEffects": false,
+    "sideEffects": false,
     "license": "MIT",
     "files": [
         "dist/**/*"
