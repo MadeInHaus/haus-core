@@ -45,7 +45,7 @@ type IntersectionObserverResult<ElementType> = readonly [
     React.MutableRefObject<ElementType | null>
 ];
 
-export const useIntersectionObserver = <ElementType extends Element>({
+const useIntersectionObserver = <ElementType extends Element>({
     once = true,
     root,
     rootMargin,
@@ -80,3 +80,5 @@ export const useIntersectionObserver = <ElementType extends Element>({
     );
     return [inView, fnRef, elRef] as const;
 };
+
+export default useIntersectionObserver;
