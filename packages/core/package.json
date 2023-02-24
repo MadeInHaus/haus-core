@@ -1,6 +1,6 @@
 {
     "name": "@madeinhaus/core",
-    "version": "0.15.1",
+    "version": "1.0.0",
     "types": "dist/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
