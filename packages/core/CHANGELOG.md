@@ -1,5 +1,11 @@
 # @madeinhaus/core
 
+## 1.0.0
+
+### Major Changes
+
+- 061f60a: Enables tree-shaking and changes the import structure.
+
 ## 0.15.1
 
 ### Patch Changes
