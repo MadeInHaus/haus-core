@@ -14,6 +14,10 @@ module.exports = {
             resolve: {
                 alias: [
                     {
+                        find: '@madeinhaus/button',
+                        replacement: path.resolve(__dirname, '../../../packages/button/'),
+                    },
+                    {
                         find: '@madeinhaus/core',
                         replacement: path.resolve(__dirname, '../../../packages/core/'),
                     },

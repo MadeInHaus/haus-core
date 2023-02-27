@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { joinClassNames } from '../../utils';
+
 import styles from './Button.module.scss';
 
 export interface ButtonProps {
@@ -7,9 +7,9 @@ export interface ButtonProps {
     variant: 'primary' | 'secondary';
 }
 
-export function Button({ children, variant = 'primary', ...rest }: ButtonProps) {
+export default function Button({ children, variant = 'primary', ...rest }: ButtonProps) {
     return (
-        <button className={joinClassNames(styles.root, styles[variant])} {...rest}>
+        <button className={`${styles.root} ${styles[variant]}`} {...rest}>
             {children}
         </button>
     );
