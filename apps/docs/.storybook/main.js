@@ -18,6 +18,10 @@ module.exports = {
                         replacement: path.resolve(__dirname, '../../../packages/button/'),
                     },
                     {
+                        find: '@madeinhaus/disclosure',
+                        replacement: path.resolve(__dirname, '../../../packages/disclosure/'),
+                    },
+                    {
                         find: '@madeinhaus/core',
                         replacement: path.resolve(__dirname, '../../../packages/core/'),
                     },

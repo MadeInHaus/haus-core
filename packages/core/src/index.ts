@@ -3,7 +3,6 @@
 export { Masonry, type MasonryProps } from './ui/Masonry';
 export { TexturalVideo, type TexturalVideoProps } from './ui/TexturalVideo';
 export { Carousel, type CarouselProps } from './ui/Carousel';
-export { Disclosure, type DisclosureRootProps, type DisclosureDetailProps } from './ui/Disclosure';
 
 /* Hooks */
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';

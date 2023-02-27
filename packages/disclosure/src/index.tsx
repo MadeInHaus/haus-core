@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { joinClassNames } from '../../utils';
 import styles from './Disclosure.module.scss';
+
+export function joinClassNames(...items: (string | undefined | null)[]) {
+    return [...items].filter(Boolean).join(' ');
+}
 
 export interface DisclosureSharedProps {
     children: React.ReactNode;
@@ -240,4 +243,4 @@ Disclosure.Details = React.memo(DisclosureDetails);
 Disclosure.Summary = DisclosureSummary;
 Disclosure.Content = DisclosureContent;
 
-export { Disclosure };
+export default Disclosure;
