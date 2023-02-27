@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { joinClassNames } from '../../utils';
-import { useWindowSize } from '../../hooks/useWindowSize';
+import { useWindowSize } from '../../../../hooks/src/useWindowSize';
 
 import styles from './Masonry.module.scss';
 
