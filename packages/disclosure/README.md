@@ -1,13 +1,13 @@
-# Button
+# Disclosure
 
 **Install**:
 
 ```bash
-npm i @madeinhaus/button
+npm i @madeinhaus/disclosure
 ```
 
 **Usage**:
 
 ```javascript
-import Button from '@madeinhaus/button';
+import { Disclosure } from '@madeinhaus/disclosure';
 ```
