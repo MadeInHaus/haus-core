@@ -1,0 +1,11 @@
+{
+  "name": "eslint-config-haus",
+  "main": "index.js",
+  "version": "0.0.0",
+  "dependencies": {
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-config-turbo": "latest"
+  }
+}
