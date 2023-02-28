@@ -10,7 +10,7 @@ type Source = {
     orientation?: string;
 };
 
-export interface ContentfulImgProps {
+export interface ContentfulImageProps {
     alt: string;
     className?: string;
     customSources?: Source[];
@@ -46,7 +46,7 @@ function negotiatedFallback(ogSrc: String) {
     return ogSrc.replace(`//images.ctfassets.net`, `/api/images/cdn`);
 }
 
-export const ContentfulImg = memo(
+const ContentfulImage = memo(
     ({
         alt = '',
         className,
@@ -58,7 +58,7 @@ export const ContentfulImg = memo(
         decoding,
         src: ogSrc,
         ...rest
-    }: ContentfulImgProps) => {
+    }: ContentfulImageProps) => {
         const hasNoFallbackCustomSource =
             customSources?.length &&
             customSources.length > 0 &&
@@ -66,7 +66,7 @@ export const ContentfulImg = memo(
 
         hasNoFallbackCustomSource &&
             console.warn(
-                'ContentfulImg: For optimization purposes, it is *highly recommended* that you include a fallback custom source with no breakpoint.'
+                'ContentfulImage: For optimization purposes, it is *highly recommended* that you include a fallback custom source with no breakpoint.'
             );
 
         // Round with to nearest integer to keep Contentful's Image API happy
@@ -126,3 +126,5 @@ export const ContentfulImg = memo(
         );
     }
 );
+
+export default ContentfulImage;
