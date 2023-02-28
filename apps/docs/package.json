@@ -9,10 +9,11 @@
         "clean": "rm -rf .turbo && rm -rf node_modules"
     },
     "dependencies": {
-        "@madeinhaus/contentful-image": "*",
-        "@madeinhaus/disclosure": "*",
         "@madeinhaus/button": "*",
+        "@madeinhaus/contentful-image": "*",
         "@madeinhaus/core": "*",
+        "@madeinhaus/disclosure": "*",
+        "@madeinhaus/portal": "*",
         "@madeinhaus/utils": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"

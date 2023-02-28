@@ -1,6 +1,6 @@
 const path = require('path');
 
-const aliasedPackages = ['button', 'disclosure', 'contentful-image', 'core', 'utils'];
+const aliasedPackages = ['button', 'disclosure', 'contentful-image', 'portal', 'core', 'utils'];
 
 module.exports = {
     stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.tsx'],
