@@ -9,6 +9,7 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   root: true,
   rules: {
+    "import/no-anonymous-default-export": "off",
     "import/no-unresolved": "off",
     "no-empty": "off",
     "react-hooks/exhaustive-deps": "warn",
