@@ -1,7 +1,7 @@
 import Carousel from '@madeinhaus/carousel';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-<Meta title="UI/Carousel" component={Carousel} />
+<Meta title="Carousel" component={Carousel} />
 
 export const Template = ({ children, ...args }) => (
     <Carousel key={JSON.stringify(args)} {...args}>
@@ -47,9 +47,9 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
 
 ## Getting started
 
-`npm install @madeinhaus/core`
+`npm install @madeinhaus/carousel`
 
-`import { Carousel } from '@madeinhaus/core';`
+`import Carousel from '@madeinhaus/carousel';`
 
 ## Known Issues
 
@@ -73,7 +73,7 @@ A simple, responsive, infinite carousel component with zero dependencies. It sup
     element. If you want to use a different element, pass it as the `childAs` prop.
     To style the wrapper element, use the `itemClassName` prop. Example:
     `<Carousel childAs="span" itemClassName={styles.itemWrapper}>`.
--   See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/core/src/ui/Carousel/Carousel.module.scss)
+-   See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/carousel/src/Carousel.module.scss)
     for the default CSS applied to the container and the item wrappers.
 
 ## CSS Variables

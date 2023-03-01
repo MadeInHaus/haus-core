@@ -12,11 +12,11 @@
         "@madeinhaus/button": "*",
         "@madeinhaus/carousel": "*",
         "@madeinhaus/contentful-image": "*",
-        "@madeinhaus/core": "*",
         "@madeinhaus/disclosure": "*",
         "@madeinhaus/masonry": "*",
         "@madeinhaus/portal": "*",
         "@madeinhaus/utils": "*",
+        "@madeinhaus/textural-video": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },

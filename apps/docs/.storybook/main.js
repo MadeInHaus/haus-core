@@ -7,7 +7,7 @@ const aliasedPackages = [
     'portal',
     'masonry',
     'carousel',
-    'core',
+    'textural-video',
     'utils',
 ];
 

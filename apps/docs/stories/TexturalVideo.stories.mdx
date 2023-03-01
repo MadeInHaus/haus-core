@@ -1,7 +1,7 @@
-import { TexturalVideo } from '@madeinhaus/core';
+import TexturalVideo from '@madeinhaus/textural-video';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-<Meta title="UI/TexturalVideo" component={TexturalVideo} />
+<Meta title="TexturalVideo" component={TexturalVideo} />
 
 export const Template = ({ children, ...args }) => (
     <TexturalVideo key={JSON.stringify(args)} {...args} style={{ width: '100%' }}>
