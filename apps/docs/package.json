@@ -10,9 +10,11 @@
     },
     "dependencies": {
         "@madeinhaus/button": "*",
+        "@madeinhaus/carousel": "*",
         "@madeinhaus/contentful-image": "*",
         "@madeinhaus/core": "*",
         "@madeinhaus/disclosure": "*",
+        "@madeinhaus/masonry": "*",
         "@madeinhaus/portal": "*",
         "@madeinhaus/utils": "*",
         "react": "^18.2.0",

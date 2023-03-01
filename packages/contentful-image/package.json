@@ -33,7 +33,7 @@
         "access": "public"
     },
     "author": "",
-    "description": "Haus Core",
+    "description": "Contentful Image",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/MadeInHaus/haus-core.git"

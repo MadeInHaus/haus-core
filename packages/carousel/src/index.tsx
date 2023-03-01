@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { type EasingFunction, easings, modulo, clamp, sign, last } from '@madeinhaus/utils';
 
-import { joinClassNames } from '../../utils';
 
 import styles from './Carousel.module.scss';
 
@@ -12,6 +11,11 @@ interface CarouselItemProps {
     className?: string;
     children: React.ReactNode;
 }
+
+function joinClassNames(...items: (string | undefined | null)[]) {
+    return [...items].filter(Boolean).join(' ');
+}
+
 
 const CarouselItem = ({ Wrapper, isDisabled, className, children }: CarouselItemProps) => {
     const props = isDisabled
@@ -67,7 +71,7 @@ type DragStartValue = { t: number; x: number };
 type DragRegisterValue = { t: number; x: number; dt: number; dx: number };
 type WheelDataValue = { t: number; d: number; dt?: number };
 
-export const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
+const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
     const {
         align = 'start',
         damping = 200,
@@ -960,3 +964,5 @@ function hermite(
 }
 
 Carousel.displayName = 'Carousel';
+
+export default Carousel;

@@ -1,5 +1,5 @@
 {
-    "name": "@madeinhaus/portal",
+    "name": "@madeinhaus/carousel",
     "version": "0.0.0",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
@@ -33,7 +33,7 @@
         "access": "public"
     },
     "author": "",
-    "description": "Portal",
+    "description": "Carousel",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/MadeInHaus/haus-core.git"
