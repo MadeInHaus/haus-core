@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { type EasingFunction, easings, modulo, clamp, sign, last } from '@madeinhaus/utils';
 
-
 import styles from './Carousel.module.scss';
 
 interface CarouselItemProps {
