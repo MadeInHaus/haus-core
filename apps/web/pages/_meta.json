@@ -1,0 +1,11 @@
+{
+  "index": "Introduction",
+  "getting-started": "Getting Started",
+  "components": "Components",
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://madeinhaus.com/contact",
+    "newWindow": true
+  }
+}
