@@ -33,7 +33,7 @@ const config = {
             use: ['sass'],
         }),
     ],
-    external: ['react', 'react-dom'],
+    external: ['react', 'react-dom', 'next/router', 'next/link'],
 };
 
 export default config;
