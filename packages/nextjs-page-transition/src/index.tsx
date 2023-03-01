@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import cx from 'clsx';
 import { useRouter } from 'next/router';
-import { getHash, removeHash } from '@madeinhaus/utils';
+import { getHash, removeHash } from '../../utils/src/url';
 
 import styles from './PageTransition.module.scss';
 

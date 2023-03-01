@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntersectionObserver } from '@madeinhaus/hooks';
+import { useIntersectionObserver } from '../../hooks/src/useIntersectionObserver';
 
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
