@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import cx from 'clsx';
 import styles from './Disclosure.module.scss';
-
-export function joinClassNames(...items: (string | undefined | null)[]) {
-    return [...items].filter(Boolean).join(' ');
-}
 
 export interface DisclosureSharedProps {
     children: React.ReactNode;
@@ -85,7 +82,7 @@ const DisclosureDetails = ({
     }, []);
 
     if (className) {
-        console.warn('%c Disclosure from @madeinhaus/core ↓ ', 'color: red; font-size: 14px');
+        console.warn('%c Disclosure from @madeinhaus/disclosure ↓ ', 'color: red; font-size: 14px');
         console.warn(
             'Use className to style the Disclosure.Details element, sparingly. To style the trigger, please apply style to Detail.Summary. To style the content within the Disclosure.Details, please apply styles to Disclosure.Content.'
         );
@@ -212,11 +209,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     return (
-        <summary
-            ref={summaryRef}
-            onClick={handleClick}
-            className={joinClassNames(styles.summary, className)}
-        >
+        <summary ref={summaryRef} onClick={handleClick} className={cx(styles.summary, className)}>
             {children}
         </summary>
     );

@@ -88,7 +88,7 @@ Each file inside of `core/src` is a component inside our design system. For exam
 
 ```tsx:core/src/ui/Button/index.tsx
 import * as React from "react";
-import { joinClassNames } from '../../utils';
+import cx from 'clsx';
 import styles from "./Button.module.scss";
 
 export interface ButtonProps {
@@ -98,7 +98,7 @@ export interface ButtonProps {
 
 export function Button({ children, variant }: ButtonProps) {
   return (
-    <button className={joinClassNames(styles.root, styles[variant])}>{children}</button>
+    <button className={cx(styles.root, styles[variant])}>{children}</button>
   );
 }
 ```

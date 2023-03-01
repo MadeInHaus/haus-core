@@ -1,14 +1,10 @@
 // Stolen & Rewritten from https://github.com/paulcollett/react-masonry-css
 
 import React, { useState, useEffect } from 'react';
+import cx from 'clsx';
 import { useWindowSize } from '../../hooks/src/useWindowSize';
 
 import styles from './Masonry.module.scss';
-
-// Remove any falsy values in an array and then join them
-function joinClassNames(...items: (string | undefined | null)[]) {
-    return [...items].filter(Boolean).join(' ');
-}
 
 export interface MasonryProps {
     breakpointCols: {
@@ -99,7 +95,7 @@ const Masonry = ({
     }, [windowWidth]);
 
     return (
-        <div {...rest} className={joinClassNames(styles.root, className)}>
+        <div {...rest} className={cx(styles.root, className)}>
             {renderColumns()}
         </div>
     );
