@@ -1,7 +1,7 @@
 // Stolen & Rewritten from https://github.com/paulcollett/react-masonry-css
 
 import React, { useState, useEffect } from 'react';
-import { useWindowSize } from '../../../../hooks/src/useWindowSize';
+import { useWindowSize } from '../../hooks/src/useWindowSize';
 
 import styles from './Masonry.module.scss';
 
@@ -22,7 +22,7 @@ export interface MasonryProps {
 
 const DEFAULT_COLUMNS = 2;
 
-export const Masonry = ({
+const Masonry = ({
     breakpointCols,
     className,
     columnClassName,
@@ -104,3 +104,5 @@ export const Masonry = ({
         </div>
     );
 };
+
+export default Masonry;
