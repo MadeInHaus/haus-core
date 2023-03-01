@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import cx from 'clsx';
-import { useWindowSize } from '../../hooks/src/useWindowSize';
+import { useWindowSize } from '@madeinhaus/hooks';
 
 import styles from './Masonry.module.scss';
 
