@@ -38,3 +38,17 @@ export function preloadImage(url: string): Promise<HTMLImageElement> {
         }
     });
 }
+
+export function removeHash(url: string): string {
+    const urlBase = 'http://a';
+    const urlObj = new URL(url, urlBase);
+    if (urlObj.origin !== urlBase) {
+        urlObj.hash = '';
+        return urlObj.toString();
+    }
+    return `${urlObj.pathname}${urlObj.search}`;
+}
+
+export function getHash(url: string): string {
+    return new URL(url, 'http://a').hash;
+}

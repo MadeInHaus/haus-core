@@ -1,0 +1,12 @@
+{
+  "name": "eslint-config-haus",
+  "main": "index.js",
+  "version": "0.0.0",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "eslint-config-turbo": "latest",
+    "eslint-plugin-react": "latest"
+  }
+}

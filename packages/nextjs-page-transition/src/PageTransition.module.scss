@@ -1,0 +1,35 @@
+.transition-appear {
+    opacity: 0.0001;
+}
+
+.transition-in {
+    animation: fadeIn var(--transition-in-duration, 600ms) linear forwards;
+}
+
+.transition-out {
+    animation: fadeOut var(--transition-out-duration, 600ms) linear forwards;
+}
+
+.transition-idle {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.0001;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

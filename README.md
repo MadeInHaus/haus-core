@@ -43,8 +43,9 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 This Turborepo includes the following packages and applications:
 
 - `apps/docs`: Component documentation site with Storybook
-- `packages/core`: Core shared react components and hooks
-- `packages/utils`: Shared React utilities
+- `packages/[package]`: React components
+- `packages/hooks`: Shared React hooks
+- `packages/utils`: Shared utilities
 
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
 
@@ -60,11 +61,11 @@ For `ui`, the `build` command, which depends on `rollup.config.js` is the follow
 rollup -c --bundleConfigAsCjs
 ```
 
-`rollup` compiles `src/index.ts`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `ui` then instructs the consumer to select the correct format:
+`rollup` compiles `src/index.ts`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. For example, the `package.json` for `textural-video` then instructs the consumer to select the correct format:
 
-```json:ui/package.json
+```json:textural-video/package.json
 {
-  "name": "@madeinhaus/core",
+  "name": "@madeinhaus/textural-video",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -73,22 +74,22 @@ rollup -c --bundleConfigAsCjs
 }
 ```
 
-Run `yarn build` to confirm compilation is working correctly. You should see a folder `core/dist` which contains the compiled output.
+Run `yarn build` to confirm compilation is working correctly. You should see a folder `[package]/dist` which contains the compiled output.
 
 ```bash
-ui
+textural-video
 └── dist
     ├── index.js    <-- CommonJS version
     └── index.mjs   <-- ES Modules version
 ```
 
-## Components
+## Package
 
-Each file inside of `core/src` is a component inside our design system. For example:
+### Example
 
-```tsx:core/src/ui/Button/index.tsx
+```tsx:button/src/index.tsx
 import * as React from "react";
-import { joinClassNames } from '../../utils';
+import cx from 'clsx';
 import styles from "./Button.module.scss";
 
 export interface ButtonProps {
@@ -96,19 +97,11 @@ export interface ButtonProps {
   variant: "primary" | "secondary";
 }
 
-export function Button({ children, variant }: ButtonProps) {
+export default function Button({ children, variant }: ButtonProps) {
   return (
-    <button className={joinClassNames(styles.root, styles[variant])}>{children}</button>
+    <button className={cx(styles.root, styles[variant])}>{children}</button>
   );
 }
-```
-
-When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
-
-```tsx:core/src/index.ts
-import * as React from "react";
-export { Button, type ButtonProps } from "./Button";
-// Add new component exports here
 ```
 
 ## Storybook
@@ -117,13 +110,13 @@ Storybook provides us with an interactive UI playground for our components. This
 
 - Use Vite to bundle stories instantly (in milliseconds)
 - Automatically find any stories inside the `stories/` folder
-- Support using module path aliases like `@madeinhaus/core` for imports
+- Support using module path aliases like `@madeinhaus/[package]` for imports
 - Write MDX for component documentation pages
 
 For example, here's the included Story for our `Button` component:
 
 ```js:apps/docs/stories/button.stories.mdx
-import { Button } from "@madeinhaus/core";
+import Button from "@madeinhaus/button";
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 
 <Meta title="UI/Button" component={Button} />
