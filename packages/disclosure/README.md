@@ -9,5 +9,5 @@ npm i @madeinhaus/disclosure
 **Usage**:
 
 ```javascript
-import { Disclosure } from '@madeinhaus/disclosure';
+import Disclosure from '@madeinhaus/disclosure';
 ```
