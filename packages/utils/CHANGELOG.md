@@ -1,5 +1,11 @@
 # @madeinhaus/utils
 
+## 1.0.0
+
+### Major Changes
+
+- 6ee38fd: Initial release
+
 ## 0.6.0
 
 ### Minor Changes
