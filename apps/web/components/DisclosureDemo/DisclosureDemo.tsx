@@ -4,15 +4,10 @@ import disclosureItems from './data/disclosureItems';
 
 import styles from './DisclosureDemo.module.css';
 
-const animationOptions = {
-    duration: 300,
-    easing: 'ease-in-out',
-};
-
 const DisclosureDemoBasic: React.FC = () => {
     return (
         <div className={styles.root}>
-            <Disclosure.Root animationOptions={animationOptions}>
+            <Disclosure.Root>
                 {disclosureItems.map(({ heading, paragraph }, index) => (
                     <Disclosure.Details key={index}>
                         <Disclosure.Summary>{heading}</Disclosure.Summary>
