@@ -1,7 +1,8 @@
 import * as React from 'react';
 import cx from 'clsx';
 
-import { Carousel, useIntersectionObserver, useImagePreload } from '@madeinhaus/core';
+import Carousel from '@madeinhaus/carousel';
+import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
 
 import styles from './Carousel.module.css';
 
