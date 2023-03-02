@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+    .component aside[class*="nextra-sidebar-container"] {
+        width: 18rem;
+    }
+}

@@ -2,11 +2,44 @@
 
 The quick brown fox jumps over the lazy dog.
 
-## Getting started
+## Installation
 
-`npm install @madeinhaus/core`
+import { Tab, Tabs } from 'nextra-theme-docs';
 
-`import { Carousel } from '@madeinhaus/core';`
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/carousel
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/carousel
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/carousel
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+`import Carousel from '@madeinhaus/carousel';`
+
+## Tips
+
+-   To center the active item in the container, set the `align` prop to `center`
+    and `--carousel-snap-position` to `50%`. The default is to align the left edge of the
+    active item with the left edge of the container.
+-   The children you pass to the carousel are internally wrapped, by default in a `<li>`
+    element. If you want to use a different element, pass it as the `childAs` prop.
+    To style the wrapper element, use the `itemClassName` prop. Example:
+    `<Carousel childAs="span" itemClassName={styles.itemWrapper}>`.
+-   See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/core/src/ui/Carousel/Carousel.module.scss)
+    for the default CSS applied to the container and the item wrappers.
 
 ## Known Issues
 
@@ -20,18 +53,6 @@ The quick brown fox jumps over the lazy dog.
     observed on iPhones with 120Hz displays (13+) while quickly swiping left and right.
     The issue is duct-tape-fixed so that the carousel doesn't get stuck in an infinite loop anymore,
     but the actual bug has not been identified yet.
-
-## Tips
-
--   To center the active item in the container, set the `align` prop to `center`
-    and `--carousel-snap-position` to `50%`. The default is to align the left edge of the
-    active item with the left edge of the container.
--   The children you pass to the carousel are internally wrapped, by default in a `<li>`
-    element. If you want to use a different element, pass it as the `childAs` prop.
-    To style the wrapper element, use the `itemClassName` prop. Example:
-    `<Carousel childAs="span" itemClassName={styles.itemWrapper}>`.
--   See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/core/src/ui/Carousel/Carousel.module.scss)
-    for the default CSS applied to the container and the item wrappers.
 
 ## CSS Variables
 
@@ -55,17 +76,18 @@ You may use the following methods via ref to programmatically control the carous
 
 ## Demo
 
-import Carousel from "../../components/Carousel";
+import Carousel from '../../components/Carousel';
 
 <Carousel />
 
 ## Demo Source Code
 
-```js filename="CarouselDemo.tsx" {14-18} copy
+```js filename="CarouselDemo.tsx" {4,15-19} copy
 import * as React from 'react';
 import cx from 'clsx';
 
-import { Carousel, useIntersectionObserver, useImagePreload } from '@madeinhaus/core';
+import Carousel from '@madeinhaus/carousel';
+import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
 
 import styles from './Carousel.module.css';
 
