@@ -31,38 +31,38 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Tips
 
--   To center the active item in the container, set the `align` prop to `center`
-    and `--carousel-snap-position` to `50%`. The default is to align the left edge of the
-    active item with the left edge of the container.
--   The children you pass to the carousel are internally wrapped, by default in a `<li>`
-    element. If you want to use a different element, pass it as the `childAs` prop.
-    To style the wrapper element, use the `itemClassName` prop. Example:
-    `<Carousel childAs="span" itemClassName={styles.itemWrapper}>`.
--   See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/core/src/ui/Carousel/Carousel.module.scss)
-    for the default CSS applied to the container and the item wrappers.
+- To center the active item in the container, set the `align` prop to `center`
+  and `--carousel-snap-position` to `50%`. The default is to align the left edge of the
+  active item with the left edge of the container.
+- The children you pass to the carousel are internally wrapped, by default in a `<li>`
+  element. If you want to use a different element, pass it as the `childAs` prop.
+  To style the wrapper element, use the `itemClassName` prop. Example:
+  `<Carousel childAs="span" itemClassName={styles.itemWrapper}>`.
+- See [Carousel.module.scss](https://github.com/MadeInHaus/haus-core/blob/main/packages/core/src/ui/Carousel/Carousel.module.scss)
+  for the default CSS applied to the container and the item wrappers.
 
 ## Known Issues
 
--   The carousel is not accessible. It doesn't support keyboard navigation and it doesn't
-    announce its state to screen readers.
--   The carousel can currently not be used as a controlled component. Even though it has a
-    `activeItemIndex` prop, it is not used to control the active item (it can only be used to
-    initialize the active item on mount). Instead, use `moveIntoView(index)` to programmatically
-    move a specific item into view.
--   The carousel may run into an infinite loop in certain conditions. This has only been
-    observed on iPhones with 120Hz displays (13+) while quickly swiping left and right.
-    The issue is duct-tape-fixed so that the carousel doesn't get stuck in an infinite loop anymore,
-    but the actual bug has not been identified yet.
+- The carousel is not accessible. It doesn't support keyboard navigation and it doesn't
+  announce its state to screen readers.
+- The carousel can currently not be used as a controlled component. Even though it has a
+  `activeItemIndex` prop, it is not used to control the active item (it can only be used to
+  initialize the active item on mount). Instead, use `moveIntoView(index)` to programmatically
+  move a specific item into view.
+- The carousel may run into an infinite loop in certain conditions. This has only been
+  observed on iPhones with 120Hz displays (13+) while quickly swiping left and right.
+  The issue is duct-tape-fixed so that the carousel doesn't get stuck in an infinite loop anymore,
+  but the actual bug has not been identified yet.
 
 ## CSS Variables
 
 Responsive props are passed to the carousel via CSS variables. Define these on the carousel's container element or on one of its ancestors.
 
--   **`--carousel-gap`** _(length value, default: 0)_ - The gap between carousel items.
--   **`--carousel-item-width`** _(length value, default: 0)_ - The width of the carousel items. Set this to a length value !== 0 if _all items_ are the same width. This helps with performance because the carousel doesn't have to measure the width of each item.
--   **`--carousel-snap-position`** _(length value, default: 0)_ - If snapping is enabled, this defines the position (measured from the left edge of the carousel's container) that an item snaps to. Use this in combination with the `align` prop to snap the left edge (`align="start"`) or the center (`align="center"`) of an item to this position.
--   **`--carousel-autoscroll`** _(number, default: 0)_ - Set this to a value !== 0 to turn the carousel into an autoscrolling ticker. The value is the speed in px/ms. Values between +/- 0.1 and 0.2 work best. Negative values make the carousel scroll to the left, positive values to the right.
--   **`--carousel-disabled`** _(0 or 1, default: 0)_ - Set this to 1 to disable the carousel (disables all carousel JS and all internal carousel CSS). Useful e.g. if on large screens you want to layout items on a (static) grid and on small screens in a carousel.
+- **`--carousel-gap`** _(length value, default: 0)_ - The gap between carousel items.
+- **`--carousel-item-width`** _(length value, default: 0)_ - The width of the carousel items. Set this to a length value !== 0 if _all items_ are the same width. This helps with performance because the carousel doesn't have to measure the width of each item.
+- **`--carousel-snap-position`** _(length value, default: 0)_ - If snapping is enabled, this defines the position (measured from the left edge of the carousel's container) that an item snaps to. Use this in combination with the `align` prop to snap the left edge (`align="start"`) or the center (`align="center"`) of an item to this position.
+- **`--carousel-autoscroll`** _(number, default: 0)_ - Set this to a value !== 0 to turn the carousel into an autoscrolling ticker. The value is the speed in px/ms. Values between +/- 0.1 and 0.2 work best. Negative values make the carousel scroll to the left, positive values to the right.
+- **`--carousel-disabled`** _(0 or 1, default: 0)_ - Set this to 1 to disable the carousel (disables all carousel JS and all internal carousel CSS). Useful e.g. if on large screens you want to layout items on a (static) grid and on small screens in a carousel.
 
 Length values can be any valid CSS length value, e.g. `1rem`, `100px`, `50%`, `calc(var(--grid-margin) * 2)`.
 Relative length values are resolved relative to the width of the carousel's container.
@@ -71,8 +71,8 @@ Relative length values are resolved relative to the width of the carousel's cont
 
 You may use the following methods via ref to programmatically control the carousel:
 
--   **`moveIntoView(index)`** - Programmatically move the item at the given index into view.
--   **`refresh()`** - Re-render the carousel. Useful if any of the CSS variables have changed programmatically (not triggered by resize).
+- **`moveIntoView(index)`** - Programmatically move the item at the given index into view.
+- **`refresh()`** - Re-render the carousel. Useful if any of the CSS variables have changed programmatically (not triggered by resize).
 
 ## Demo
 
@@ -95,36 +95,36 @@ const dog = '/assets/images/dogs/n02097047_1028.jpg';
 const dogs = new Array(20).fill(dog);
 
 const CarouselDemo: React.FC = () => {
-    return (
-        <div className={styles.root}>
-            <Carousel className={styles.carousel} itemClassName={styles.item}>
-                {dogs.map((dog, i) => (
-                    <LazyImage key={i} index={i} url={dog} />
-                ))}
-            </Carousel>
-        </div>
-    );
+  return (
+    <div className={styles.root}>
+      <Carousel className={styles.carousel} itemClassName={styles.item}>
+        {dogs.map((dog, i) => (
+          <LazyImage key={i} index={i} url={dog} />
+        ))}
+      </Carousel>
+    </div>
+  );
 };
 
 interface LazyImageProps {
-    url: string;
-    index: number;
+  url: string;
+  index: number;
 }
 
 const LazyImage: React.FC<LazyImageProps> = ({ url, index }) => {
-    const [inView, intersectionRef] = useIntersectionObserver();
-    const [loaded, loadRef] = useImagePreload();
-    return (
-        <div ref={intersectionRef} className={styles.itemContainer}>
-            <div className={styles.index}>{index}</div>
-            <img
-                ref={loadRef}
-                src={inView ? url : undefined}
-                className={cx(styles.image, { [styles.loaded]: loaded })}
-                alt=""
-            />
-        </div>
-    );
+  const [inView, intersectionRef] = useIntersectionObserver();
+  const [loaded, loadRef] = useImagePreload();
+  return (
+    <div ref={intersectionRef} className={styles.itemContainer}>
+      <div className={styles.index}>{index}</div>
+      <img
+        ref={loadRef}
+        src={inView ? url : undefined}
+        className={cx(styles.image, { [styles.loaded]: loaded })}
+        alt=""
+      />
+    </div>
+  );
 };
 
 export default CarouselDemo;

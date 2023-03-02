@@ -46,16 +46,16 @@ import Disclosure from '@madeinhaus/disclosure';
 import items from './data/items';
 
 function DisclosureDemoBasic() {
-    return (
-        <Disclosure.Root>
-            {items.map(({ heading, paragraph }, index) => (
-                <Disclosure.Details key={index}>
-                    <Disclosure.Summary>{heading}</Disclosure.Summary>
-                    <Disclosure.Content>{paragraph}</Disclosure.Content>
-                </Disclosure.Details>
-            ))}
-        </Disclosure.Root>
-    );
+  return (
+    <Disclosure.Root>
+      {items.map(({ heading, paragraph }, index) => (
+        <Disclosure.Details key={index}>
+          <Disclosure.Summary>{heading}</Disclosure.Summary>
+          <Disclosure.Content>{paragraph}</Disclosure.Content>
+        </Disclosure.Details>
+      ))}
+    </Disclosure.Root>
+  );
 }
 
 export default DisclosureDemoBasic;
@@ -70,22 +70,22 @@ import Disclosure from '@madeinhaus/disclosure';
 import items from './data/items';
 
 function DisclosureDemoRenderProp() {
-    return (
-        <Disclosure.Root>
-            {items.map(({ heading, paragraph }, index) => (
-                <Disclosure.Details key={index}>
-                    {({ isOpen }) => (
-                        <>
-                            <Disclosure.Summary>
-                                {`${heading} - ${(isOpen ? 'open' : 'closed')}`}
-                            </Disclosure.Summary>
-                            {isOpen && <Disclosure.Content>{paragraph}</Disclosure.Content>}
-                        </>
-                    )}
-                </Disclosure.Details>
-            ))}
-        </Disclosure.Root>
-    );
+  return (
+    <Disclosure.Root>
+      {items.map(({ heading, paragraph }, index) => (
+        <Disclosure.Details key={index}>
+          {({ isOpen }) => (
+            <>
+              <Disclosure.Summary>
+                {`${heading} - ${isOpen ? 'open' : 'closed'}`}
+              </Disclosure.Summary>
+              {isOpen && <Disclosure.Content>{paragraph}</Disclosure.Content>}
+            </>
+          )}
+        </Disclosure.Details>
+      ))}
+    </Disclosure.Root>
+  );
 }
 
 export default DisclosureDemoRenderProp;
