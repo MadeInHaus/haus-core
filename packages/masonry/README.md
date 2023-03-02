@@ -1,13 +1,13 @@
-# Portal
+# Masonry
 
 **Install**:
 
 ```bash
-npm i @madeinhaus/portal
+npm i @madeinhaus/masonry
 ```
 
 **Usage**:
 
 ```javascript
-import Portal from '@madeinhaus/portal';
+import Masonry from '@madeinhaus/masonry';
 ```

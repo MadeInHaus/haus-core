@@ -1,13 +1,13 @@
-# Button
+# Carousel
 
 **Install**:
 
 ```bash
-npm i @madeinhaus/button
+npm i @madeinhaus/carousel
 ```
 
 **Usage**:
 
 ```javascript
-import Button from '@madeinhaus/button';
+import Carousel from '@madeinhaus/carousel';
 ```

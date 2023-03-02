@@ -1,13 +1,13 @@
-# Portal
+# TexturalVideo
 
 **Install**:
 
 ```bash
-npm i @madeinhaus/portal
+npm i @madeinhaus/textural-video
 ```
 
 **Usage**:
 
 ```javascript
-import Portal from '@madeinhaus/portal';
+import TexturalVideo from '@madeinhaus/textural-video';
 ```
