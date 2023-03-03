@@ -314,50 +314,10 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.14.tgz#add4c98d341472a289190b424efbdb096991bb24"
   integrity sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==
 
-"@madeinhaus/carousel@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/carousel/-/carousel-1.0.0.tgz#0f1d90ca416cb3857b65c5584cfbad882f1e2c19"
-  integrity sha512-ueXiOAlL5/CLXsOfvPFqk26sdj40HMKoNfnkpk/Nw30E6zyImZs0PaP6VgTFAXTqcBvlXnUvCpkSanD83GDQcw==
-
-"@madeinhaus/contentful-image@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/contentful-image/-/contentful-image-1.0.0.tgz#084c60d9261d19080cf68bc4c0bc77975be27b0d"
-  integrity sha512-Fgov7G0kzhY8SMbL14dVRHLeEyDmsXXuxn/drAmM7nVUHErAcqQQ9F8S73OW0g4p+5nYT0Bg1hidCbgWZjc89w==
-
-"@madeinhaus/disclosure@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/disclosure/-/disclosure-1.0.0.tgz#92d502d58602b19a282822673f0447bbae79bdcc"
-  integrity sha512-iEBA+kLBI5U2LlWIB6xOH4sfuHcc1Ty+rn7NajjEvoU37htp/uMN9Kyok7+OMwaetpu8VBvpjLx+2BbrtzJ3PA==
-
-"@madeinhaus/hooks@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/hooks/-/hooks-1.0.0.tgz#0d051be9d9fca3928a5c3de4dc171ee25339996b"
-  integrity sha512-S9dD4OU+jFtbSvcRZ+YfzWgnwmvYUbMkmHFyrf+zEfF2r/8i+uJelQ3tmTS2mqn0wHZtbzfJamyrYdQnbNQZ2w==
-
-"@madeinhaus/masonry@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/masonry/-/masonry-1.0.0.tgz#e4980780222b000e01ede80cb0830a98b05813b6"
-  integrity sha512-fHDsBS0Pc6xsJdanLSnf4Rwxl3Oyew55w6n2943H8FVYqhyYPzHu10KrRZHxnrIj8MxpIQs0ohAEy3xcoVSzyQ==
-
-"@madeinhaus/portal@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/portal/-/portal-1.0.0.tgz#39a5ab1844cc8a4e3c5bd56397211f419cec8b1c"
-  integrity sha512-/REQg0syBGcBbP3G7JkIDjtt3H6kfak+ijeqBqmkM2KlSMtU6DBx8q6q6Wgnz9rtLz2g9ZWfQcxZ10HXDkBKyw==
-
 "@madeinhaus/prettier-config@1.2.1", "@madeinhaus/prettier-config@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@madeinhaus/prettier-config/-/prettier-config-1.2.1.tgz#4523a34f84027a2f4ca1680484b3114f3a904893"
   integrity sha512-hHzPP9W1fjpZ5jVlCn2RLjpWH/exvXgyIFjrVL5TycE1xovzAmpWdgnMTl7KPumn0nmAFM7DLM700Bj4b3SQUg==
-
-"@madeinhaus/textural-video@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/textural-video/-/textural-video-1.0.0.tgz#0ab2675163cfcc5ae4efe951be76704c5d9be498"
-  integrity sha512-HC8Cruz1MDTDM1bkYYuBjBWHDyVQ99MkKmnFFZcYBJLOeLgjxd2vIsc9rSSKr+gTmOnNTkw2xbca8yNX/7B4Rg==
-
-"@madeinhaus/utils@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@madeinhaus/utils/-/utils-1.0.0.tgz#314e4046e6176ad918dbdb4e16e2fdf782650469"
-  integrity sha512-zgSrIgkpEJs225HMNnXSWgP/uu5bl5Tfhjr6XXjA1SAQ9Y1muheFpeknL98xm8gGCDwKDW4rEa4jo7oCBhFImg==
 
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
