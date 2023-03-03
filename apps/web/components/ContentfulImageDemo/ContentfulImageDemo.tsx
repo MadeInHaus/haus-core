@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cx from 'clsx';
 
 import ContentfulImage from '@madeinhaus/contentful-image';
 
