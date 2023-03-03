@@ -1,0 +1,94 @@
+# Disclosure
+
+WAAPI animated disclosure component consisting of a root, details, summary, and content.
+Disclosure.Root takes an animationOptions prop, which is an OptionalEffectTiming object.
+See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/AnimationEffectTimingProperties)
+for more information.
+
+The Disclosure.Details optionally returns a render prop with an isOpen boolean.
+This can be used to conditionally render the Disclosure.Summary and Disclosure.Content.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/disclosure
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/disclosure
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/disclosure
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+`import Disclosure from '@madeinhaus/disclosure';`
+
+## Examples
+
+import { DisclosureDemo, DisclosureDemoRenderProp } from '../../components/DisclosureDemo';
+
+### Basic Usage
+
+```tsx filename="DisclosureDemoBasic.tsx" copy showLineNumbers=true
+import Disclosure from '@madeinhaus/disclosure';
+import items from './data/items';
+
+function DisclosureDemoBasic() {
+  return (
+    <Disclosure.Root>
+      {items.map(({ heading, paragraph }, index) => (
+        <Disclosure.Details key={index}>
+          <Disclosure.Summary>{heading}</Disclosure.Summary>
+          <Disclosure.Content>{paragraph}</Disclosure.Content>
+        </Disclosure.Details>
+      ))}
+    </Disclosure.Root>
+  );
+}
+
+export default DisclosureDemoBasic;
+```
+
+<DisclosureDemo />
+
+### Usage With Render Prop
+
+```tsx filename="DisclosureDemoRenderProp.tsx" copy showLineNumbers=true
+import Disclosure from '@madeinhaus/disclosure';
+import items from './data/items';
+
+function DisclosureDemoRenderProp() {
+  return (
+    <Disclosure.Root>
+      {items.map(({ heading, paragraph }, index) => (
+        <Disclosure.Details key={index}>
+          {({ isOpen }) => (
+            <>
+              <Disclosure.Summary>
+                {`${heading} - ${isOpen ? 'open' : 'closed'}`}
+              </Disclosure.Summary>
+              {isOpen && <Disclosure.Content>{paragraph}</Disclosure.Content>}
+            </>
+          )}
+        </Disclosure.Details>
+      ))}
+    </Disclosure.Root>
+  );
+}
+
+export default DisclosureDemoRenderProp;
+```
+
+<DisclosureDemoRenderProp />
