@@ -4,12 +4,12 @@ import cx from 'clsx';
 import Carousel from '@madeinhaus/carousel';
 import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
 
-import styles from './Carousel.module.css';
+import styles from './CarouselDemoLazyLoad.module.css';
 
 const dog = '/assets/images/dogs/n02097047_1028.jpg';
 const dogs = new Array(20).fill(dog);
 
-const CarouselDemo: React.FC = () => {
+const CarouselDemoLazyLoad: React.FC = () => {
   return (
     <div className={styles.root}>
       <Carousel className={styles.carousel} itemClassName={styles.carouselItem}>
@@ -40,4 +40,4 @@ const LazyImage: React.FC<LazyImageProps> = ({ url }) => {
   );
 };
 
-export default CarouselDemo;
+export default CarouselDemoLazyLoad;

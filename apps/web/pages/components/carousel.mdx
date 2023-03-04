@@ -1,10 +1,10 @@
+import { CarouselDemoTicker, CarouselDemoLazyLoad } from '../../components/Carousel';
+
 # Carousel
 
 A simple, responsive, infinite carousel component with zero dependencies.
 It supports touch gestures, mouse dragging and mouse wheels. It can also be
 turned into an autoscrolling ticker:
-
-import { CarouselDemoTicker } from '../../components/Carousel';
 
 <CarouselDemoTicker />
 
@@ -143,9 +143,7 @@ You may use the following methods via ref to programmatically control the carous
 
 ### Lazy Loading
 
-import { Carousel } from '../../components/Carousel';
-
-<Carousel />
+<CarouselDemoLazyLoad />
 
 ```js filename="CarouselDemo.tsx" {4,15-19} copy
 import * as React from 'react';
