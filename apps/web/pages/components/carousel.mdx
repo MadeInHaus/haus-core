@@ -1,4 +1,4 @@
-import { CarouselDemoTicker, CarouselDemoLazyLoad } from '../../components/Carousel';
+import { CarouselDemo, CarouselDemoTicker, CarouselDemoLazyLoad } from '../../components/Carousel';
 
 # Carousel
 
@@ -141,14 +141,60 @@ You may use the following methods via ref to programmatically control the carous
 
 ## Examples
 
+### Basic
+
+<CarouselDemo />
+
+```js filename="CarouselDemo.tsx" {1,11-15} copy
+import Carousel from '@madeinhaus/carousel';
+
+import styles from './CarouselDemo.module.css';
+
+const dog = '/assets/images/dogs/n02097047_1028.jpg';
+const dogs = new Array(20).fill(dog);
+
+const CarouselDemo: React.FC = () => {
+  return (
+    <div className={styles.root}>
+      <Carousel className={styles.carousel} itemClassName={styles.carouselItem}>
+        {dogs.map((dog, i) => (
+          <img key={i} src={dog} alt="" className={styles.image} />
+        ))}
+      </Carousel>
+    </div>
+  );
+};
+
+export default CarouselDemo;
+```
+
+```css filename="CarouselDemo.module.css" copy
+.carousel {
+    --image-size: 300px;
+    --carousel-gap: 20px;
+    --carousel-item-width: var(--image-size);
+}
+
+.carouselItem {
+    position: relative;
+    width: var(--image-size);
+    height: var(--image-size);
+}
+
+.image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+```
+
 ### Lazy Loading
 
 <CarouselDemoLazyLoad />
 
-```js filename="CarouselDemo.tsx" {4,15-19} copy
-import * as React from 'react';
+```js filename="CarouselDemoLazyLoad.tsx" {2,13-17} copy
 import cx from 'clsx';
-
 import Carousel from '@madeinhaus/carousel';
 import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
 
@@ -189,37 +235,36 @@ const LazyImage: React.FC<LazyImageProps> = ({ url }) => {
 };
 
 export default CarouselDemo;
-
 ```
 
-```css filename="CarouselDemo.module.css" copy
+```css filename="CarouselDemoLazyLoad.module.css" copy
 .carousel {
-    --image-size: 300px;
-    --carousel-gap: 20px;
-    --carousel-item-width: var(--image-size);
+  --image-size: 300px;
+  --carousel-gap: 20px;
+  --carousel-item-width: var(--image-size);
 }
 
 .carouselItem {
-    position: relative;
-    width: var(--image-size);
-    height: var(--image-size);
+  position: relative;
+  width: var(--image-size);
+  height: var(--image-size);
 }
 
 .imageWrapper {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 }
 
 .image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.001;
-    transition: opacity 0.5s linear;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.001;
+  transition: opacity 0.5s linear;
 }
 
 .image.loaded {
-    opacity: 1;
+  opacity: 1;
 }
 ```

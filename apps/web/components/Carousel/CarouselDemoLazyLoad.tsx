@@ -1,4 +1,3 @@
-import * as React from 'react';
 import cx from 'clsx';
 
 import Carousel from '@madeinhaus/carousel';
