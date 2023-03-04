@@ -35,6 +35,83 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 `import Carousel from '@madeinhaus/carousel';`
 
+## Props
+
+All props are optional.
+
+- **`activeItemIndex`** _number (default: 0)_<br />
+  The index of the active item.
+- **`align`** _"start"_ | _"center" (default: "start")_<br/>
+  The alignment of the active item.
+- **`as`** _React.ElementType (default: 'ul')_<br />
+  The element type to use for the container element.
+- **`childAs`** _React.ElementType (default: 'li')_<br />
+  The element type to use for the item wrapper elements.
+- **`className`** _string (default: undefined)_<br />
+  The CSS class name to apply to the container element.
+- **`damping`** _number (default: 200)_<br/>
+  The damping factor applied to the velocity of the carousel after throwing.
+  Lower values make the carousel stop more abruptly.
+- **`disableSnap`** _boolean (default: false)_<br/>
+  Whether to disable snapping. If snapping is disabled, the carousel will
+  not snap to the `--carousel-snap-position`.
+- **`enableNavigationGestures`** _boolean (default: false)_<br/>
+  Mobile browsers often implement gestures to navigate back or forward in
+  the browser history (usually by swiping from the edges of the screen).
+  These gestures can interfere with the carousel's touch gestures and are
+  therefore disabled by default. If this prop is set to `true`, the carousel
+  will re-enable these gestures.
+- **`enableVerticalScroll`** _boolean (default: false)_<br/>
+  Whether to enable vertical scrolling. If enabled, the carousel will
+  scroll horizontally when swiping up or down.
+- **`itemClassName`** _string (default: undefined)_<br />
+  The CSS class name to apply to the item wrapper elements.
+- **`onDrag`** _() => void (default: undefined)_<br />
+  A callback that is called when the user starts dragging the carousel.
+- **`onPress`** _(event: PointerEvent) => void (default: undefined)_<br />
+  A callback that is called when the user presses on the carousel.
+- **`onSnap`** _(index: number) => void (default: undefined)_<br />
+  A callback that is called when the carousel snaps to an item.
+- **`style`** _React.CSSProperties (default: undefined)_<br />
+  The CSS style to apply to the container element.
+
+## CSS Variables
+
+Responsive props are passed to the carousel via CSS variables. Define these on the carousel's container element or on one of its ancestors.
+
+- **`--carousel-gap`** _length value (default: 0)_<br />
+  The gap between carousel items.
+- **`--carousel-item-width`** _length value (default: 0)_<br />
+  The width of the carousel items. Set this to a length value !== 0 if _all items_ are
+  the same width. This helps with performance because the carousel doesn't have to measure
+  the width of each item.
+- **`--carousel-snap-position`** _length value (default: 0)_<br />
+  If snapping is enabled, this defines the position (measured from the left edge of the
+  carousel's container) that an item snaps to. Use this in combination with the `align` prop
+  to snap the left edge (`align="start"`) or the center (`align="center"`) of an item to this position.
+- **`--carousel-autoscroll`** _number (default: 0)_<br />
+  Set this to a value !== 0 to turn the carousel into an autoscrolling ticker.
+  The value is the speed in px/ms. Values between +/- 0.1 and 0.2 work best.
+  Negative values make the carousel scroll to the left, positive values to the right.
+- **`--carousel-disabled`** _0 | 1 (default: 0)_<br />
+  Set this to 1 to disable the carousel (disables all carousel JS and all internal carousel CSS).
+  Useful e.g. if on large screens you want to layout items on a (static) grid and on small screens
+  in a carousel.
+
+Length values can be any valid CSS length value, e.g. `1rem`, `100px`, `50%`,
+`calc(var(--grid-margin) * 2)`. Relative length values are resolved relative to the size
+of the carousel's container.
+
+## Imperative Methods
+
+You may use the following methods via ref to programmatically control the carousel:
+
+- **`moveIntoView(index)`**<br />
+  Moves the item at the given index into view.
+- **`refresh()`**<br />
+  Re-renders the carousel. Useful if any of the CSS variables have changed programmatically
+  (not triggered by resize).
+
 ## Tips
 
 - To center the active item in the container, set the `align` prop to `center`
@@ -60,33 +137,13 @@ import { Tab, Tabs } from 'nextra-theme-docs';
   The issue is duct-tape-fixed so that the carousel doesn't get stuck in an infinite loop anymore,
   but the actual bug has not been identified yet.
 
-## CSS Variables
+## Examples
 
-Responsive props are passed to the carousel via CSS variables. Define these on the carousel's container element or on one of its ancestors.
-
-- **`--carousel-gap`** _(length value, default: 0)_ - The gap between carousel items.
-- **`--carousel-item-width`** _(length value, default: 0)_ - The width of the carousel items. Set this to a length value !== 0 if _all items_ are the same width. This helps with performance because the carousel doesn't have to measure the width of each item.
-- **`--carousel-snap-position`** _(length value, default: 0)_ - If snapping is enabled, this defines the position (measured from the left edge of the carousel's container) that an item snaps to. Use this in combination with the `align` prop to snap the left edge (`align="start"`) or the center (`align="center"`) of an item to this position.
-- **`--carousel-autoscroll`** _(number, default: 0)_ - Set this to a value !== 0 to turn the carousel into an autoscrolling ticker. The value is the speed in px/ms. Values between +/- 0.1 and 0.2 work best. Negative values make the carousel scroll to the left, positive values to the right.
-- **`--carousel-disabled`** _(0 or 1, default: 0)_ - Set this to 1 to disable the carousel (disables all carousel JS and all internal carousel CSS). Useful e.g. if on large screens you want to layout items on a (static) grid and on small screens in a carousel.
-
-Length values can be any valid CSS length value, e.g. `1rem`, `100px`, `50%`, `calc(var(--grid-margin) * 2)`.
-Relative length values are resolved relative to the width of the carousel's container.
-
-## Imperative Methods
-
-You may use the following methods via ref to programmatically control the carousel:
-
-- **`moveIntoView(index)`** - Programmatically move the item at the given index into view.
-- **`refresh()`** - Re-render the carousel. Useful if any of the CSS variables have changed programmatically (not triggered by resize).
-
-## Demo
+### Carousel with Lazy Loading
 
 import { Carousel } from '../../components/Carousel';
 
 <Carousel />
-
-## Demo Source Code
 
 ```js filename="CarouselDemo.tsx" {4,15-19} copy
 import * as React from 'react';
@@ -95,7 +152,7 @@ import cx from 'clsx';
 import Carousel from '@madeinhaus/carousel';
 import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
 
-import styles from './Carousel.module.css';
+import styles from './CarouselDemo.module.css';
 
 const dog = '/assets/images/dogs/n02097047_1028.jpg';
 const dogs = new Array(20).fill(dog);
@@ -103,9 +160,9 @@ const dogs = new Array(20).fill(dog);
 const CarouselDemo: React.FC = () => {
   return (
     <div className={styles.root}>
-      <Carousel className={styles.carousel} itemClassName={styles.item}>
+      <Carousel className={styles.carousel} itemClassName={styles.carouselItem}>
         {dogs.map((dog, i) => (
-          <LazyImage key={i} index={i} url={dog} />
+          <LazyImage key={i} url={dog} />
         ))}
       </Carousel>
     </div>
@@ -114,15 +171,13 @@ const CarouselDemo: React.FC = () => {
 
 interface LazyImageProps {
   url: string;
-  index: number;
 }
 
-const LazyImage: React.FC<LazyImageProps> = ({ url, index }) => {
+const LazyImage: React.FC<LazyImageProps> = ({ url }) => {
   const [inView, intersectionRef] = useIntersectionObserver();
   const [loaded, loadRef] = useImagePreload();
   return (
-    <div ref={intersectionRef} className={styles.itemContainer}>
-      <div className={styles.index}>{index}</div>
+    <div ref={intersectionRef}>
       <img
         ref={loadRef}
         src={inView ? url : undefined}
@@ -134,4 +189,31 @@ const LazyImage: React.FC<LazyImageProps> = ({ url, index }) => {
 };
 
 export default CarouselDemo;
+```
+
+```css filename="CarouselDemo.module.css" copy
+.carousel {
+  --image-size: 300px;
+  --carousel-gap: 20px;
+  --carousel-item-width: var(--image-size);
+}
+
+.carouselItem {
+  position: relative;
+  width: var(--image-size);
+  height: var(--image-size);
+}
+
+.image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.001;
+  transition: opacity 0.5s linear;
+}
+
+.image.loaded {
+  opacity: 1;
+}
 ```

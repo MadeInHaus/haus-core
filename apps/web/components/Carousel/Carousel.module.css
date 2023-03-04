@@ -1,19 +1,10 @@
 .carousel {
     --image-size: 300px;
-
     --carousel-gap: 20px;
     --carousel-item-width: var(--image-size);
 }
 
-.itemContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.item {
+.carouselItem {
     position: relative;
     width: var(--image-size);
     height: var(--image-size);

@@ -1,9 +1,7 @@
 .carousel {
-    position: relative;
-    color: hsl(var(--nextra-primary-hue)100% 45%/var(--tw-text-opacity));
+    margin-top: 1rem;
     font-size: 20px;
     font-weight: 700;
-    padding-top: 1rem;
 
     --carousel-gap: 0.4ch;
     --carousel-autoscroll: -0.055;

@@ -12,9 +12,9 @@ const dogs = new Array(20).fill(dog);
 const CarouselDemo: React.FC = () => {
   return (
     <div className={styles.root}>
-      <Carousel className={styles.carousel} itemClassName={styles.item}>
+      <Carousel className={styles.carousel} itemClassName={styles.carouselItem}>
         {dogs.map((dog, i) => (
-          <LazyImage key={i} index={i} url={dog} />
+          <LazyImage key={i} url={dog} />
         ))}
       </Carousel>
     </div>
@@ -23,15 +23,13 @@ const CarouselDemo: React.FC = () => {
 
 interface LazyImageProps {
   url: string;
-  index: number;
 }
 
-const LazyImage: React.FC<LazyImageProps> = ({ url, index }) => {
+const LazyImage: React.FC<LazyImageProps> = ({ url }) => {
   const [inView, intersectionRef] = useIntersectionObserver();
   const [loaded, loadRef] = useImagePreload();
   return (
-    <div ref={intersectionRef} className={styles.itemContainer}>
-      <div className={styles.index}>{index}</div>
+    <div ref={intersectionRef}>
       <img
         ref={loadRef}
         src={inView ? url : undefined}
