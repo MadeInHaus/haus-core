@@ -1,4 +1,6 @@
 .carousel {
+    margin-top: 1rem;
+
     --image-size: 300px;
     --carousel-gap: 20px;
     --carousel-item-width: var(--image-size);
@@ -8,6 +10,11 @@
     position: relative;
     width: var(--image-size);
     height: var(--image-size);
+}
+
+.imageWrapper {
+    position: absolute;
+    inset: 0;
 }
 
 .image {
@@ -21,20 +28,4 @@
 
 .image.loaded {
     opacity: 1;
-}
-
-.index {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 4rem;
-    height: 4rem;
-    font-size: 1.5rem;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    z-index: 1;
 }
