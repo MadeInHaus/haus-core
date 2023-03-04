@@ -3,6 +3,7 @@ import * as React from 'react';
 import cx from 'clsx';
 import { useRouter } from 'next/router';
 import { getHash, removeHash } from '../../utils/src/url';
+import { useNextCssRemovalPrevention } from './helpers/useNextCssRemovalPrevention';
 
 import styles from './PageTransition.module.scss';
 
@@ -84,6 +85,8 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
         className,
         children,
     } = props;
+
+    useNextCssRemovalPrevention();
 
     const saveScrollPos = onSaveScrollPos ?? saveScrollPosDefault;
     const retrieveScrollPos = onRetrieveScrollPos ?? retrieveScrollPosDefault;
