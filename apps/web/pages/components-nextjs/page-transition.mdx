@@ -25,6 +25,34 @@ import { Tab, Tabs } from 'nextra-theme-docs';
     </Tab>
 </Tabs>
 
-## Import
+## Basic Usage
 
-`import PageTransition from '@madeinhaus/nextjs-page-transition';`
+```tsx filename="_app.tsx" copy
+import type { AppProps } from 'next/app';
+import PageTransition, { useAsPathWithoutHash } from '@madeinhaus/nextjs-page-transition';
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <PageTransition>
+      <Component {...pageProps} key={useAsPathWithoutHash()} />
+    </PageTransition>
+  );
+};
+
+export default App;
+```
+
+## Props
+
+All props are optional.
+
+- **`as`** _React.ElementType (default: 'main')_<br />
+  The element type to use for the container element.
+- **`inPhaseDuration`** _number (default: 600)_<br />
+  The duration of the in phase in milliseconds.
+- **`outPhaseDuration`** _number (default: 600)_<br />
+  The duration of the out phase in milliseconds.
+- **`disableDefaultStyles`** _boolean (default: false)_<br />
+  Disable the default styles.
+- **`className`** _string (default: undefined)_<br />
+  The class name to apply to the container element.
