@@ -1,10 +1,16 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # PageTransition
 
-The quick brown fox jumps over the lazy dog.
+One-stop solution for implementing page transitions in Next.js.
+
+Takes care of
+
+- keeping the outgoing page mounted until the out phase is complete
+- preventing Next.js from removing page styles of the outgoing page
+- restoring scroll position
 
 ## Installation
-
-import { Tab, Tabs } from 'nextra-theme-docs';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
@@ -32,9 +38,10 @@ import type { AppProps } from 'next/app';
 import PageTransition, { useAsPathWithoutHash } from '@madeinhaus/nextjs-page-transition';
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const key = useAsPathWithoutHash();
   return (
     <PageTransition>
-      <Component {...pageProps} key={useAsPathWithoutHash()} />
+      <Component {...pageProps} key={key} />
     </PageTransition>
   );
 };
@@ -56,3 +63,105 @@ All props are optional.
   Disable the default styles.
 - **`className`** _string (default: undefined)_<br />
   The class name to apply to the container element.
+
+## PageTransitionContext
+
+Use PageTransitionContext if you need more control over transitions.
+
+```tsx filename="_app.tsx" {11,16} copy showLineNumbers=true
+import type { AppProps } from 'next/app';
+import Header from 'components/Header';
+import PageTransition, {
+  PageTransitionContext,
+  useAsPathWithoutHash,
+} from '@madeinhaus/nextjs-page-transition';
+
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const key = useAsPathWithoutHash();
+  return (
+    <PageTransitionContext>
+      <Header />
+      <PageTransition>
+        <Component {...pageProps} key={key} />
+      </PageTransition>
+    </PageTransitionContext>
+  );
+};
+
+export default App;
+```
+
+PageTransitionContext goes together with the `useTransitionState` hook,
+which returns the current transition state.
+
+```tsx filename="components/Header.tsx" {4} copy showLineNumbers=true
+import { usePageTransitionState } from '@madeinhaus/nextjs-page-transition';
+
+const Header: React.FC = () => {
+  const { phase } = usePageTransitionState();
+  return (
+    <header>
+      <h1>Header</h1>
+      <p>PageTransitionPhase.{phase}</p>
+    </header>
+  );
+};
+
+export default Header;
+```
+
+## Link
+
+A convenience component to disable scrolling to the top of the page after
+navigation. It behaves exactly the same as Next.js' Link component, with
+the exception that it sets `scroll={false}` by default.
+
+## useNextCssRemovalPrevention
+
+Next.js removes page styles of the outgoing page as soon as the new page is
+mounted. As PageTransition keeps that page mounted until the out phase
+is complete, this would break the page. This hook prevents the removal of
+page styles during the out phase of the transition.
+
+Note that PageTransition already takes care of calling useNextCssRemovalPrevention
+for you, so you only need to explicitliy call it if you do not use PageTransition,
+but other means to keep the outgoing page mounted, such as Framer Motion's
+AnimatePresence, react-transition-group etc.
+
+This hook is not needed if your app does not make use of page stylesheets,
+such as CSS-in-JS solutions like styled-jsx, styled-components, emotion,
+tailwind etc.
+
+## useTransitionState
+
+Returns the current transition state. Requires PageTransitionContext to be
+used in the component tree, as an acestor of both PageTransition and the
+component using this hook.
+
+```tsx copy showLineNumbers=true
+interface PageTransitionState {
+    phase: PageTransitionPhase;
+    phaseOutAnticipated?: boolean;
+    currentUrl?: string | null;
+    targetUrl?: string | null;
+    scrollPosY?: number;
+}
+
+enum PageTransitionPhase {
+    IDLE = 'IDLE',
+    APPEAR = 'APPEAR',
+    IN = 'IN',
+    OUT = 'OUT',
+}
+```
+
+## useAsPathWithoutHash
+
+A convenience hook that returns the router's current `asPath` without
+the hash part, to be used as the `key` prop of the page component.
+
+If `asPath` is used as the `key` prop, React will unmout the page component
+and mount a new one when the hash part of the URL changes. This is not
+desirable, anchor links within a page should not trigger a page transition.
+This hook returns the `asPath` without the hash part, so that the page component
+is not unmounted when the hash part changes.
