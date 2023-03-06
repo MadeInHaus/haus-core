@@ -1,12 +1,14 @@
 # Disclosure
 
 WAAPI animated disclosure component consisting of a root, details, summary, and content.
-Disclosure.Root takes an animationOptions prop, which is an OptionalEffectTiming object.
+`Disclosure.Root` takes an `animationOptions` prop, which is an `OptionalEffectTiming` object.
 See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/AnimationEffectTimingProperties)
 for more information.
 
-The Disclosure.Details optionally returns a render prop with an isOpen boolean.
+The `Disclosure.Details` optionally returns a render prop with an `isOpen` boolean.
 This can be used to conditionally render the Disclosure.Summary and Disclosure.Content.
+
+All components, includeing `Disclosure.Summary` and `Disclosure.Content`, have an optional `className` prop.
 
 ## Installation
 
@@ -71,7 +73,11 @@ The `Disclosure.Content` component is used to create the trigger that reveals or
 
 ## Examples
 
-import { DisclosureDemo, DisclosureDemoRenderProp } from '../../components/DisclosureDemo';
+import {
+  DisclosureDemo,
+  DisclosureDemoRenderProp,
+  DisclosureDemoWithStyle,
+} from '../../components/DisclosureDemo';
 
 ### Basic Usage
 
@@ -126,3 +132,31 @@ export default DisclosureDemoRenderProp;
 ```
 
 <DisclosureDemoRenderProp />
+
+### Usage With Style
+
+```tsx filename="DisclosureDemoWithStyle.tsx" copy showLineNumbers=true
+import Disclosure from '@madeinhaus/disclosure';
+
+import disclosureItems from './data/disclosureItems';
+import styles from './DisclosureDemo.module.css';
+
+const DisclosureDemoWithStyle: React.FC = () => {
+  return (
+    <div className={styles.root}>
+      <Disclosure.Root>
+        {disclosureItems.map(({ heading, paragraph }, index) => (
+          <Disclosure.Details key={index}>
+            <Disclosure.Summary className={styles.summary}>{heading}</Disclosure.Summary>
+            <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
+          </Disclosure.Details>
+        ))}
+      </Disclosure.Root>
+    </div>
+  );
+};
+
+export default DisclosureDemoWithStyle;
+```
+
+<DisclosureDemoWithStyle />
