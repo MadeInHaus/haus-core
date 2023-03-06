@@ -1,4 +1,4 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout, Tab, Tabs } from 'nextra-theme-docs';
 
 # PageTransition
 
@@ -9,6 +9,11 @@ Takes care of
 - keeping the outgoing page mounted until the out phase is complete
 - preventing Next.js from removing page styles of the outgoing page
 - restoring scroll position
+
+<Callout type="info">
+  Cross-fade transitions (or any kind of transition where the out and in phases overlap) are not
+  supported by this package.
+</Callout>
 
 ## Installation
 
@@ -140,18 +145,18 @@ component using this hook.
 
 ```tsx copy showLineNumbers=true
 interface PageTransitionState {
-    phase: PageTransitionPhase;
-    phaseOutAnticipated?: boolean;
-    currentUrl?: string | null;
-    targetUrl?: string | null;
-    scrollPosY?: number;
+  phase: PageTransitionPhase;
+  phaseOutAnticipated?: boolean;
+  currentUrl?: string | null;
+  targetUrl?: string | null;
+  scrollPosY?: number;
 }
 
 enum PageTransitionPhase {
-    IDLE = 'IDLE',
-    APPEAR = 'APPEAR',
-    IN = 'IN',
-    OUT = 'OUT',
+  IDLE = 'IDLE',
+  APPEAR = 'APPEAR',
+  IN = 'IN',
+  OUT = 'OUT',
 }
 ```
 
