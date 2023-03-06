@@ -25,12 +25,80 @@ import { Tab, Tabs } from 'nextra-theme-docs';
     </Tab>
 </Tabs>
 
+## Introduction
+
+The ContentfulImage component is a React component that displays an image fetched from Contentful's Image API. This component requires Contentful's Image API to be installed in the project.
+
 ## Import
 
 `import ContentfulImage from '@madeinhaus/contenful-image';`
+
+## Props
+
+| Prop Name            | Type                             | Description                                          |
+| -------------------- | -------------------------------- | ---------------------------------------------------- |
+| `alt`                | `string`                         | The alternative text for the image                   |
+| `className`          | `string`                         | The class name for the image                         |
+| `customSources`      | `Source[]`                       | An array of custom sources for the image             |
+| `draggable`          | `boolean`                        | Whether the image can be dragged                     |
+| `fallbackImageWidth` | `number`                         | The fallback width for the image                     |
+| `loading`            | `'eager'` or `'lazy'`            | Whether the image should be loaded eagerly or lazily |
+| `priority`           | `boolean`                        | Whether the image should be loaded with priority     |
+| `decoding`           | `'async'`, `'sync'`, or `'auto'` | The decoding mode for the image                      |
+| `src`                | `string`                         | The source URL for the image                         |
+
+### `Source` Type
+
+| Property      | Type                | Description                              |
+| ------------- | ------------------- | ---------------------------------------- |
+| `breakpoint`  | `number` (optional) | The minimum viewport width for the image |
+| `src`         | `string`            | The source URL for the image             |
+| `imageWidth`  | `number`            | The desired width for the image          |
+| `orientation` | `string` (optional) | The orientation for the image            |
 
 ## Demo
 
 import ContentfulImageDemo from '../../components/ContentfulImageDemo';
 
 <ContentfulImageDemo />
+
+## Demo Source Code
+
+```js filename="ContentfulImageDemo.tsx"
+import * as React from 'react';
+
+import ContentfulImage from '@madeinhaus/contentful-image';
+
+import styles from './ContentfulImageDemo.module.css';
+
+const ContentfulImageDemo: React.FC = () => {
+  return (
+    <div className={styles.root}>
+      <ContentfulImage
+        priority={false}
+        fallbackImageWidth={1280}
+        customSources={[
+          { breakpoint: 1024, imageWidth: 1024 * 1.5 },
+          { breakpoint: 768, imageWidth: 768 * 1.5 },
+          { imageWidth: 768 },
+        ]}
+        src="https://images.ctfassets.net/j8tkpy1gjhi5/1sNDo90vR4xXAv1RdrQFki/1fe19001c36da6b7f9d0afd5745a930f/Frame_1826.png"
+        alt=""
+      />
+    </div>
+  );
+};
+
+export default ContentfulImageDemo;
+```
+
+## Notes
+
+- The `ContentfulImage` component uses Contentful's Image API to serve optimized images with the desired dimensions and quality.
+- The `customSources` prop allows you to provide an array of custom sources for the image, each with a specified breakpoint and image width.
+- The `fallbackImageWidth` prop sets the fallback width for the image in case the custom sources are not specified or do not have a breakpoint.
+- The `loading` prop determines whether the image should be loaded eagerly or lazily.
+- The `priority` prop determines whether the image should be loaded with priority.
+- The `decoding` prop sets the decoding mode for the image, which can improve performance in some cases.
+- The `src` prop is required and should be a string representing the source URL for the image.
+- The `alt` and `className` props are optional and are used for accessibility and styling purposes, respectively.
