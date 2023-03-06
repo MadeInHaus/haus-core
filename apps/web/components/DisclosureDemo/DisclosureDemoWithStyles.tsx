@@ -3,7 +3,7 @@ import Disclosure from '@madeinhaus/disclosure';
 import disclosureItems from './data/disclosureItems';
 import styles from './DisclosureDemo.module.css';
 
-const DisclosureDemoWithStyle: React.FC = () => {
+const DisclosureDemoWithStyles: React.FC = () => {
   return (
     <div className={styles.root}>
       <Disclosure.Root>
@@ -18,4 +18,4 @@ const DisclosureDemoWithStyle: React.FC = () => {
   );
 };
 
-export default DisclosureDemoWithStyle;
+export default DisclosureDemoWithStyles;
