@@ -6,7 +6,7 @@ export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoE
     isTransparent?: boolean;
     mp4?: string;
     webm?: string;
-    threshold: number;
+    threshold?: number;
 }
 
 const TexturalVideo = ({

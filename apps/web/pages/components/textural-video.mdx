@@ -1,6 +1,6 @@
 # TexturalVideo
 
-The quick brown fox jumps over the lazy dog.
+The TexturalVideo component renders a HTML5 video element with `mp4` and `webm` sources. It uses the useIntersectionObserver hook to play/pause the video based on whether it is currently in the viewport. It also has options to set the `className`, `isTransparent`, `threshold`, `poster`, `title` props, and other attributes of the HTML video element.
 
 ## Installation
 
@@ -25,6 +25,65 @@ import { Tab, Tabs } from 'nextra-theme-docs';
     </Tab>
 </Tabs>
 
+## Props
+
+| Prop name       | Type                            | Default value | Description                                                                                                                     |
+| --------------- | ------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `className`     | `string`                        | `undefined`   | CSS class of the video element.                                                                                                 |
+| `isTransparent` | `boolean`                       | `false`       | Whether the video has a transparent background. Requires both mp4 and webm sources if `true`.                                   |
+| `mp4`           | `string`                        | `undefined`   | Path to the mp4 video source.                                                                                                   |
+| `webm`          | `string`                        | `undefined`   | Path to the webm video source.                                                                                                  |
+| `poster`        | `string`                        | `undefined`   | Path to the poster image shown before the video loads.                                                                          |
+| `threshold`     | `number` between 0 and 1        | `0`           | How much of the video must be visible before it starts playing.                                                                 |
+| `title`         | `string`                        | `undefined`   | Sets the `title` attribute of the video element.                                                                                |
+| Other props     | HTML `video` element attributes | n/a           | Other props passed to the component will be passed to the underlying `video` element, such as `autoPlay`, `loop`, `muted`, etc. |
+
 ## Import
 
 `import TexturalVideo from '@madeinhaus/textural-video';`
+
+## Usage
+
+import {
+  TexturalVideoDemoBasic,
+  TexturalVideoDemoTransparent,
+} from '../../components/TexturalVideoDemo';
+
+### Basic Usage
+
+```tsx filename="TexturalVideoDemoBasic.tsx" copy showLineNumbers=true
+import TexturalVideo from '@madeinhaus/textural-video';
+
+const TexturalVideoDemoBasic: React.FC = () => {
+  return (
+    <TexturalVideo
+      mp4="https://videos.ctfassets.net/j8tkpy1gjhi5/4YWtNzFROCQBTLFmgt0GtC/46b15d9fbb9a6f5af12819461a37bfc9/Tillamook_Desktop_v7.mp4"
+      webm="https://videos.ctfassets.net/j8tkpy1gjhi5/3vr3eDCt4firB4lb5snVrc/c55eb5261efbe9cf0f8489e5aa4b5ab4/Tillamook_Desktop_v7.webm"
+    />
+  );
+};
+
+export default TexturalVideoDemoBasic;
+```
+
+<TexturalVideoDemoBasic />
+
+### Transparent Usage
+
+```tsx filename="TexturalVideoDemoTransparent.tsx" copy showLineNumbers=true
+import TexturalVideo from '@madeinhaus/textural-video';
+
+const TexturalVideoDemoTransparent: React.FC = () => {
+  return (
+    <TexturalVideo
+      mp4="https://happiest.madeinhaus.com/videos/laughs.mp4"
+      webm="https://happiest.madeinhaus.com/videos/laughs.webm"
+      isTransparent
+    />
+  );
+};
+
+export default TexturalVideoDemoTransparent;
+```
+
+<TexturalVideoDemoTransparent />
