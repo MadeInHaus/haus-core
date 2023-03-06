@@ -7,9 +7,14 @@
   border-bottom: 1px solid white;
   padding: 1rem 0;
   background-color: firebrick;
+  transition: background-color 0.3s ease-in-out;
   color: white;
   text-align: center;
   cursor: pointer;
+}
+
+.summary:hover {
+  background-color: darkred;
 }
 
 .content {
