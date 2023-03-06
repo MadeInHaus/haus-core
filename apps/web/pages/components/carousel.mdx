@@ -145,7 +145,7 @@ You may use the following methods via ref to programmatically control the carous
 
 <CarouselDemo />
 
-```js filename="CarouselDemo.tsx" {1,11-15} copy
+```js filename="CarouselDemo.tsx" {1,11-15} copy showLineNumbers=true
 import Carousel from '@madeinhaus/carousel';
 
 import styles from './CarouselDemo.module.css';
@@ -168,7 +168,7 @@ const CarouselDemo: React.FC = () => {
 export default CarouselDemo;
 ```
 
-```css filename="CarouselDemo.module.css" copy
+```css filename="CarouselDemo.module.css" copy showLineNumbers=true
 .carousel {
     --image-size: 300px;
     --carousel-gap: 20px;
@@ -193,7 +193,7 @@ export default CarouselDemo;
 
 <CarouselDemoLazyLoad />
 
-```js filename="CarouselDemoLazyLoad.tsx" {2,13-17} copy
+```js filename="CarouselDemoLazyLoad.tsx" {2,13-17} copy showLineNumbers=true
 import cx from 'clsx';
 import Carousel from '@madeinhaus/carousel';
 import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
@@ -237,7 +237,7 @@ const LazyImage: React.FC<LazyImageProps> = ({ url }) => {
 export default CarouselDemo;
 ```
 
-```css filename="CarouselDemoLazyLoad.module.css" copy
+```css filename="CarouselDemoLazyLoad.module.css" copy showLineNumbers=true
 .carousel {
   --image-size: 300px;
   --carousel-gap: 20px;
