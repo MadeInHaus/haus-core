@@ -15,9 +15,9 @@ const config: DocsThemeConfig = {
     </svg>
   ),
   project: {
-    link: 'https://github.com/MadeInHaus/haus-core-docs',
+    link: 'https://github.com/MadeInHaus/haus-core',
   },
-  docsRepositoryBase: 'https://github.com/MadeInHaus/haus-core-docs',
+  docsRepositoryBase: 'https://github.com/MadeInHaus/haus-core',
   useNextSeoProps() {
     return {
       titleTemplate: '%s – Haus Core Component Library',
