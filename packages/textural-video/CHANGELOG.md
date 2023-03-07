@@ -1,5 +1,11 @@
 # @madeinhaus/textural-video
 
+## 1.1.0
+
+### Minor Changes
+
+- 74a3fd4: Change threshold prop to optional
+
 ## 1.0.0
 
 ### Major Changes
