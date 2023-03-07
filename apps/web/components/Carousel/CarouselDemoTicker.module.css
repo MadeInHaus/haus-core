@@ -1,0 +1,9 @@
+.carousel {
+    margin-top: 1rem;
+    font-size: 20px;
+    font-weight: 700;
+
+    --carousel-gap: 0.4ch;
+    --carousel-autoscroll: -0.055;
+    --carousel-snap-position: 50%;
+}
