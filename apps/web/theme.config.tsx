@@ -16,7 +16,7 @@ const config: DocsThemeConfig = {
     content: null,
   },
   editLink: {
-    component: null,
+    component: () => null,
   },
   footer: {
     component: null,

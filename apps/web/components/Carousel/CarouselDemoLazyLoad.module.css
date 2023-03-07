@@ -1,0 +1,31 @@
+.carousel {
+    margin-top: 1rem;
+
+    --image-size: 300px;
+    --carousel-gap: 20px;
+    --carousel-item-width: var(--image-size);
+}
+
+.carouselItem {
+    position: relative;
+    width: var(--image-size);
+    height: var(--image-size);
+}
+
+.imageWrapper {
+    position: absolute;
+    inset: 0;
+}
+
+.image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.001;
+    transition: opacity 0.5s linear;
+}
+
+.image.loaded {
+    opacity: 1;
+}
