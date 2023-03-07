@@ -31,26 +31,19 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Props
 
-| Prop Name            | Type                             | Description                                          |
-| -------------------- | -------------------------------- | ---------------------------------------------------- |
-| `alt`                | `string`                         | The alternative text for the image                   |
-| `className`          | `string`                         | The class name for the image                         |
-| `customSources`      | `Source[]`                       | An array of custom sources for the image             |
-| `draggable`          | `boolean`                        | Whether the image can be dragged                     |
-| `fallbackImageWidth` | `number`                         | The fallback width for the image                     |
-| `loading`            | `'eager'` or `'lazy'`            | Whether the image should be loaded eagerly or lazily |
-| `priority`           | `boolean`                        | Whether the image should be loaded with priority     |
-| `decoding`           | `'async'`, `'sync'`, or `'auto'` | The decoding mode for the image                      |
-| `src`                | `string`                         | The source URL for the image                         |
-
-### `Source` Type
-
-| Property      | Type                | Description                              |
-| ------------- | ------------------- | ---------------------------------------- |
-| `breakpoint`  | `number` (optional) | The minimum viewport width for the image |
-| `src`         | `string`            | The source URL for the image             |
-| `imageWidth`  | `number`            | The desired width for the image          |
-| `orientation` | `string` (optional) | The orientation for the image            |
+- `alt` _(required)_: A string representing the alternate text for the image. This is required for accessibility purposes.
+- `className`: A string representing the CSS class name(s) to apply to the component.
+- `customSources`: An array of custom sources to use for the image. Each custom source is an object with the following properties:
+  - `breakpoint`: A number representing the screen width at which to use this custom source. If omitted, this source will be used as the fallback source for all screen sizes.
+  - `src`: A string representing the URL of the image source.
+  - `imageWidth`: A number representing the desired width of the image.
+  - `orientation`: A string representing the orientation of the device (e.g. "portrait" or "landscape").
+- `decoding`: A string representing the decoding method to use for the image. Possible values are "async", "sync", or "auto".
+- `draggable`: A boolean representing whether the image should be draggable or not.
+- `fallbackImageWidth`: A number representing the desired width of the fallback image. This is used as the fallback when the custom sources do not provide a source for a given screen size.
+- `loading`: A string representing the loading method to use for the image. Possible values are "eager" or "lazy".
+- `priority`: A boolean representing whether the image should be prioritized for loading or not.
+- `src` _(required)_: A string representing the URL of the image source.
 
 ## Usage
 

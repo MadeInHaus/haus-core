@@ -31,12 +31,10 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Props
 
-| Prop Name         | Type                                         | Default          | Required? | Description                                                                          |
-| ----------------- | -------------------------------------------- | ---------------- | --------- | ------------------------------------------------------------------------------------ |
-| `breakpointCols`  | `{ default: number, [key: number]: number }` | `{ default: 2 }` | No        | An object that specifies the number of columns to be used at various breakpoints.    |
-| `className`       | `string`                                     | `undefined`      | No        | A string that allows for adding a CSS class to the root element of the component.    |
-| `columnClassName` | `string`                                     | `undefined`      | No        | A string that allows for adding a CSS class to the column elements of the component. |
-| `children`        | `React.ReactNode`                            | `undefined`      | Yes       | The child elements to be rendered in the Masonry component.                          |
+- `breakpointCols`: an object that specifies the number of columns to be used at various breakpoints. This prop is optional and defaults to `{ default: 2 }`.
+- `className`: a string that allows for adding a CSS class to the root element of the component.
+- `columnClassName`: a string that allows for adding a CSS class to the column elements of the component.
+- `children`: a required prop that represents the child elements to be rendered in the Masonry component. |
 
 ## Usage
 

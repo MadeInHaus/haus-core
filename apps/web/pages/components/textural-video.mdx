@@ -27,16 +27,14 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Props
 
-| Prop name       | Type                            | Default value | Description                                                                                                                     |
-| --------------- | ------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `className`     | `string`                        | `undefined`   | CSS class of the video element.                                                                                                 |
-| `isTransparent` | `boolean`                       | `false`       | Whether the video has a transparent background. Requires both mp4 and webm sources if `true`.                                   |
-| `mp4`           | `string`                        | `undefined`   | Path to the mp4 video source.                                                                                                   |
-| `webm`          | `string`                        | `undefined`   | Path to the webm video source.                                                                                                  |
-| `poster`        | `string`                        | `undefined`   | Path to the poster image shown before the video loads.                                                                          |
-| `threshold`     | `number` between 0 and 1        | `0`           | How much of the video must be visible before it starts playing.                                                                 |
-| `title`         | `string`                        | `undefined`   | Sets the `title` attribute of the video element.                                                                                |
-| Other props     | HTML `video` element attributes | n/a           | Other props passed to the component will be passed to the underlying `video` element, such as `autoPlay`, `loop`, `muted`, etc. |
+- `className`: A string that represents the class name(s) of the video element. Optional.
+- `isTransparent`: A boolean that indicates whether the video has a transparent background or not. Optional.
+- `mp4`: A string that represents the URL of the `.mp4` video file. Required.
+- `webm`: A string that represents the URL of the `.webm` video file. Required.
+- `poster`: A string that represents the URL of the poster image for the video. Optional.
+- `threshold`: A number that represents the percentage of the video element that needs to be visible in the viewport to start playing the video. Optional.
+- `title`: A string that represents the title of the video element. Optional.
+- Other props: Any other valid HTML video attributes.
 
 ## Import
 
@@ -51,7 +49,7 @@ import {
 
 ### Basic Usage
 
-```tsx filename="TexturalVideoDemoBasic.tsx" copy showLineNumbers
+```tsx filename="TexturalVideoDemoBasic.tsx"{1, 5-8} copy showLineNumbers
 import TexturalVideo from '@madeinhaus/textural-video';
 
 const TexturalVideoDemoBasic: React.FC = () => {
@@ -70,7 +68,7 @@ export default TexturalVideoDemoBasic;
 
 ### Transparent Usage
 
-```tsx filename="TexturalVideoDemoTransparent.tsx" copy showLineNumbers
+```tsx filename="TexturalVideoDemoTransparent.tsx" {1, 5-9} copy showLineNumbers
 import TexturalVideo from '@madeinhaus/textural-video';
 
 const TexturalVideoDemoTransparent: React.FC = () => {
