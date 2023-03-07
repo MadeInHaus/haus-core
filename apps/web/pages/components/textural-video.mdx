@@ -1,6 +1,6 @@
 # TexturalVideo
 
-The quick brown fox jumps over the lazy dog.
+The TexturalVideo component renders a HTML5 video element with `mp4` and `webm` sources. It uses the useIntersectionObserver hook to play/pause the video based on whether it is currently in the viewport. It also has options to set the `className`, `isTransparent`, `threshold`, `poster`, `title` props, and other attributes of the HTML video element.
 
 ## Installation
 
@@ -25,6 +25,63 @@ import { Tab, Tabs } from 'nextra-theme-docs';
     </Tab>
 </Tabs>
 
+## Props
+
+- `className`: A string that represents the class name(s) of the video element. Optional.
+- `isTransparent`: A boolean that indicates whether the video has a transparent background or not. Optional.
+- `mp4`: A string that represents the URL of the `.mp4` video file. Required.
+- `webm`: A string that represents the URL of the `.webm` video file. Required.
+- `poster`: A string that represents the URL of the poster image for the video. Optional.
+- `threshold`: A number that represents the percentage of the video element that needs to be visible in the viewport to start playing the video. Optional.
+- `title`: A string that represents the title of the video element. Optional.
+- Other props: Any other valid HTML video attributes.
+
 ## Import
 
 `import TexturalVideo from '@madeinhaus/textural-video';`
+
+## Usage
+
+import {
+  TexturalVideoDemoBasic,
+  TexturalVideoDemoTransparent,
+} from '../../components/TexturalVideoDemo';
+
+### Basic Usage
+
+```tsx filename="TexturalVideoDemoBasic.tsx"{1, 5-8} copy showLineNumbers
+import TexturalVideo from '@madeinhaus/textural-video';
+
+const TexturalVideoDemoBasic: React.FC = () => {
+  return (
+    <TexturalVideo
+      mp4="https://videos.ctfassets.net/j8tkpy1gjhi5/4YWtNzFROCQBTLFmgt0GtC/46b15d9fbb9a6f5af12819461a37bfc9/Tillamook_Desktop_v7.mp4"
+      webm="https://videos.ctfassets.net/j8tkpy1gjhi5/3vr3eDCt4firB4lb5snVrc/c55eb5261efbe9cf0f8489e5aa4b5ab4/Tillamook_Desktop_v7.webm"
+    />
+  );
+};
+
+export default TexturalVideoDemoBasic;
+```
+
+<TexturalVideoDemoBasic />
+
+### Transparent Usage
+
+```tsx filename="TexturalVideoDemoTransparent.tsx" {1, 5-9} copy showLineNumbers
+import TexturalVideo from '@madeinhaus/textural-video';
+
+const TexturalVideoDemoTransparent: React.FC = () => {
+  return (
+    <TexturalVideo
+      mp4="https://happiest.madeinhaus.com/videos/laughs.mp4"
+      webm="https://happiest.madeinhaus.com/videos/laughs.webm"
+      isTransparent
+    />
+  );
+};
+
+export default TexturalVideoDemoTransparent;
+```
+
+<TexturalVideoDemoTransparent />

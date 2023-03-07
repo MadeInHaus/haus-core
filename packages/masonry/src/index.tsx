@@ -7,7 +7,7 @@ import { useWindowSize } from '../../hooks/src/useWindowSize';
 import styles from './Masonry.module.scss';
 
 export interface MasonryProps {
-    breakpointCols: {
+    breakpointCols?: {
         default: number;
         [key: number]: number;
     };
@@ -19,7 +19,7 @@ export interface MasonryProps {
 const DEFAULT_COLUMNS = 2;
 
 const Masonry = ({
-    breakpointCols,
+    breakpointCols = { default: DEFAULT_COLUMNS },
     className,
     columnClassName,
     children,
