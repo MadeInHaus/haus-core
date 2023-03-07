@@ -4,7 +4,7 @@ import ContentfulImage from '@madeinhaus/contentful-image';
 
 import styles from './ContentfulImageDemo.module.css';
 
-const ContentfulImageDemo: React.FC = () => {
+const ContentfulImageDemoBasic: React.FC = () => {
   return (
     <div className={styles.root}>
       <ContentfulImage
@@ -22,4 +22,4 @@ const ContentfulImageDemo: React.FC = () => {
   );
 };
 
-export default ContentfulImageDemo;
+export default ContentfulImageDemoBasic;

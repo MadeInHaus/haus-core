@@ -47,9 +47,9 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Usage
 
-import ContentfulImageDemo from '../../components/ContentfulImageDemo';
+import { ContentfulImageDemoBasic } from '../../components/ContentfulImageDemo';
 
-<ContentfulImageDemo />
+<ContentfulImageDemoBasic />
 
 ### Basic Usage
 
@@ -57,7 +57,7 @@ import ContentfulImageDemo from '../../components/ContentfulImageDemo';
 import ContentfulImage from '@madeinhaus/contentful-image';
 import styles from './ContentfulImageDemo.module.css';
 
-const ContentfulImageDemo: React.FC = () => {
+const ContentfulImageDemoBasic: React.FC = () => {
   return (
     <div className={styles.root}>
       <ContentfulImage
@@ -75,7 +75,7 @@ const ContentfulImageDemo: React.FC = () => {
   );
 };
 
-export default ContentfulImageDemo;
+export default ContentfulImageDemoBasic;
 ```
 
 ## Notes
