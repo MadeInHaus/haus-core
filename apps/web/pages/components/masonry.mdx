@@ -1,6 +1,6 @@
 # Masonry
 
-The quick brown fox jumps over the lazy dog.
+The Masonry component is a useful tool for creating responsive grid layouts with varying column widths. It is highly customizable with the `breakpointCols`, `className`, and `columnClassName` props, and can be easily integrated into any React project.
 
 ## Installation
 
@@ -28,3 +28,55 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 ## Import
 
 `import Masonry from '@madeinhaus/masonry';`
+
+## Props
+
+| Prop Name         | Type                                         | Default          | Required? | Description                                                                          |
+| ----------------- | -------------------------------------------- | ---------------- | --------- | ------------------------------------------------------------------------------------ |
+| `breakpointCols`  | `{ default: number, [key: number]: number }` | `{ default: 2 }` | No        | An object that specifies the number of columns to be used at various breakpoints.    |
+| `className`       | `string`                                     | `undefined`      | No        | A string that allows for adding a CSS class to the root element of the component.    |
+| `columnClassName` | `string`                                     | `undefined`      | No        | A string that allows for adding a CSS class to the column elements of the component. |
+| `children`        | `React.ReactNode`                            | `undefined`      | Yes       | The child elements to be rendered in the Masonry component.                          |
+
+## Usage
+
+import { MasonryDemoBasic } from '../../components/MasonryDemo';
+
+```tsx filename="MasonryDemoBasic.tsx" {1,9-30}  copy showLineNumbers
+import Masonry from '@madeinhaus/masonry';
+import styles from './MasonryDemo.module.css';
+
+const dog = '/assets/images/dogs/n02097047_1028.jpg';
+const dogs = new Array(20).fill(dog);
+
+const MasonryDemoBasic: React.FC = () => {
+  return (
+    <Masonry
+      breakpointCols={{
+        default: 2,
+        768: 3,
+        1024: 4,
+      }}
+    >
+      {dogs.map((_, index) => {
+        return (
+          <img
+            className={styles.image}
+            key={index}
+            src={dog}
+            style={
+              {
+                '--image-height': `${Math.floor(300 + Math.random() * (500 - 300 + 1))}px`,
+              } as React.CSSProperties
+            }
+          />
+        );
+      })}
+    </Masonry>
+  );
+};
+
+export default MasonryDemoBasic;
+```
+
+<MasonryDemoBasic />
