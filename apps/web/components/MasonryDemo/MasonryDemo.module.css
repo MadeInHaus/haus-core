@@ -1,5 +1,20 @@
+.item {
+  position: relative;
+}
+
 .image {
   width: 100%;
   height: var(--image-height);
   object-fit: cover;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: hsl(var(--nextra-primary-hue) 100% 45%);
+  background-color: hsl(var(--nextra-primary-hue) 100% 97% / var(--tw-bg-opacity));
+  padding: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  z-index: 1;
 }
