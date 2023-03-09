@@ -9,8 +9,9 @@ const MasonryDemoBasic: React.FC = () => {
   return (
     <Masonry
       breakpointCols={{
-        default: 3,
-        768: 4,
+        default: 2,
+        768: 3,
+        1024: 4,
       }}
     >
       {images.map((src, index) => {
