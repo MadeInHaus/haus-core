@@ -33,6 +33,7 @@ const config: DocsThemeConfig = {
     component: null,
   },
   navigation: false,
+  primaryHue: 300,
 };
 
 export default config;
