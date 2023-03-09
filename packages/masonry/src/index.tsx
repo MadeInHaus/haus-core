@@ -72,17 +72,10 @@ const Masonry = ({
 
     const renderColumns = () => {
         const childrenInColumns = itemsInColumns();
-        const columnWidth = `${100 / childrenInColumns.length}%`;
 
         return childrenInColumns.map((items, index) => {
             return (
-                <div
-                    className={columnClassName}
-                    style={{
-                        width: columnWidth,
-                    }}
-                    key={index}
-                >
+                <div className={cx(styles.column, columnClassName)} key={index}>
                     {items}
                 </div>
             );
