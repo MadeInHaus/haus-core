@@ -10,5 +10,4 @@
   background-color: hsl(var(--nextra-primary-hue) 100% 97% / var(--tw-bg-opacity));
   padding: 0.5rem;
   border-bottom-right-radius: 0.5rem;
-  z-index: 1;
 }
