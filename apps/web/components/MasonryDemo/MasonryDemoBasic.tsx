@@ -13,10 +13,10 @@ const MasonryDemoBasic: React.FC = () => {
         768: 3,
       }}
     >
-      {images.map((image, index) => {
+      {images.map((src, index) => {
         return (
           <div key={index} className={styles.item}>
-            <img src={image} />
+            <img src={src} />
             <h2 className={styles.label}>
               {index + 1} <br />
             </h2>
