@@ -68,21 +68,18 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 - `breakpointCols`: an object that specifies the number of columns to be used at various breakpoints. This prop is optional and defaults to `{ default: 2 }`.
 - `className`: a string that allows for adding a CSS class to the root element of the component.
 - `columnClassName`: a string that allows for adding a CSS class to the column elements of the component.
-- `children`: a required prop that represents the child elements to be rendered in the Masonry component. |
+- `children`: a required prop that represents the child elements to be rendered in the Masonry component.
 
 ## Usage
 
 import { MasonryDemoBasic } from '../../components/MasonryDemo';
 
-```tsx filename="MasonryDemoBasic.tsx" {1,9-25}  copy showLineNumbers
+```tsx filename="MasonryDemoBasic.tsx" {1,6-23}  copy showLineNumbers
 import Masonry from '@madeinhaus/masonry';
-import { useSSG } from 'nextra/ssg';
-
 import styles from './MasonryDemo.module.css';
 
-const MasonryDemoBasic: React.FC = () => {
-  const { images }: { images: string[] } = useSSG();
-
+const MasonryDemoBasic: React.FC = ({ images }: { images: string[] }) => {
+  return (
     <Masonry
       breakpointCols={{
         default: 2,
@@ -90,14 +87,14 @@ const MasonryDemoBasic: React.FC = () => {
         1024: 4,
       }}
     >
-      {images.map((image, index) => {
+      {images.map((src, index) => {
         return (
-          <div key={index} className={styles.item}>
-            <img src={image} />
-            <h2 className={styles.label}>
-              Index: {index} <br />
-            </h2>
-          </div>
+          <figure key={index} className={styles.item}>
+            <img src={src} />
+            <figcaption className={styles.caption}>
+              {index + 1} <br />
+            </figcaption>
+          </figure>
         );
       })}
     </Masonry>
@@ -105,6 +102,23 @@ const MasonryDemoBasic: React.FC = () => {
 };
 
 export default MasonryDemoBasic;
+```
+
+```css filename="MasonryDemo.module.css" copy showLineNumbers
+.item {
+  position: relative;
+}
+
+.caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: hsl(var(--nextra-primary-hue) 100% 45%);
+  background-color: hsl(var(--nextra-primary-hue) 100% 97% / var(--tw-bg-opacity));
+  padding: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  z-index: 1;
+}
 ```
 
 <MasonryDemoBasic />

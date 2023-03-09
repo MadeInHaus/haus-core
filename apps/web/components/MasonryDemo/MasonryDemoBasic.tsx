@@ -16,12 +16,12 @@ const MasonryDemoBasic: React.FC = () => {
     >
       {images.map((src, index) => {
         return (
-          <div key={index} className={styles.item}>
+          <figure key={index} className={styles.item}>
             <img src={src} />
-            <h2 className={styles.label}>
+            <figcaption className={styles.caption}>
               {index + 1} <br />
-            </h2>
-          </div>
+            </figcaption>
+          </figure>
         );
       })}
     </Masonry>
