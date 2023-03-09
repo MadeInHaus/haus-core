@@ -16,41 +16,29 @@ export interface MasonryProps {
     children: React.ReactNode;
 }
 
-const DEFAULT_COLUMNS = 2;
-
 const Masonry = ({
-    breakpointCols = { default: DEFAULT_COLUMNS },
+    breakpointCols = { default: 2 },
     className,
     columnClassName,
     children,
-    ...rest
 }: MasonryProps) => {
-    const [columnCount, setColumnCount] = useState(breakpointCols?.default || DEFAULT_COLUMNS);
+    const [columnCount, setColumnCount] = useState(breakpointCols.default);
 
     const { width: windowWidth } = useWindowSize();
 
-    const reCalculateColumnCount = () => {
-        let breakpointColsObject = breakpointCols;
+    const calculateColumnCount = () => {
+        let columns = breakpointCols.default;
 
-        // Allow passing a single number to `breakpointCols` instead of an object
-        if (typeof breakpointColsObject !== 'object') {
-            breakpointColsObject = {
-                default: parseInt(breakpointColsObject) || DEFAULT_COLUMNS,
-            };
-        }
-
-        let columns = breakpointColsObject.default || DEFAULT_COLUMNS;
-
-        for (let breakpoint in breakpointColsObject) {
+        for (let breakpoint in breakpointCols) {
             if (windowWidth && Number(breakpoint) <= windowWidth) {
-                columns = breakpointColsObject[breakpoint];
+                columns = breakpointCols[breakpoint];
             }
         }
 
         setColumnCount(columns);
     };
 
-    const itemsInColumns = () => {
+    const getItemsInColumns = () => {
         const currentColumnCount = columnCount;
         const itemsInColumns = new Array(currentColumnCount);
 
@@ -71,7 +59,7 @@ const Masonry = ({
     };
 
     const renderColumns = () => {
-        const childrenInColumns = itemsInColumns();
+        const childrenInColumns = getItemsInColumns();
 
         return childrenInColumns.map((items, index) => {
             return (
@@ -83,15 +71,10 @@ const Masonry = ({
     };
 
     useEffect(() => {
-        reCalculateColumnCount();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        calculateColumnCount();
     }, [windowWidth]);
 
-    return (
-        <div {...rest} className={cx(styles.root, className)}>
-            {renderColumns()}
-        </div>
-    );
+    return <div className={cx(styles.root, className)}>{renderColumns()}</div>;
 };
 
 export default Masonry;
