@@ -1,5 +1,11 @@
 # @madeinhaus/textural-video
 
+## 1.2.0
+
+### Minor Changes
+
+- b9a3740: Removes sourcemaps option from rollup config
+
 ## 1.1.0
 
 ### Minor Changes
