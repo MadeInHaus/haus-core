@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 1.2.1
+
+### Patch Changes
+
+- 3de6b74: Fix page transitions when used without PageTransitionContext
+
 ## 1.2.0
 
 ### Minor Changes
