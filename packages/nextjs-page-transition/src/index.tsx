@@ -102,7 +102,7 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
     const [localState, setLocalState] = React.useState<PageTransitionState>(initialState);
     const contextState = React.useContext(StateContext);
     const setContextState = React.useContext(DispatchContext);
-    const state = contextState ?? localState;
+    const state = setContextState ? contextState : localState;
     const setState = setContextState ?? setLocalState;
     const phase = state.phase;
 
