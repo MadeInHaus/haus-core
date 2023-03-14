@@ -77,11 +77,14 @@ import {
 
 ### Basic Usage
 
-```tsx filename="DisclosureDemoBasic.tsx" {1,6-13} copy showLineNumbers
+```tsx filename="DisclosureDemoBasic.tsx" {1,9-16} copy showLineNumbers
 import Disclosure from '@madeinhaus/disclosure';
-import items from './data/items';
 
-function DisclosureDemoBasic() {
+const DisclosureDemoBasic: React.FC = ({
+  items,
+}: {
+  items: { heading: string; paragraph: string }[];
+}) => {
   return (
     <Disclosure.Root>
       {items.map(({ heading, paragraph }, index) => (
@@ -92,7 +95,7 @@ function DisclosureDemoBasic() {
       ))}
     </Disclosure.Root>
   );
-}
+};
 
 export default DisclosureDemoBasic;
 ```
@@ -101,11 +104,14 @@ export default DisclosureDemoBasic;
 
 ### Usage With Render Prop
 
-```tsx filename="DisclosureDemoRenderProp.tsx" {1,6-19} copy showLineNumbers
+```tsx filename="DisclosureDemoRenderProp.tsx" {1,9-22} copy showLineNumbers
 import Disclosure from '@madeinhaus/disclosure';
-import items from './data/items';
 
-function DisclosureDemoRenderProp() {
+const DisclosureDemoRenderProp: React.FC = ({
+  items,
+}: {
+  items: { heading: string; paragraph: string }[];
+}) => {
   return (
     <Disclosure.Root>
       {items.map(({ heading, paragraph }, index) => (
@@ -122,7 +128,7 @@ function DisclosureDemoRenderProp() {
       ))}
     </Disclosure.Root>
   );
-}
+};
 
 export default DisclosureDemoRenderProp;
 ```
@@ -131,24 +137,24 @@ export default DisclosureDemoRenderProp;
 
 ### Usage With Styles
 
-```tsx filename="DisclosureDemoWithStyles.tsx" {1,9-16} copy showLineNumbers
+```tsx filename="DisclosureDemoWithStyles.tsx" {1,10-17} copy showLineNumbers
 import Disclosure from '@madeinhaus/disclosure';
-
-import disclosureItems from './data/disclosureItems';
 import styles from './DisclosureDemo.module.css';
 
-const DisclosureDemoWithStyles: React.FC = () => {
+const DisclosureDemoWithStyles: React.FC = ({
+  items,
+}: {
+  items: { heading: string; paragraph: string }[];
+}) => {
   return (
-    <div className={styles.root}>
-      <Disclosure.Root>
-        {disclosureItems.map(({ heading, paragraph }, index) => (
-          <Disclosure.Details key={index}>
-            <Disclosure.Summary className={styles.summary}>{heading}</Disclosure.Summary>
-            <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
-          </Disclosure.Details>
-        ))}
-      </Disclosure.Root>
-    </div>
+    <Disclosure.Root className={styles.root}>
+      {items.map(({ heading, paragraph }, index) => (
+        <Disclosure.Details key={index}>
+          <Disclosure.Summary className={styles.summary}>{heading}</Disclosure.Summary>
+          <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
+        </Disclosure.Details>
+      ))}
+    </Disclosure.Root>
   );
 };
 
