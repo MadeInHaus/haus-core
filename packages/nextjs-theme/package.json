@@ -41,7 +41,7 @@
     "bugs": {
         "url": "https://github.com/MadeInHaus/haus-core/issues"
     },
-    "homepage": "https://github.com/MadeInHaus/haus-core#readme",
+    "homepage": "https://hauscore.xyz/components-nextjs/theme",
     "peerDependencies": {
         "next": ">=13",
         "react": ">=18",
