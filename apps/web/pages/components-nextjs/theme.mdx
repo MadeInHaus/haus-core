@@ -1,0 +1,130 @@
+# Theme
+
+Adds theme support to your Next.js app. By default implements FOUC-free light
+and dark theme, but can be configured to support any number of themes.
+
+The current theme is set on the `<html>` element's `data-theme` attribute,
+which can be used to apply theme-specific styles, for example:
+
+```css filename="theme.css" copy showLineNumbers=true
+:root[data-theme='light'] {
+  --color-primary: #000;
+  --color-secondary: #333;
+}
+
+:root[data-theme='dark'] {
+  --color-primary: #fff;
+  --color-secondary: #ccc;
+}
+```
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/theme
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/theme
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/theme
+        ```
+    </Tab>
+</Tabs>
+
+## Usage
+
+To enable themes in your app, you have to add the components ThemeProvider to
+`_app.tsx` and ThemeScript to `_document.tsx`, as follows:
+
+### ThemeProvider
+
+ThemeProvider is a wrapper component that provides the theme context to the
+entire app. Via context all components have access to the current theme, the
+theme configuration and a function to set the theme manually.
+
+It also keeps track of the user's preferred theme, stores it in localStorage
+and updates the `data-theme` attribute on the `<html>` element.
+
+```tsx filename="_app.tsx" {2,6,8} copy showLineNumbers=true
+import type { AppProps } from 'next/app';
+import { ThemeProvider } from '@madeinhaus/theme';
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <ThemeProvider>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
+};
+
+export default App;
+```
+
+### ThemeScript
+
+ThemeScript installs a script in the `<head>` element that runs on app load.
+It initializes the `data-theme` attribute on the `<html>` element to the user's
+preferred theme (from localStorage if available, otherwise either the default
+or the system theme).
+
+This happens early in the app load process, so that the theme is applied long
+before the app is hydrated. This means that the app will render with the correct
+theme on the first load, preventing a flash of unstyled content.
+
+```tsx filename="_document.tsx" {2,7-9} copy showLineNumbers=true
+import { Html, Head, Main, NextScript } from 'next/document';
+import { ThemeScript } from '@madeinhaus/theme';
+
+export default function Document() {
+  return (
+    <Html>
+      <Head>
+        <ThemeScript />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+```
+
+### useTheme
+
+In any descendent component of ThemeProvider, you can use the `useTheme` hook
+to access the current theme, the theme configuration and a function to set the
+theme manually.
+
+```tsx filename="pages/index.tsx" {1,4} copy showLineNumbers=true
+import { useTheme } from '@madeinhaus/theme';
+
+const Index = () => {
+  const { theme, themeValue, setTheme } = useTheme();
+  return (
+    <div>
+      <p>Current theme: {theme}</p>
+      <p>Current theme value: {themeValue}</p>
+      <button onClick={() => setTheme('light')}>Set theme to 'light'</button>
+      <button onClick={() => setTheme('dark')}>Set theme to 'dark'</button>
+      <button onClick={() => setTheme('auto')}>Set theme to 'auto'</button>
+    </div>
+  );
+};
+
+export default Index;
+```
+
+## Customized themes
+
+TBD
