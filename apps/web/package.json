@@ -25,6 +25,7 @@
     "@madeinhaus/hooks": "*",
     "@madeinhaus/masonry": "*",
     "@madeinhaus/nextjs-page-transition": "*",
+    "@madeinhaus/nextjs-theme": "*",
     "@madeinhaus/portal": "*",
     "@madeinhaus/textural-video": "*",
     "@madeinhaus/utils": "*",
