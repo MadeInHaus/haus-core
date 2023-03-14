@@ -102,9 +102,24 @@ export default function Document() {
 
 ### useTheme
 
-In any descendent component of ThemeProvider, you can use the `useTheme` hook
+In any descendent component of ThemeProvider, you can use the useTheme hook
 to access the current theme, the theme configuration and a function to set the
 theme manually.
+
+The useTheme hook returns a ThemeContextType object with the following properties:
+
+- **`theme`**: _string (default: value of themedDef.defaultTheme)_<br />
+  The current theme, either `'light'`, `'dark'` or `'auto'`.
+- **`themeValue`**: _string_<br />
+  The current theme value, either `'light'` or `'dark'`. If the
+  current theme is `'auto'`, `themeValue` is resolved to either `'light'`
+  or `'dark'` based on the user's system theme. This value is also set on
+  the `<html>` element's `data-theme` attribute.
+- **`themesDef`**: ThemeDefType<br />
+  An object containing the theme configuration.
+- **`setTheme`**: _(theme: string) => void_<br />
+  A function to set the theme manually. Takes a theme as an
+  argument, either `'light'`, `'dark'` or `'auto'`.
 
 ```tsx filename="pages/index.tsx" {1,4} copy showLineNumbers=true
 import { useTheme } from '@madeinhaus/theme';
