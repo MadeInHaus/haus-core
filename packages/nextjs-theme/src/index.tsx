@@ -28,6 +28,7 @@ export interface ThemeScriptProps {
 interface ThemeInternalType {
     theme: string | null;
     themeValue: string | null;
+    themesDef: ThemeDefType;
 }
 
 interface ThemeContextType extends ThemeInternalType {
@@ -45,6 +46,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     const [{ theme, themeValue }, setThemeInternal] = React.useState<ThemeInternalType>({
         theme: null,
         themeValue: null,
+        themesDef,
     });
 
     const getThemeValue = React.useCallback(
@@ -67,10 +69,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
             if (theme) {
                 const themeValue = getThemeValue(theme, isSystemDarkMode);
                 document.documentElement.dataset.theme = themeValue;
-                setThemeInternal({ theme, themeValue });
+                setThemeInternal({ theme, themeValue, themesDef });
             }
         },
-        [getThemeValue]
+        [getThemeValue, themesDef]
     );
 
     const setTheme = React.useCallback(
@@ -87,7 +89,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         const themeNew = saved ?? themesDef.defaultTheme;
         const themeValueNew = getThemeValue(themeNew, mql.matches);
         if (themeNew !== theme || themeValueNew !== themeValue) {
-            setThemeInternal({ theme: themeNew, themeValue: themeValueNew });
+            setThemeInternal({ theme: themeNew, themeValue: themeValueNew, themesDef });
         }
         const handleChange = (event: MediaQueryListEvent) => {
             applyTheme(theme, event.matches);
@@ -97,7 +99,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     }, [theme, themeValue, localStorageKey, themesDef, getThemeValue, applyTheme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, themeValue, setTheme }}>
+        <ThemeContext.Provider value={{ theme, themeValue, themesDef, setTheme }}>
             {children}
         </ThemeContext.Provider>
     );
