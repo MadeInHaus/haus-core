@@ -125,14 +125,14 @@ The useTheme hook returns a ThemeContextType object with the following propertie
 import { useTheme } from '@madeinhaus/theme';
 
 const Index = () => {
-  const { theme, themeValue, setTheme } = useTheme();
+  const { theme, themeValue, themesDef, setTheme } = useTheme();
   return (
     <div>
       <p>Current theme: {theme}</p>
       <p>Current theme value: {themeValue}</p>
-      <button onClick={() => setTheme('light')}>Set theme to 'light'</button>
-      <button onClick={() => setTheme('dark')}>Set theme to 'dark'</button>
-      <button onClick={() => setTheme('auto')}>Set theme to 'auto'</button>
+      {themesDef.themes.map(theme => (
+        <button onClick={() => setTheme(theme)}>Set theme to '{theme}'</button>
+      ))}
     </div>
   );
 };
