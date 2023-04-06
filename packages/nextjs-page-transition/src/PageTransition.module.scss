@@ -1,5 +1,5 @@
 .transition-appear {
-    opacity: 0.0001;
+    opacity: 0.001;
 }
 
 .transition-in {
@@ -16,7 +16,7 @@
 
 @keyframes fadeIn {
     0% {
-        opacity: 0.0001;
+        opacity: 0.001;
     }
 
     100% {
@@ -30,6 +30,6 @@
     }
 
     100% {
-        opacity: 0;
+        opacity: 0.001;
     }
 }
