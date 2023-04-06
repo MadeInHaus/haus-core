@@ -3,11 +3,11 @@
 }
 
 .transition-in {
-    animation: fadeIn var(--transition-in-duration, 600ms) linear forwards;
+    animation: fadeIn var(--transition-in-duration, 600ms) linear both;
 }
 
 .transition-out {
-    animation: fadeOut var(--transition-out-duration, 600ms) linear forwards;
+    animation: fadeOut var(--transition-out-duration, 600ms) linear both;
 }
 
 .transition-idle {
