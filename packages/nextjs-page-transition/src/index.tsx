@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import cx from 'clsx';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getHash, removeHash } from '../../utils/src/url';
 import { useNextCssRemovalPrevention } from './helpers/useNextCssRemovalPrevention';
@@ -250,6 +251,13 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
 
     return (
         <Wrapper ref={ref} className={rootClasses} style={rootStyle}>
+            {!disableDefaultStyles && (
+                <Head>
+                    <style type="text/css">
+                        {`${styles['transition-appear']} { opacity: 0.001; }`}
+                    </style>
+                </Head>
+            )}
             {currentChild}
         </Wrapper>
     );
