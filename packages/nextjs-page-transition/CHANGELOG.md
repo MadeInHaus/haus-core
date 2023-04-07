@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 1.2.3
+
+### Patch Changes
+
+- 9d47224: Set opacity to 0.001 as soon as possible to prevent flash on load
+
 ## 1.2.2
 
 ### Patch Changes
