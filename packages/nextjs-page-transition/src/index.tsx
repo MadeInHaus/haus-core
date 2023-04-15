@@ -279,7 +279,7 @@ export const usePageTransitionState = (): PageTransitionState => {
     return React.useContext(StateContext);
 };
 
-export { Link } from './helpers/Link';
+export { Link, type LinkProps } from './helpers/Link';
 export { useAsPathWithoutHash } from './helpers/useAsPathWithoutHash';
 export { useNextCssRemovalPrevention } from './helpers/useNextCssRemovalPrevention';
 
