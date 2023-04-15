@@ -75,6 +75,5 @@ export function getHash(url: string): string {
 export function getLastSegment(url: string = ''): string | undefined {
     const { pathname } = new URL(url, 'http://a');
     const segments = pathname.split('/');
-    console.log(segments);
     return segments.length > 1 ? segments[segments.length - 1].trim() || undefined : undefined;
 }
