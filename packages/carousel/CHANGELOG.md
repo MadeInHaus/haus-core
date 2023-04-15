@@ -1,5 +1,11 @@
 # @madeinhaus/carousel
 
+## 1.1.1
+
+### Patch Changes
+
+- 1283131: Bugfix: Adapt to stronger typed 'last()' util function
+
 ## 1.1.0
 
 ### Minor Changes
