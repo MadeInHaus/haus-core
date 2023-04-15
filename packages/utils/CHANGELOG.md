@@ -1,5 +1,11 @@
 # @madeinhaus/utils
 
+## 1.1.0
+
+### Minor Changes
+
+- 26f0ca8: Add lerp, mapRange, truncate and getLastSegment
+
 ## 1.0.0
 
 ### Major Changes
