@@ -1,5 +1,5 @@
 // Get the last item of an array
-export function last(array: any[]) {
+export function last<T>(array: T[]): T | undefined {
     return Array.isArray(array) ? array[array.length - 1] : undefined;
 }
 
