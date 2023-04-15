@@ -1,5 +1,11 @@
 # @madeinhaus/utils
 
+## 1.1.1
+
+### Patch Changes
+
+- 9be3196: Remove log
+
 ## 1.1.0
 
 ### Minor Changes
