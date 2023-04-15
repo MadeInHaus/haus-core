@@ -691,7 +691,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
                 wheelDirection.current = sign(d);
                 wheelData.current = [{ t, d }];
             } else {
-                const dt = t - last(wheelData.current).t;
+                const dt = t - (last(wheelData.current)?.t ?? t);
                 wheelData.current.push({ t, dt, d });
             }
         }
@@ -773,7 +773,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
             } else if (!wheelInertia.current) {
                 // Inertia
                 const latestData = last(wheelData.current);
-                if (latestData.dt) {
+                if (latestData?.dt) {
                     const v0 = -latestData.d / latestData.dt;
                     if (v0 !== 0) {
                         // console.log(`[handleWheel] calling animateThrow`, {
