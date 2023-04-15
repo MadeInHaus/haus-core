@@ -39,6 +39,12 @@ export function preloadImage(url: string): Promise<HTMLImageElement> {
     });
 }
 
+/**
+ * Remove the hash from an URL.
+ *
+ * @param {string} url The URL.
+ * @return {string} The URL without the hash.
+ */
 export function removeHash(url: string): string {
     const urlBase = 'http://a';
     const urlObj = new URL(url, urlBase);
@@ -49,6 +55,26 @@ export function removeHash(url: string): string {
     return `${urlObj.pathname}${urlObj.search}`;
 }
 
+/**
+ * Get the hash from an URL.
+ *
+ * @param {string} url The URL.
+ * @return {string} The Hash ('#' followed by the fragment identifier of the URL).
+ */
 export function getHash(url: string): string {
     return new URL(url, 'http://a').hash;
+}
+
+/**
+ * Get the last segment of an URL. This might be a slug, or a file name.
+ * Returns undefined if the URL has no segments.
+ *
+ * @param {string} url The URL.
+ * @return {string | undefined} The last segment of the URL, or undefined if no segment exists (for example "/").
+ */
+export function getLastSegment(url: string = ''): string | undefined {
+    const { pathname } = new URL(url, 'http://a');
+    const segments = pathname.split('/');
+    console.log(segments);
+    return segments.length > 1 ? segments[segments.length - 1].trim() || undefined : undefined;
 }
