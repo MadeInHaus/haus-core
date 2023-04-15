@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 1.2.4
+
+### Patch Changes
+
+- 88c2ca5: Fix LinkType to allow HTMLAnchorElement attributes as props
+
 ## 1.2.3
 
 ### Patch Changes
