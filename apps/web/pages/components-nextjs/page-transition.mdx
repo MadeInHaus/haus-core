@@ -7,12 +7,18 @@ One-stop solution for implementing page transitions in Next.js.
 Takes care of
 
 - keeping the outgoing page mounted until the out phase is complete
-- preventing Next.js from removing page styles of the outgoing page
+- preventing Next.js from removing page styles of the outgoing page too soon
 - restoring scroll position
+- handling anchor links correctly
 
 <Callout type="info">
   Cross-fade transitions (or any kind of transition where the out and in phases overlap) are not
   supported by this package.
+</Callout>
+
+<Callout type="warning">
+  PageTransition has not been tested (and may not work at all) running in the app folder of a
+  Next.js project.
 </Callout>
 
 ## Installation
@@ -102,7 +108,7 @@ which returns the current transition state.
 ```tsx filename="components/Header.tsx" {4} copy showLineNumbers=true
 import { usePageTransitionState } from '@madeinhaus/nextjs-page-transition';
 
-const Header: React.FC = () => {
+const Header = () => {
   const { phase } = usePageTransitionState();
   return (
     <header>
@@ -123,24 +129,38 @@ the exception that it sets `scroll={false}` by default.
 
 ## useNextCssRemovalPrevention
 
-Next.js removes page styles of the outgoing page as soon as the new page is
-mounted. As PageTransition keeps that page mounted until the out phase
-is complete, this would break the page. This hook prevents the removal of
-page styles during the out phase of the transition.
+Next.js removes the styles of the outgoing page as soon as the new page is
+mounted. Since PageTransition keeps the outgoing page mounted until the 'out'
+phase is complete, this could cause the page to break.
 
-Note that PageTransition already takes care of calling useNextCssRemovalPrevention
-for you, so you only need to explicitliy call it if you do not use PageTransition,
-but other means to keep the outgoing page mounted, such as Framer Motion's
-AnimatePresence, react-transition-group etc.
+This hook prevents the removal of page styles on route change and during
+the 'out' phase of the transition.
 
-This hook is not needed if your app does not make use of page stylesheets,
-such as CSS-in-JS solutions like styled-jsx, styled-components, emotion,
-tailwind etc.
+Please note that PageTransition already takes care of calling
+this hook for you, so you only need to explicitly call it
+if you're not using PageTransition but other methods to keep the outgoing
+page mounted, such as Framer Motion's AnimatePresence,
+react-transition-group, etc.
+
+This hook returns a function that you can call to remove unused styles when
+the 'out' phase of the transition is complete and the new page mounts.
+You don't need to do this (useNextCssRemovalPrevention will take care of it
+automatically), but it's a good idea to do it anyway to prevent CSS scope
+collisions. Unused styles are only removed at the next route change, so
+lingering styles from the outgoing page can potentially override styles
+of the incoming page (PageTransition takes care of this automatically, so
+you only need to worry about it if you're using your own page transition
+solution).
+
+<Callout type="info">
+  This hook is not necessary if your app does not utilize page stylesheets, but CSS-in-JS solutions
+  like styled-jsx, styled-components, emotion, tailwind, etc.
+</Callout>
 
 ## useTransitionState
 
 Returns the current transition state. Requires PageTransitionContext to be
-used in the component tree, as an acestor of both PageTransition and the
+used in the component tree, as an ancestor of both PageTransition and the
 component using this hook.
 
 ```tsx copy showLineNumbers=true
@@ -162,11 +182,11 @@ enum PageTransitionPhase {
 
 ## useAsPathWithoutHash
 
-A convenience hook that returns the router's current `asPath` without
-the hash part, to be used as the `key` prop of the page component.
+A convenience hook that returns the router's current asPath without the hash
+part, to be used as the key prop for the page component.
 
-If `asPath` is used as the `key` prop, React will unmout the page component
-and mount a new one when the hash part of the URL changes. This is not
-desirable, anchor links within a page should not trigger a page transition.
-This hook returns the `asPath` without the hash part, so that the page component
-is not unmounted when the hash part changes.
+If asPath is used as the key prop, React will unmount the page component and
+mount a new one when the hash part of the URL changes. This is not desirable,
+as anchor links within a page should not trigger a page transition. This hook
+returns the asPath without the hash part, ensuring that the page component is
+not unmounted when the hash part changes.
