@@ -102,7 +102,7 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
         children,
     } = props;
 
-    useNextCssRemovalPrevention();
+    const removeExpiredStyles = useNextCssRemovalPrevention();
 
     const saveScrollPos = onSaveScrollPos ?? saveScrollPosDefault;
     const retrieveScrollPos = onRetrieveScrollPos ?? retrieveScrollPosDefault;
@@ -192,18 +192,6 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
     }, [router, phase, updateState, saveScrollPos, retrieveScrollPos]);
 
     React.useEffect(() => {
-        const handleOutComplete = () => {
-            const _nextChild = nextChild.current;
-            const nextPhase = _nextChild ? PageTransitionPhase.APPEAR : PageTransitionPhase.IDLE;
-            nextChild.current = null;
-            setCurrentChild(_nextChild);
-            updateState({ phase: nextPhase });
-        };
-
-        const handleInComplete = () => {
-            updateState({ phase: PageTransitionPhase.IDLE });
-        };
-
         const transitionOut = (next: React.ReactElement) => {
             nextChild.current = next;
             clearTimeout(timeout.current);
@@ -211,10 +199,23 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
             updateState({ phase: PageTransitionPhase.OUT });
         };
 
+        const handleOutComplete = () => {
+            const _nextChild = nextChild.current;
+            const nextPhase = _nextChild ? PageTransitionPhase.APPEAR : PageTransitionPhase.IDLE;
+            nextChild.current = null;
+            setCurrentChild(_nextChild);
+            updateState({ phase: nextPhase });
+            removeExpiredStyles();
+        };
+
         const transitionIn = () => {
             clearTimeout(timeout.current);
             timeout.current = window.setTimeout(handleInComplete, inPhaseDuration);
             updateState({ phase: PageTransitionPhase.IN });
+        };
+
+        const handleInComplete = () => {
+            updateState({ phase: PageTransitionPhase.IDLE });
         };
 
         const restoreScroll = () => {
