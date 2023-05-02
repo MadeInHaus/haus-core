@@ -148,8 +148,15 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
                 doRestoreScroll.current = false;
             };
 
+            const onHashChangeComplete = (url: string) => {
+                if(!getHash(url)) {
+                    window.scrollTo(0, 0);
+                }
+            };
+
             window.addEventListener('beforeunload', onBeforeUnload);
             router.events.on('routeChangeStart', onRouteChangeStart);
+            router.events.on('hashChangeComplete', onHashChangeComplete);
             router.beforePopState(state => {
                 state.options.scroll = false;
                 scrollPos.current = null;
@@ -160,6 +167,7 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
             return () => {
                 window.removeEventListener('beforeunload', onBeforeUnload);
                 router.events.off('routeChangeStart', onRouteChangeStart);
+                router.events.off('hashChangeComplete', onHashChangeComplete);
                 router.beforePopState(() => true);
             };
         }
