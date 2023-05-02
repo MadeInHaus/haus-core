@@ -75,6 +75,21 @@ function retrieveScrollPosDefault(url: string): ScrollPos {
     }
 }
 
+function getFullAsPath({
+    asPath,
+    basePath,
+    locale,
+}: {
+    asPath: string;
+    basePath?: string;
+    locale?: string;
+}): string {
+    let fullAsPath = asPath;
+    if (basePath) fullAsPath = basePath + (fullAsPath === '/' ? '' : fullAsPath);
+    if (locale) fullAsPath = `/${locale}${fullAsPath}`;
+    return fullAsPath;
+}
+
 const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props, ref) => {
     const {
         as: Wrapper = 'main',
@@ -87,7 +102,7 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
         children,
     } = props;
 
-    useNextCssRemovalPrevention();
+    const removeExpiredStyles = useNextCssRemovalPrevention();
 
     const saveScrollPos = onSaveScrollPos ?? saveScrollPosDefault;
     const retrieveScrollPos = onRetrieveScrollPos ?? retrieveScrollPosDefault;
@@ -110,25 +125,28 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
     const updateState = React.useCallback(
         (state: PageTransitionState) => {
             const { phase, currentUrl, targetUrl, phaseOutAnticipated = false } = state;
+            const fullAsPath = getFullAsPath(router);
             const newState: PageTransitionState = {
                 phase,
                 phaseOutAnticipated,
-                targetUrl: removeHash(router.asPath),
+                targetUrl: removeHash(fullAsPath),
                 scrollPosY: scrollPos.current?.y ?? 0,
             };
             if (currentUrl) newState.currentUrl = removeHash(currentUrl);
             if (targetUrl) newState.targetUrl = removeHash(targetUrl);
             setState(newState);
         },
-        [router.asPath, setState]
+        [router, setState]
     );
 
     React.useEffect(() => {
         if ('scrollRestoration' in window.history) {
             window.history.scrollRestoration = 'manual';
 
+            const fullAsPath = getFullAsPath(router);
+
             const onBeforeUnload = (event: BeforeUnloadEvent) => {
-                saveScrollPos(router.asPath, { x: window.scrollX, y: window.scrollY });
+                saveScrollPos(fullAsPath, { x: window.scrollX, y: window.scrollY });
                 delete event.returnValue;
             };
 
@@ -136,20 +154,27 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
                 scrollPos.current = doRestoreScroll.current
                     ? retrieveScrollPos(url)
                     : { x: 0, y: 0, hash: getHash(url) };
-                saveScrollPos(router.asPath, { x: window.scrollX, y: window.scrollY });
-                if (url !== router.asPath) {
+                saveScrollPos(fullAsPath, { x: window.scrollX, y: window.scrollY });
+                if (url !== fullAsPath) {
                     updateState({
                         phase,
                         phaseOutAnticipated: true,
-                        currentUrl: router.asPath,
+                        currentUrl: fullAsPath,
                         targetUrl: url,
                     });
                 }
                 doRestoreScroll.current = false;
             };
 
+            const onHashChangeComplete = (url: string) => {
+                if(!getHash(url)) {
+                    window.scrollTo(0, 0);
+                }
+            };
+
             window.addEventListener('beforeunload', onBeforeUnload);
             router.events.on('routeChangeStart', onRouteChangeStart);
+            router.events.on('hashChangeComplete', onHashChangeComplete);
             router.beforePopState(state => {
                 state.options.scroll = false;
                 scrollPos.current = null;
@@ -160,24 +185,13 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
             return () => {
                 window.removeEventListener('beforeunload', onBeforeUnload);
                 router.events.off('routeChangeStart', onRouteChangeStart);
+                router.events.off('hashChangeComplete', onHashChangeComplete);
                 router.beforePopState(() => true);
             };
         }
     }, [router, phase, updateState, saveScrollPos, retrieveScrollPos]);
 
     React.useEffect(() => {
-        const handleOutComplete = () => {
-            const _nextChild = nextChild.current;
-            const nextPhase = _nextChild ? PageTransitionPhase.APPEAR : PageTransitionPhase.IDLE;
-            nextChild.current = null;
-            setCurrentChild(_nextChild);
-            updateState({ phase: nextPhase });
-        };
-
-        const handleInComplete = () => {
-            updateState({ phase: PageTransitionPhase.IDLE });
-        };
-
         const transitionOut = (next: React.ReactElement) => {
             nextChild.current = next;
             clearTimeout(timeout.current);
@@ -185,10 +199,23 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
             updateState({ phase: PageTransitionPhase.OUT });
         };
 
+        const handleOutComplete = () => {
+            const _nextChild = nextChild.current;
+            const nextPhase = _nextChild ? PageTransitionPhase.APPEAR : PageTransitionPhase.IDLE;
+            nextChild.current = null;
+            setCurrentChild(_nextChild);
+            updateState({ phase: nextPhase });
+            removeExpiredStyles();
+        };
+
         const transitionIn = () => {
             clearTimeout(timeout.current);
             timeout.current = window.setTimeout(handleInComplete, inPhaseDuration);
             updateState({ phase: PageTransitionPhase.IN });
+        };
+
+        const handleInComplete = () => {
+            updateState({ phase: PageTransitionPhase.IDLE });
         };
 
         const restoreScroll = () => {
