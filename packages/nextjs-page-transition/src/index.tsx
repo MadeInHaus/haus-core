@@ -75,6 +75,21 @@ function retrieveScrollPosDefault(url: string): ScrollPos {
     }
 }
 
+function getFullAsPath({
+    asPath,
+    basePath,
+    locale,
+}: {
+    asPath: string;
+    basePath?: string;
+    locale?: string;
+}): string {
+    let fullAsPath = asPath;
+    if (basePath) fullAsPath = basePath + (fullAsPath === '/' ? '' : fullAsPath);
+    if (locale) fullAsPath = `/${locale}${fullAsPath}`;
+    return fullAsPath;
+}
+
 const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props, ref) => {
     const {
         as: Wrapper = 'main',
@@ -110,25 +125,28 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
     const updateState = React.useCallback(
         (state: PageTransitionState) => {
             const { phase, currentUrl, targetUrl, phaseOutAnticipated = false } = state;
+            const fullAsPath = getFullAsPath(router);
             const newState: PageTransitionState = {
                 phase,
                 phaseOutAnticipated,
-                targetUrl: removeHash(router.asPath),
+                targetUrl: removeHash(fullAsPath),
                 scrollPosY: scrollPos.current?.y ?? 0,
             };
             if (currentUrl) newState.currentUrl = removeHash(currentUrl);
             if (targetUrl) newState.targetUrl = removeHash(targetUrl);
             setState(newState);
         },
-        [router.asPath, setState]
+        [router, setState]
     );
 
     React.useEffect(() => {
         if ('scrollRestoration' in window.history) {
             window.history.scrollRestoration = 'manual';
 
+            const fullAsPath = getFullAsPath(router);
+
             const onBeforeUnload = (event: BeforeUnloadEvent) => {
-                saveScrollPos(router.asPath, { x: window.scrollX, y: window.scrollY });
+                saveScrollPos(fullAsPath, { x: window.scrollX, y: window.scrollY });
                 delete event.returnValue;
             };
 
@@ -136,12 +154,12 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
                 scrollPos.current = doRestoreScroll.current
                     ? retrieveScrollPos(url)
                     : { x: 0, y: 0, hash: getHash(url) };
-                saveScrollPos(router.asPath, { x: window.scrollX, y: window.scrollY });
-                if (url !== router.asPath) {
+                saveScrollPos(fullAsPath, { x: window.scrollX, y: window.scrollY });
+                if (url !== fullAsPath) {
                     updateState({
                         phase,
                         phaseOutAnticipated: true,
-                        currentUrl: router.asPath,
+                        currentUrl: fullAsPath,
                         targetUrl: url,
                     });
                 }
