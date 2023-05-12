@@ -1,5 +1,11 @@
 # @madeinhaus/hooks
 
+## 1.0.2
+
+### Patch Changes
+
+- 6e5115a: Add mergeRefs util and useRefList hook
+
 ## 1.0.1
 
 ### Patch Changes
