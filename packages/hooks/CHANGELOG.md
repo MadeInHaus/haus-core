@@ -1,5 +1,11 @@
 # @madeinhaus/hooks
 
+## 1.0.3
+
+### Patch Changes
+
+- 37e4fe7: Fix useRefList export
+
 ## 1.0.2
 
 ### Patch Changes
