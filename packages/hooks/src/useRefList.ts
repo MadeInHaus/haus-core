@@ -22,7 +22,7 @@ import * as React from 'react';
  *
  * Returns a ref callback HOF and an array of elements.
  */
-const useRefList = <T = HTMLElement>(): [
+export const useRefList = <T = HTMLElement>(): [
     (index: number) => React.RefCallback<T>,
     React.MutableRefObject<(T | null)[]>
 ] => {
@@ -36,5 +36,3 @@ const useRefList = <T = HTMLElement>(): [
     );
     return [refFn, refs];
 };
-
-export default useRefList;
