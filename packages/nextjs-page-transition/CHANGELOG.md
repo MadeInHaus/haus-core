@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 2.0.1
+
+### Patch Changes
+
+- b61de9a: Fix scroll to hash on initial load
+
 ## 2.0.0
 
 ### Major Changes
