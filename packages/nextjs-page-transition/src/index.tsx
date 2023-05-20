@@ -167,7 +167,7 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
             };
 
             const onHashChangeComplete = (url: string) => {
-                if(!getHash(url)) {
+                if (!getHash(url)) {
                     window.scrollTo(0, 0);
                 }
             };
@@ -220,6 +220,7 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
 
         const restoreScroll = () => {
             if (scrollPos.current?.hash) {
+                // Scroll to hash
                 const el = document.querySelector(scrollPos.current.hash) as Element;
                 if (el) {
                     const style = window.getComputedStyle(el);
@@ -231,8 +232,14 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
                     return;
                 }
             }
-            const { x, y } = scrollPos.current ?? { x: 0, y: 0 };
-            window.scrollTo(x, y);
+            if (scrollPos.current) {
+                // Restore scroll position
+                const { x, y } = scrollPos.current;
+                window.scrollTo(x, y);
+            } else {
+                // scrollPos is null on initial load.
+                // We don't want to scroll to top in that case.
+            }
         };
 
         switch (phase) {
