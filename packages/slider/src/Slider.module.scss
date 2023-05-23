@@ -6,17 +6,6 @@
 }
 
 .hasOverflow {
-    opacity: 0;
-    transform: translateX(30rem);
-    transition-duration: $superSlow;
-    transition-property: transform, opacity;
-    transition-timing-function: $easeOutCubic;
-
-    &.isInView {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
     @media (hover: hover) {
         &:hover {
             .navigation {
@@ -52,17 +41,6 @@
 
             &:hover::-webkit-scrollbar-thumb {
                 background-color: var(--scrollbar-color);
-            }
-        }
-    }
-
-    .hideScrollBars & {
-        @media (hover: hover) {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-
-            &::-webkit-scrollbar {
-                display: none;
             }
         }
     }

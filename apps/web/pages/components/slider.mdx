@@ -1,0 +1,106 @@
+import { useSSG } from 'nextra/ssg';
+
+export const getStaticProps = ({ params }) => {
+  return {
+    props: {
+      ssg: {
+        images: [
+          'https://fastly.picsum.photos/id/235/500/335.jpg?hmac=BMSDYoFuSmaYD-FIdOAaNnqUkDY3tV-aJZmliNMvnAE',
+          'https://fastly.picsum.photos/id/407/500/382.jpg?hmac=-Xp4GU2DkGLF1-_H4J-j-MWlDhjcqUuO0MtqNdQsm8E',
+          'https://fastly.picsum.photos/id/221/500/491.jpg?hmac=AWMxven_S7BesDmeZjbeYOuVF-lhcPMBF-YfSciqadw',
+          'https://fastly.picsum.photos/id/991/500/319.jpg?hmac=Z6xLJcww6FtsXltPAa-HGGZMDTvMVifgVxXhVDw4OUc',
+          'https://fastly.picsum.photos/id/625/500/420.jpg?hmac=dghXQGq-47Yn1ZsijvbWPMga1IIA3rGPMUKwXY8jqp8',
+          'https://fastly.picsum.photos/id/179/500/370.jpg?hmac=4QCLbYlkMDU-CYFdAbw9gNE2ARGs9BnLMgY3lumK6F0',
+          'https://fastly.picsum.photos/id/942/500/350.jpg?hmac=KhrKrDyDFH-dOi6JQ9M5EVuL94hHwXk9o8ezael_qeg',
+          'https://fastly.picsum.photos/id/114/500/390.jpg?hmac=xv78Id938UO9X26QxVghXGMx4zn8qHWBm4u4-6QpQUg',
+          'https://fastly.picsum.photos/id/189/500/457.jpg?hmac=OD_G1zwKKjWvceSYaSrI0K4XNHoU7KXTNZXMosBGLbk',
+          'https://fastly.picsum.photos/id/503/500/411.jpg?hmac=NYC0huqr-aoFXvM-bq5dndY2ApPmURMXG20N8YU-9So',
+          'https://fastly.picsum.photos/id/492/500/440.jpg?hmac=44G7zo86C62rqLxitRj9EfGjKuISjWq6isYEvD9ibug',
+          'https://fastly.picsum.photos/id/926/500/416.jpg?hmac=AkdxOAgoYz4jDPY42yKcQxpVnu5K1O5P0gGpNec5NJE',
+          'https://fastly.picsum.photos/id/3/500/313.jpg?hmac=NndyHQRTJEDrGsOBHFNA2CZjKnEzca71FkGUwBWuRWM',
+          'https://fastly.picsum.photos/id/244/500/413.jpg?hmac=9b0VERLOfjEqGNNWCxvNZT3pyLdv362gEXHxYchVeOk',
+          'https://fastly.picsum.photos/id/872/500/439.jpg?hmac=pikw0Sm4MBo1lYoCXkKFM_NNErlkYP8niJ_QyDtJA8M',
+          'https://fastly.picsum.photos/id/56/500/349.jpg?hmac=rRKQMkOxGTY-mz9SfeRhjVXVjCiTLMpgG9qAF7UpsdU',
+          'https://fastly.picsum.photos/id/640/500/344.jpg?hmac=bwwmZON7eAxsiL6k5skhq9gSw4jw2or94dDMyAhLJAk',
+          'https://fastly.picsum.photos/id/102/500/379.jpg?hmac=82C0K-clQJbJZDh3DmbAI0ZCC8AUwwZ5RYPGIfuPdKY',
+          'https://fastly.picsum.photos/id/999/500/389.jpg?hmac=iyr5qeLrTVhKhyca3hugqcNwINinxn44QKpxliPs73o',
+          'https://fastly.picsum.photos/id/1033/500/428.jpg?hmac=iielbEzw7qY4Xx-eYIRHUzSttGU2Vf0HjwLlP9xGXOQ',
+        ],
+      },
+    },
+  };
+};
+
+# Slider
+
+The Slider component is a React component that provides a slideshow functionality with the ability to scroll through a set of slides. It creates a slider container that can be used to display and navigate through a collection of child components.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/slider
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/slider
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/slider
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+`import Slider from '@madeinhaus/slider';`
+
+## Props
+
+- `children` (required): An array of React nodes representing the slides to be displayed in the slider.
+- `className` (optional): Additional CSS class name(s) to be applied to the root element of the Slider component.
+- `containerClassName` (optional): Additional CSS class name(s) to be applied to the container element of the Slider component.
+- `slideClassName` (optional): Additional CSS class name(s) to be applied to each slide element in the Slider component.
+
+## Usage
+
+import { SliderDemoBasic } from '../../components/SliderDemo';
+
+```tsx filename="SliderDemoBasic.tsx" {1,6-17}  copy showLineNumbers
+import Slider from '@madeinhaus/slider';
+import styles from './SliderDemo.module.css';
+
+const SliderDemoBasic: React.FC = ({ images }: { images: string[] }) => {
+  return (
+    <Slider>
+      {images.map((src, index) => {
+        return (
+          <figure key={index} className={styles.item}>
+            <img src={src} />
+            <figcaption>
+              {index + 1} <br />
+            </figcaption>
+          </figure>
+        );
+      })}
+    </Slider>
+  );
+};
+
+export default SliderDemoBasic;
+```
+
+```css filename="MasonryDemo.module.css" copy showLineNumbers
+.item {
+  width: 300px;
+}
+```
+
+<SliderDemoBasic />
