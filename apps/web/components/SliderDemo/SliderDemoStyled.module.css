@@ -24,3 +24,7 @@
   width: 100%;
   justify-content: space-between;
 }
+
+.button:disabled {
+  opacity: 0.5;
+}

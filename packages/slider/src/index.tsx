@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useMeasure } from '../../hooks/src/useMeasure';
+import { mergeRefs } from '../../utils/src/react';
 import cx from 'clsx';
 
 import Slide from './Slide';
@@ -108,28 +109,28 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
             }}
         >
             <section
-                ref={containerRef}
+                ref={mergeRefs([containerRef, widthRef])}
                 className={cx(className, styles.root, {
                     [styles.hasOverflow]: hasOverflow,
                 })}
             >
-                <div ref={widthRef}>
-                    <ul ref={trackRef} className={styles.track}>
-                        {React.Children.map(children, (child: any, index) => {
-                            return (
-                                <Slide
-                                    key={child!.key!}
-                                    index={index}
-                                    className={cx(styles.slide, slideClassName)}
-                                >
-                                    {React.cloneElement(child)}
-                                </Slide>
-                            );
-                        })}
-                    </ul>
-                </div>
+                <ul ref={trackRef} className={styles.track}>
+                    {React.Children.map(children, (child: any, index) => {
+                        return (
+                            <Slide
+                                key={child!.key!}
+                                index={index}
+                                className={cx(styles.slide, slideClassName)}
+                            >
+                                {React.cloneElement(child)}
+                            </Slide>
+                        );
+                    })}
+                </ul>
             </section>
-            {renderNavigation && renderNavigation({ isBeginning, isEnd, handleNavigation })}
+            {hasOverflow &&
+                renderNavigation &&
+                renderNavigation({ isBeginning, isEnd, handleNavigation })}
         </SliderContext.Provider>
     );
 };
