@@ -10,7 +10,6 @@ const SliderDemoStyled: React.FC = () => {
   return (
     <Slider
       className={styles.root}
-      containerClassName={styles.container}
       slideClassName={styles.slide}
       renderNavigation={({ isBeginning, isEnd, handleNavigation }) => {
         return (

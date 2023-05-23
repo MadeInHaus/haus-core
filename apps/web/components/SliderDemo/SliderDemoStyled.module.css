@@ -5,10 +5,6 @@
   --slider-slide-spacing: 0.3rem;
   --slider-scroll-snap-align: start;
 
-  margin-top: 2rem;
-}
-
-.container {
   padding: 0.5rem 0;
 }
 
