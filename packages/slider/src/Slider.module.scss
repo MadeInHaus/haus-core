@@ -7,32 +7,30 @@
     --slider-scroll-snap-align: center;
 }
 
-.root {
-    &.hasOverflow {
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-behavior: smooth;
-        scroll-snap-type: x mandatory;
+.hasOverflow {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 
-        @media (hover: hover) {
-            &::-webkit-scrollbar {
-                width: 1.5rem;
-            }
+    @media (hover: hover) {
+        &::-webkit-scrollbar {
+            width: 1.5rem;
+        }
 
-            &::-webkit-scrollbar-thumb {
-                border: var(--slider-scrollbar-border) solid transparent;
-                background-clip: content-box;
-                background-color: var(--slider-scrollbar-color);
-                border-radius: var(--slider-scrollbar-border-radius);
-            }
+        &::-webkit-scrollbar-thumb {
+            border: var(--slider-scrollbar-border) solid transparent;
+            background-clip: content-box;
+            background-color: var(--slider-scrollbar-color);
+            border-radius: var(--slider-scrollbar-border-radius);
+        }
 
-            &::-webkit-scrollbar-thumb {
-                background-color: transparent;
-            }
+        &::-webkit-scrollbar-thumb {
+            background-color: transparent;
+        }
 
-            &:hover::-webkit-scrollbar-thumb {
-                background-color: var(--slider-scrollbar-color);
-            }
+        &:hover::-webkit-scrollbar-thumb {
+            background-color: var(--slider-scrollbar-color);
         }
     }
 }

@@ -110,9 +110,7 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
         >
             <section
                 ref={mergeRefs([containerRef, widthRef])}
-                className={cx(className, styles.root, {
-                    [styles.hasOverflow]: hasOverflow,
-                })}
+                className={cx(className, { [styles.hasOverflow]: hasOverflow })}
             >
                 <ul ref={trackRef} className={styles.track}>
                     {React.Children.map(children, (child: any, index) => {
