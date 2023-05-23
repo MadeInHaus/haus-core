@@ -14,6 +14,7 @@ export type SliderContextType = {
     isBeginning: boolean;
     isEnd: boolean;
     scrollToIndex: (index: number) => void;
+    handleNavigation: (direction: 'prev' | 'next') => void;
 };
 
 export const SliderContext = React.createContext<SliderContextType>({
@@ -23,6 +24,7 @@ export const SliderContext = React.createContext<SliderContextType>({
     isBeginning: true,
     isEnd: false,
     scrollToIndex: () => {},
+    handleNavigation: () => {},
 });
 
 export type SliderProps = {
@@ -49,16 +51,17 @@ const Slider = ({ children, className, containerClassName, slideClassName }: Sli
 
     const [inView, intersectionRef] = useIntersectionObserver();
 
-    // const handleNavigation = direction => {
-    //     const scroll = {
-    //         prev: slideWith * -1,
-    //         next: slideWith,
-    //     };
+    const handleNavigation = (direction: 'prev' | 'next') => {
+        const scroll = {
+            prev: slideWith * -1,
+            next: slideWith,
+        };
 
-    //     containerRef.current.scrollBy({
-    //         left: scroll[direction],
-    //     });
-    // };
+        containerRef.current &&
+            containerRef.current.scrollBy({
+                left: scroll[direction],
+            });
+    };
 
     const handleContainerScroll = () => {
         setScrollLeft(containerRef?.current?.scrollLeft ?? 0);
@@ -107,6 +110,7 @@ const Slider = ({ children, className, containerClassName, slideClassName }: Sli
                 isEnd,
                 setActiveIndices,
                 scrollToIndex,
+                handleNavigation,
             }}
         >
             <section
