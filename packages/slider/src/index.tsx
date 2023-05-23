@@ -90,7 +90,7 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
             return;
         }
 
-        containerRef.current.addEventListener('scroll', handleContainerScroll);
+        container.addEventListener('scroll', handleContainerScroll);
         return () => {
             container.removeEventListener('scroll', handleContainerScroll);
         };
