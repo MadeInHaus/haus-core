@@ -1,0 +1,23 @@
+.root {
+  --slider-scrollbar-color: hsl(var(--nextra-primary-hue) 100% 77%/0.4);
+  --slider-scrollbar-border: 0.3rem;
+  --slider-scrollbar-border-radius: 0;
+  --slider-slide-spacing: 0.3rem;
+
+  margin-top: 2rem;
+}
+
+.container {
+  padding: 0.5rem 0;
+}
+
+.slide {
+  width: 200px;
+  height: 200px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

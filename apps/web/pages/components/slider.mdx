@@ -71,7 +71,7 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Usage
 
-import { SliderDemoBasic } from '../../components/SliderDemo';
+import { SliderDemoBasic, SliderDemoStyled } from '../../components/SliderDemo';
 
 ```tsx filename="SliderDemoBasic.tsx" {1,6-17}  copy showLineNumbers
 import Slider from '@madeinhaus/slider';
@@ -104,3 +104,35 @@ export default SliderDemoBasic;
 ```
 
 <SliderDemoBasic />
+
+```tsx filename="SliderDemoStyled.tsx" {1,6-17}  copy showLineNumbers
+import Slider from '@madeinhaus/slider';
+import styles from './SliderDemo.module.css';
+
+const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {
+  return (
+    <Slider>
+      {images.map((src, index) => {
+        return (
+          <figure key={index} className={styles.item}>
+            <img src={src} />
+            <figcaption>
+              {index + 1} <br />
+            </figcaption>
+          </figure>
+        );
+      })}
+    </Slider>
+  );
+};
+
+export default SliderDemoStyled;
+```
+
+```css filename="SliderDemo.module.css" copy showLineNumbers
+.item {
+  width: 300px;
+}
+```
+
+<SliderDemoStyled />

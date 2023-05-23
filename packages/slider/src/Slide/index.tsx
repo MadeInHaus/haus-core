@@ -13,9 +13,13 @@ const Slide = ({
     className?: string;
     index: number;
 }) => {
-    const [inView, intersectionRef] = useIntersectionObserver();
+    const [inView, intersectionRef] = useIntersectionObserver({
+        once: false,
+        rootMargin: '0px',
+        threshold: 0,
+    });
 
-    const { scrollToIndex, setActiveIndices } = React.useContext(SliderContext);
+    const { setActiveIndices } = React.useContext(SliderContext);
 
     React.useEffect(() => {
         setActiveIndices((prevActiveIndices: number[]) =>
@@ -23,16 +27,10 @@ const Slide = ({
                 ? [...prevActiveIndices, index]
                 : prevActiveIndices.filter((idx: number) => idx !== index)
         );
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [inView]);
-
-    const handleClick = React.useCallback(() => {
-        scrollToIndex(index);
-    }, [index, scrollToIndex]);
+    }, [inView, setActiveIndices, index]);
 
     return (
-        <li ref={intersectionRef} className={className} onClick={handleClick} role="button">
+        <li ref={intersectionRef} className={className}>
             {children}
         </li>
     );
