@@ -33,7 +33,7 @@ export const getStaticProps = ({ params }) => {
 
 # Slider
 
-The Slider component is a React component that provides a slideshow functionality with the ability to scroll through a set of slides. It creates a slider container that can be used to display and navigate through a collection of child components.
+The Slider component is a React component that provides a finite slideshow functionality with the ability to scroll through a set of slides. It creates a slider container that can be used to display and navigate through a collection of child components.
 
 ## Installation
 
@@ -66,8 +66,12 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 - `children` (required): An array of React nodes representing the slides to be displayed in the slider.
 - `className` (optional): Additional CSS class name(s) to be applied to the root element of the Slider component.
-- `containerClassName` (optional): Additional CSS class name(s) to be applied to the container element of the Slider component.
 - `slideClassName` (optional): Additional CSS class name(s) to be applied to each slide element in the Slider component.
+- `renderNavigation` (optional): A function that renders custom navigation elements based on the slider's state. It receives an object with the following properties:
+
+  - `isBeginning` (boolean): Indicates whether the slider is at the beginning - (first slide).
+  - `isEnd` (boolean): Indicates whether the slider is at the end (last slide).
+  - `handleNavigation` (function): A function to handle navigation actions. It takes a direction parameter ('prev' or 'next').
 
 ## Usage
 

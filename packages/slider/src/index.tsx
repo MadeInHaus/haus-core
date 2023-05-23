@@ -29,7 +29,6 @@ export const SliderContext = React.createContext<SliderContextType>({
 export type SliderProps = {
     children: React.ReactNode[];
     className?: string;
-    containerClassName?: string;
     slideClassName?: string;
     renderNavigation?: (props: {
         isBeginning: boolean;
@@ -54,7 +53,6 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
     const isEnd = Math.ceil(containerWidth + scrollLeft) >= trackWidth;
 
     const handleNavigation = (direction: 'prev' | 'next') => {
-        console.log('handleNavigation');
         const scroll = {
             prev: slideWith * -1,
             next: slideWith,
