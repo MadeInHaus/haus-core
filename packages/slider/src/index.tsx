@@ -31,17 +31,20 @@ export type SliderProps = {
     className?: string;
     containerClassName?: string;
     slideClassName?: string;
+    renderNavigation?: (props: {
+        isBeginning: boolean;
+        isEnd: boolean;
+        handleNavigation: (direction: 'prev' | 'next') => void;
+    }) => React.ReactNode;
 };
 
-const Slider = ({ children, className, slideClassName }: SliderProps) => {
+const Slider = ({ children, className, slideClassName, renderNavigation }: SliderProps) => {
     const [scrollLeft, setScrollLeft] = React.useState(0);
     const [activeIndices, setActiveIndices] = React.useState([0]);
     const [hasOverflow, setHasOverflow] = React.useState(true);
 
     const containerRef = React.useRef<HTMLDivElement>(null);
     const trackRef = React.useRef<HTMLUListElement>(null);
-
-    console.log({ activeIndices });
 
     const [widthRef, { width: containerWidth }] = useMeasure();
     const trackWidth = trackRef?.current?.scrollWidth ?? 0;
@@ -51,6 +54,7 @@ const Slider = ({ children, className, slideClassName }: SliderProps) => {
     const isEnd = Math.ceil(containerWidth + scrollLeft) >= trackWidth;
 
     const handleNavigation = (direction: 'prev' | 'next') => {
+        console.log('handleNavigation');
         const scroll = {
             prev: slideWith * -1,
             next: slideWith,
@@ -127,6 +131,7 @@ const Slider = ({ children, className, slideClassName }: SliderProps) => {
                     </ul>
                 </div>
             </section>
+            {renderNavigation && renderNavigation({ isBeginning, isEnd, handleNavigation })}
         </SliderContext.Provider>
     );
 };

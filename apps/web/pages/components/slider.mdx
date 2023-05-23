@@ -105,22 +105,39 @@ export default SliderDemoBasic;
 
 <SliderDemoBasic />
 
-```tsx filename="SliderDemoStyled.tsx" {1,6-17}  copy showLineNumbers
+```tsx filename="SliderDemoStyled.tsx" {1,6-34}  copy showLineNumbers
 import Slider from '@madeinhaus/slider';
 import styles from './SliderDemo.module.css';
 
 const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {
   return (
-    <Slider>
-      {images.map((src, index) => {
+    <Slider
+      className={styles.root}
+      containerClassName={styles.container}
+      slideClassName={styles.slide}
+      renderNavigation={({ isBeginning, isEnd, handleNavigation }) => {
         return (
-          <figure key={index} className={styles.item}>
-            <img src={src} />
-            <figcaption>
-              {index + 1} <br />
-            </figcaption>
-          </figure>
+          <div className={styles.navigation}>
+            <button
+              className={styles.button}
+              onClick={() => handleNavigation('prev')}
+              disabled={isBeginning}
+            >
+              {'<'} Previous
+            </button>
+            <button
+              className={styles.button}
+              onClick={() => handleNavigation('next')}
+              disabled={isEnd}
+            >
+              Next {'>'}
+            </button>
+          </div>
         );
+      }}
+    >
+      {images.map((src, index) => {
+        return <img className={styles.image} key={index} src={src} />;
       })}
     </Slider>
   );
@@ -130,8 +147,35 @@ export default SliderDemoStyled;
 ```
 
 ```css filename="SliderDemo.module.css" copy showLineNumbers
-.item {
-  width: 300px;
+.root {
+  --slider-scrollbar-color: hsl(var(--nextra-primary-hue) 100% 77%/0.4);
+  --slider-scrollbar-border: 0.3rem;
+  --slider-scrollbar-border-radius: 0;
+  --slider-slide-spacing: 0.3rem;
+  --slider-scroll-snap-align: start;
+
+  margin-top: 2rem;
+}
+
+.container {
+  padding: 0.5rem 0;
+}
+
+.slide {
+  width: 200px;
+  height: 200px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navigation {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 ```
 
