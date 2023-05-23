@@ -1,23 +1,14 @@
 .root {
     --scrollbar-border: 0.35rem;
     --scrollbar-color: #b8b8b8;
-
-    width: 100%;
+    --scrollbar-border-radius: 2rem;
+    --track-justify-content: flex-start;
+    --slide-spacing: 1rem;
+    --scroll-snap-align: center;
 }
 
 .hasOverflow {
-    @media (hover: hover) {
-        &:hover {
-            .navigation {
-                opacity: 1;
-                pointer-events: all;
-            }
-        }
-    }
-}
-
-.container {
-    .hasOverflow & {
+    .container {
         overflow-x: auto;
         overflow-y: hidden;
         scroll-behavior: smooth;
@@ -32,7 +23,7 @@
                 border: var(--scrollbar-border) solid transparent;
                 background-clip: content-box;
                 background-color: var(--scrollbar-color);
-                border-radius: 2rem;
+                border-radius: var(--scrollbar-border-radius);
             }
 
             &::-webkit-scrollbar-thumb {
@@ -50,14 +41,14 @@
     display: flex;
     width: 100%;
     min-width: min-content;
-    justify-content: var(--track-justify-content, flex-start);
+    justify-content: var(--track-justify-content);
     padding: 0;
     margin: 0;
-    gap: var(--slide-spacing, 1rem);
+    gap: var(--slide-spacing);
     list-style: none;
 }
 
 .slide {
     display: block;
-    scroll-snap-align: center;
+    scroll-snap-align: var(--scroll-snap-align);
 }
