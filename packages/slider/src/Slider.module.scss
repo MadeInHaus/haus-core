@@ -22,11 +22,7 @@
         &::-webkit-scrollbar-thumb {
             border: var(--slider-scrollbar-border) solid transparent;
             background-clip: content-box;
-            background-color: var(--slider-scrollbar-color);
             border-radius: var(--slider-scrollbar-border-radius);
-        }
-
-        &::-webkit-scrollbar-thumb {
             background-color: transparent;
         }
 
