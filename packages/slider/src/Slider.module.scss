@@ -4,6 +4,7 @@
     --slider-scrollbar-border-radius: 2rem;
     --slider-track-justify-content: flex-start;
     --slider-slide-spacing: 1rem;
+    --slider-scroll-snap-type: x mandatory;
     --slider-scroll-snap-align: center;
 }
 
@@ -11,7 +12,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: var(--slider-scroll-snap-type);
 
     @media (hover: hover) {
         &::-webkit-scrollbar {
