@@ -113,10 +113,13 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
                 className={cx(className, { [styles.hasOverflow]: hasOverflow })}
             >
                 <ul ref={trackRef} className={styles.track}>
-                    {React.Children.map(children, (child: any, index) => {
+                    {React.Children.map(children, (child: React.ReactNode, index) => {
+                        if (!React.isValidElement(child)) {
+                            return null;
+                        }
                         return (
                             <Slide
-                                key={child!.key!}
+                                key={child.key ?? index}
                                 index={index}
                                 className={cx(styles.slide, slideClassName)}
                                 setActiveIndices={setActiveIndices}
