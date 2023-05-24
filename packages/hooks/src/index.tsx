@@ -4,3 +4,4 @@ export { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { usePrevious } from './usePrevious';
 export { useWindowSize } from './useWindowSize';
 export { useRefList } from './useRefList';
+export { useMeasure } from './useMeasure';

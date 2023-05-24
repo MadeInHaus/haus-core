@@ -27,6 +27,7 @@
     "@madeinhaus/nextjs-page-transition": "*",
     "@madeinhaus/nextjs-theme": "*",
     "@madeinhaus/portal": "*",
+    "@madeinhaus/slider": "*",
     "@madeinhaus/textural-video": "*",
     "@madeinhaus/utils": "*",
     "clsx": "^1.2.1",
