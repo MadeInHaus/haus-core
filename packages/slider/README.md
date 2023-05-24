@@ -1,13 +1,13 @@
-# Disclosure
+# Slider
 
 **Install**:
 
 ```bash
-npm i @madeinhaus/disclosure
+npm i @madeinhaus/slider
 ```
 
 **Usage**:
 
 ```javascript
-import Disclosure from '@madeinhaus/disclosure';
+import Slider from '@madeinhaus/slider';
 ```
