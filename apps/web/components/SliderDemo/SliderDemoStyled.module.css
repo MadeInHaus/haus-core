@@ -3,6 +3,7 @@
   --slider-scrollbar-border-width: 0.3rem;
   --slider-scrollbar-border-radius: 0;
   --slider-slide-spacing: 0.3rem;
+  --slider-scroll-snap-type: x mandatory;
   --slider-scroll-snap-align: start;
 
   padding: 0.5rem 0;

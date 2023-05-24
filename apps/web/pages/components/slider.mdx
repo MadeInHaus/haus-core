@@ -77,13 +77,12 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
   ```css
   :root {
-    --slider-scrollbar-border-width: 0.35rem;
     --slider-scrollbar-color: #b8b8b8;
+    --slider-scrollbar-border-width: 0.35rem;
     --slider-scrollbar-border-radius: 2rem;
-    --slider-track-justify-content: flex-start;
-    --slider-slide-spacing: 1rem;
-    --slider-scroll-snap-type: x mandatory;
-    --slider-scroll-snap-align: center;
+    --slider-slide-spacing: 0;
+    --slider-scroll-snap-type: none;
+    --slider-scroll-snap-align: none;
   }
   ```
 
@@ -169,12 +168,9 @@ export default SliderDemoStyled;
   --slider-scrollbar-border-width: 0.3rem;
   --slider-scrollbar-border-radius: 0;
   --slider-slide-spacing: 0.3rem;
+  --slider-scroll-snap-type: x mandatory;
   --slider-scroll-snap-align: start;
 
-  margin-top: 2rem;
-}
-
-.container {
   padding: 0.5rem 0;
 }
 
@@ -193,6 +189,10 @@ export default SliderDemoStyled;
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+
+.button:disabled {
+  opacity: 0.5;
 }
 ```
 
