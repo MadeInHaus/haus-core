@@ -1,6 +1,6 @@
 :root {
-    --slider-scrollbar-border: 0.35rem;
     --slider-scrollbar-color: #b8b8b8;
+    --slider-scrollbar-border-width: 0.35rem;
     --slider-scrollbar-border-radius: 2rem;
     --slider-track-justify-content: flex-start;
     --slider-slide-spacing: 1rem;
@@ -20,7 +20,7 @@
         }
 
         &::-webkit-scrollbar-thumb {
-            border: var(--slider-scrollbar-border) solid transparent;
+            border: var(--slider-scrollbar-border-width) solid transparent;
             background-clip: content-box;
             border-radius: var(--slider-scrollbar-border-radius);
             background-color: transparent;
