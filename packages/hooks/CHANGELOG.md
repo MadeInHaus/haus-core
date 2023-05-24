@@ -1,5 +1,11 @@
 # @madeinhaus/hooks
 
+## 1.1.0
+
+### Minor Changes
+
+- 7afc25a: Added Slider component, Added useMeaure hook
+
 ## 1.0.3
 
 ### Patch Changes
