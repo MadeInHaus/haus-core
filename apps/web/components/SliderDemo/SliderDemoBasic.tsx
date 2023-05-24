@@ -8,16 +8,14 @@ const SliderDemoBasic: React.FC = () => {
 
   return (
     <Slider>
-      {images.map((src, index) => {
-        return (
-          <figure key={index} className={styles.item}>
-            <img src={src} />
-            <figcaption>
-              {index + 1} <br />
-            </figcaption>
-          </figure>
-        );
-      })}
+      {images.map((src, index) => (
+        <figure key={index} className={styles.item}>
+          <img src={src} />
+          <figcaption>
+            {index + 1} <br />
+          </figcaption>
+        </figure>
+      ))}
     </Slider>
   );
 };

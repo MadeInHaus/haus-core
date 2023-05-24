@@ -91,23 +91,21 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 import { SliderDemoBasic, SliderDemoStyled } from '../../components/SliderDemo';
 
-```tsx filename="SliderDemoBasic.tsx" {1,6-17}  copy showLineNumbers
+```tsx filename="SliderDemoBasic.tsx" {1,6-15}  copy showLineNumbers
 import Slider from '@madeinhaus/slider';
-import styles from './SliderDemo.module.css';
+import styles from './SliderDemoBasic.module.css';
 
 const SliderDemoBasic: React.FC = ({ images }: { images: string[] }) => {
   return (
     <Slider>
-      {images.map((src, index) => {
-        return (
-          <figure key={index} className={styles.item}>
-            <img src={src} />
-            <figcaption>
-              {index + 1} <br />
-            </figcaption>
-          </figure>
-        );
-      })}
+      {images.map((src, index) => (
+        <figure key={index} className={styles.item}>
+          <img src={src} />
+          <figcaption>
+            {index + 1} <br />
+          </figcaption>
+        </figure>
+      ))}
     </Slider>
   );
 };
@@ -115,7 +113,7 @@ const SliderDemoBasic: React.FC = ({ images }: { images: string[] }) => {
 export default SliderDemoBasic;
 ```
 
-```css filename="SliderDemo.module.css" copy showLineNumbers
+```css filename="SliderDemoBasic.module.css" copy showLineNumbers
 .item {
   width: 300px;
 }
@@ -123,9 +121,9 @@ export default SliderDemoBasic;
 
 <SliderDemoBasic />
 
-```tsx filename="SliderDemoStyled.tsx" {1,6-34}  copy showLineNumbers
+```tsx filename="SliderDemoStyled.tsx" {1,6-35}  copy showLineNumbers
 import Slider from '@madeinhaus/slider';
-import styles from './SliderDemo.module.css';
+import styles from './SliderDemoStyled.module.css';
 
 const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {
   return (
@@ -138,6 +136,7 @@ const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {
             <button
               className={styles.button}
               onClick={() => handleNavigation('prev')}
+              aria-label="Previous"
               disabled={isBeginning}
             >
               {'<'} Previous
@@ -145,6 +144,7 @@ const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {
             <button
               className={styles.button}
               onClick={() => handleNavigation('next')}
+              aria-label="Next"
               disabled={isEnd}
             >
               Next {'>'}
@@ -163,7 +163,7 @@ const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {
 export default SliderDemoStyled;
 ```
 
-```css filename="SliderDemo.module.css" copy showLineNumbers
+```css filename="SliderDemoStyled.module.css" copy showLineNumbers
 .root {
   --slider-scrollbar-color: hsl(var(--nextra-primary-hue) 100% 77%/0.4);
   --slider-scrollbar-border: 0.3rem;

@@ -18,6 +18,7 @@ const SliderDemoStyled: React.FC = () => {
               className={styles.button}
               onClick={() => handleNavigation('prev')}
               disabled={isBeginning}
+              aria-label="Previous"
             >
               {'<'} Previous
             </button>
@@ -25,6 +26,7 @@ const SliderDemoStyled: React.FC = () => {
               className={styles.button}
               onClick={() => handleNavigation('next')}
               disabled={isEnd}
+              aria-label="Next"
             >
               Next {'>'}
             </button>
