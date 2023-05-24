@@ -2,7 +2,7 @@
     --slider-scrollbar-color: #b8b8b8;
     --slider-scrollbar-border-width: 0.35rem;
     --slider-scrollbar-border-radius: 2rem;
-    --slider-slide-spacing: 0;
+    --slider-gap: 0;
     --slider-scroll-snap-type: none;
     --slider-scroll-snap-align: none;
 }
@@ -42,7 +42,7 @@
     justify-content: flex-start;
     padding: 0;
     margin: 0;
-    gap: var(--slider-slide-spacing);
+    gap: var(--slider-gap);
     list-style: none;
 }
 
