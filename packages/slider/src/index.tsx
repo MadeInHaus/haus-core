@@ -119,6 +119,7 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
                                 key={child!.key!}
                                 index={index}
                                 className={cx(styles.slide, slideClassName)}
+                                setActiveIndices={setActiveIndices}
                             >
                                 {React.cloneElement(child)}
                             </Slide>
