@@ -1,6 +1,8 @@
 import cx from 'clsx';
 
 import Carousel from '@madeinhaus/carousel';
+import '@madeinhaus/carousel/dist/index.css';
+
 import { useIntersectionObserver, useImagePreload } from '@madeinhaus/hooks';
 
 import styles from './CarouselDemoLazyLoad.module.css';
@@ -27,6 +29,7 @@ interface LazyImageProps {
 const LazyImage: React.FC<LazyImageProps> = ({ url }) => {
   const [inView, intersectionRef] = useIntersectionObserver();
   const [loaded, loadRef] = useImagePreload();
+
   return (
     <div ref={intersectionRef} className={styles.imageWrapper}>
       <img

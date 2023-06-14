@@ -1,4 +1,5 @@
 import Slider from '@madeinhaus/slider';
+import '@madeinhaus/slider/dist/index.css';
 import { useSSG } from 'nextra/ssg';
 
 import styles from './SliderDemoBasic.module.css';

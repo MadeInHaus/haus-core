@@ -1,4 +1,5 @@
 import Carousel from '@madeinhaus/carousel';
+import '@madeinhaus/carousel/dist/index.css';
 
 import styles from './CarouselDemo.module.css';
 

@@ -60,7 +60,10 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import Slider from '@madeinhaus/slider';`
+```js copy
+import Slider from '@madeinhaus/slider';
+import '@madeinhaus/slider/dist/index.css';
+```
 
 ## Props
 
@@ -90,8 +93,9 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 import { SliderDemoBasic, SliderDemoStyled } from '../../components/SliderDemo';
 
-```tsx filename="SliderDemoBasic.tsx" {1,6-15}  copy showLineNumbers
+```tsx filename="SliderDemoBasic.tsx" {1-2,7-16}  copy showLineNumbers
 import Slider from '@madeinhaus/slider';
+import '@madeinhaus/slider/dist/index.css';
 import styles from './SliderDemoBasic.module.css';
 
 const SliderDemoBasic: React.FC = ({ images }: { images: string[] }) => {
@@ -120,8 +124,9 @@ export default SliderDemoBasic;
 
 <SliderDemoBasic />
 
-```tsx filename="SliderDemoStyled.tsx" {1,6-35}  copy showLineNumbers
+```tsx filename="SliderDemoStyled.tsx" {1-2,7-36}  copy showLineNumbers
 import Slider from '@madeinhaus/slider';
+import '@madeinhaus/slider/dist/index.css';
 import styles from './SliderDemoStyled.module.css';
 
 const SliderDemoStyled: React.FC = ({ images }: { images: string[] }) => {

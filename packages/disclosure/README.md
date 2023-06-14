@@ -10,4 +10,5 @@ npm i @madeinhaus/disclosure
 
 ```javascript
 import Disclosure from '@madeinhaus/disclosure';
+import '@madeinhaus/disclosure/dist/index.css';
 ```

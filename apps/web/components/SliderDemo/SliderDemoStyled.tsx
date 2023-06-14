@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider from '@madeinhaus/slider';
+import '@madeinhaus/slider/dist/index.css';
 import { useSSG } from 'nextra/ssg';
 
 import styles from './SliderDemoStyled.module.css';

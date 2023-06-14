@@ -1,7 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import ts from 'rollup-plugin-ts';
-import postcss from 'rollup-plugin-postcss';
 
 const packageJson = require('./package.json');
 
@@ -19,15 +18,6 @@ export default {
             globals: { react: 'React' },
         },
     ],
-    plugins: [
-        resolve(),
-        commonjs(),
-        ts({ useTsconfigDeclarationDir: true }),
-        postcss({
-            extract: true,
-            modules: true,
-            use: ['sass'],
-        }),
-    ],
+    plugins: [resolve(), commonjs(), ts({ useTsconfigDeclarationDir: true })],
     external: ['react', 'react-dom'],
 };

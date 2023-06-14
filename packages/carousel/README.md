@@ -8,6 +8,7 @@ npm i @madeinhaus/carousel
 
 **Usage**:
 
-```javascript
+```js
 import Carousel from '@madeinhaus/carousel';
+import '@madeinhaus/carousel/dist/index.css';
 ```
