@@ -198,8 +198,6 @@ function MyComponent() {
 
 In this example, the `div` with the id `my-portal` is used as the selector for the portal. The `Portal` component will render the `div` containing the `p` element within the `my-portal` element, which is located outside of the parent hierarchy of `MyComponent`.
 
-````
-
 - `yarn dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
 - `yarn build`: Builds the Nextra app and generates the static files
 
@@ -226,7 +224,7 @@ When you push your code to GitHub, the [GitHub Action](https://github.com/change
 
 ```bash
 turbo run build --filter=docs^... && changeset publish
-````
+```
 
 Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `madeinhaus` as the npm organization. To change this, do the following:
 
