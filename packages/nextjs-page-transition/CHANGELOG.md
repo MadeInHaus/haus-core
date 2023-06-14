@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 3.0.0
+
+### Major Changes
+
+- ccd02ff: Sets postcss extraction for css, which now requires css to be imported
+
 ## 2.0.1
 
 ### Patch Changes

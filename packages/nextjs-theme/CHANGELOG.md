@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-theme
 
+## 1.1.0
+
+### Minor Changes
+
+- ccd02ff: Sets postcss extraction for css, which now requires css to be imported
+
 ## 1.0.2
 
 ### Patch Changes
