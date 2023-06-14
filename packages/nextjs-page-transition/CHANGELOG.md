@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 3.1.0
+
+### Minor Changes
+
+- 5f29fb3: Chore: Update docs and README
+
 ## 3.0.0
 
 ### Major Changes
