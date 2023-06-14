@@ -111,9 +111,12 @@ Nextra provides us with an interactive UI playground for our components. This al
 - The Nextra repository uses PNPM Workspaces and Turborepo. To install dependencies, run yarn install in the project root directory.
 - Write MDX for component documentation pages
 
-For example, here's the included Story for our `Portal` component:
+- `yarn dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
+- `yarn build`: Builds the Nextra app and generates the static files
 
-````js:apps/web/pages/components/portal.mdx
+For example, here's the Nextra markdown for our `Portal` component:
+
+````js
 # Portal
 
 The Portal component allows you to render a child component outside of its parent hierarchy, by creating a portal to another part of the DOM. This can be useful in situations where you need to render a component in a specific part of the page or outside of the component tree.
@@ -169,36 +172,6 @@ function MyComponent() {
   );
 }
 ````
-
-In the above example, the `div` element containing the `p` element will be rendered outside of the parent hierarchy of `MyComponent`, and will be placed within an element selected by the `selector` prop of the `Portal` component.
-
-## Example
-
-Here is an example of using the `Portal` component with a custom selector:
-
-```tsx copy showLineNumbers=true
-function MyComponent() {
-  return (
-    <div>
-      <h1>My Component</h1>
-      <Portal selector="#my-portal">
-        <div>
-          <p>
-            This component will be rendered outside of the parent hierarchy in a
-            custom portal.
-          </p>
-        </div>
-      </Portal>
-      <div id="my-portal"></div>
-    </div>
-  );
-}
-```
-
-In this example, the `div` with the id `my-portal` is used as the selector for the portal. The `Portal` component will render the `div` containing the `p` element within the `my-portal` element, which is located outside of the parent hierarchy of `MyComponent`.
-
-- `yarn dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
-- `yarn build`: Builds the Nextra app and generates the static files
 
 ## Versioning & Publishing Packages
 
