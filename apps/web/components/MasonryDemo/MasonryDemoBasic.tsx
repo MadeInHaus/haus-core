@@ -1,4 +1,5 @@
 import Masonry from '@madeinhaus/masonry';
+import '@madeinhaus/masonry/dist/index.css';
 import { useSSG } from 'nextra/ssg';
 
 import styles from './MasonryDemo.module.css';

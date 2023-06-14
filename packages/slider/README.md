@@ -8,6 +8,7 @@ npm i @madeinhaus/slider
 
 **Usage**:
 
-```javascript
+```js
 import Slider from '@madeinhaus/slider';
+import '@madeinhaus/slider/dist/index.css';
 ```

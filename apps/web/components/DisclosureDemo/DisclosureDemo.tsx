@@ -1,4 +1,6 @@
 import Disclosure from '@madeinhaus/disclosure';
+import '@madeinhaus/disclosure/dist/index.css';
+
 import items from './data/items';
 import styles from './DisclosureDemo.module.css';
 

@@ -1,5 +1,6 @@
 import { useSSG } from 'nextra/ssg';
 import Masonry from '@madeinhaus/masonry';
+import '@madeinhaus/masonry/dist/index.css';
 
 export const getStaticProps = ({ params }) => {
   return {
@@ -61,7 +62,10 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import Masonry from '@madeinhaus/masonry';`
+```js copy
+import Masonry from '@madeinhaus/masonry';
+import '@madeinhaus/masonry/dist/index.css';
+```
 
 ## Props
 

@@ -24,7 +24,7 @@ export default {
         commonjs(),
         ts(),
         postcss({
-            extract: false,
+            extract: true,
             modules: true,
             use: ['sass'],
         }),
