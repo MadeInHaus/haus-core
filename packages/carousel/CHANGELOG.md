@@ -1,5 +1,11 @@
 # @madeinhaus/carousel
 
+## 2.0.0
+
+### Major Changes
+
+- ccd02ff: Sets postcss extraction for css, which now requires css to be imported
+
 ## 1.1.1
 
 ### Patch Changes

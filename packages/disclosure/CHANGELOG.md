@@ -1,5 +1,11 @@
 # @madeinhaus/disclosure
 
+## 2.0.0
+
+### Major Changes
+
+- ccd02ff: Sets postcss extraction for css, which now requires css to be imported
+
 ## 1.1.0
 
 ### Minor Changes
