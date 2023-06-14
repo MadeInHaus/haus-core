@@ -6,7 +6,7 @@ Powered by:
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
 - 🛠 [Rollup](https://rollupjs.org/guide/en/) — A module bundler for JavaScript
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
-- 📖 [Storybook](https://storybook.js.org/) — Component environment powered by Vite
+- 📖 [Nextra](https://nextra.site/) — Simple, powerful and flexible site generation framework from Next.js.
 
 As well as a few others tools preconfigured:
 
@@ -26,8 +26,8 @@ yarn install
 
 ### Useful Commands
 
-- `yarn build` - Build all packages including the Storybook site
-- `yarn dev` - Run all packages locally and preview with Storybook
+- `yarn build` - Build all packages including the Nextra site
+- `yarn dev` - Run all packages locally and preview with Nextra
 - `yarn lint` - Lint all packages
 - `yarn changeset` - Generate a changeset
 - `yarn clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
@@ -42,7 +42,7 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 
 This Turborepo includes the following packages and applications:
 
-- `apps/docs`: Component documentation site with Storybook
+- `apps/docs`: Component documentation site with Nextra
 - `packages/[package]`: React components
 - `packages/hooks`: Shared React hooks
 - `packages/utils`: Shared utilities
@@ -104,61 +104,101 @@ export default function Button({ children, variant }: ButtonProps) {
 }
 ```
 
-## Storybook
+## Nextra
 
-Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Storybook to:
+Nextra provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Nextra to:
 
-- Use Vite to bundle stories instantly (in milliseconds)
-- Automatically find any stories inside the `stories/` folder
-- Support using module path aliases like `@madeinhaus/[package]` for imports
+- The Nextra repository uses PNPM Workspaces and Turborepo. To install dependencies, run yarn install in the project root directory.
 - Write MDX for component documentation pages
 
-For example, here's the included Story for our `Button` component:
+For example, here's the included Story for our `Portal` component:
 
-```js:apps/docs/stories/button.stories.mdx
-import Button from "@madeinhaus/button";
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+````js:apps/web/pages/components/portal.mdx
+# Portal
 
-<Meta title="UI/Button" component={Button} />
+The Portal component allows you to render a child component outside of its parent hierarchy, by creating a portal to another part of the DOM. This can be useful in situations where you need to render a component in a specific part of the page or outside of the component tree.
 
-export const Template = ({ children, ...args }) => (
-  <Button {...args}>{children}</Button>
-);
+## Installation
 
-# Button
+import { Tab, Tabs } from 'nextra-theme-docs';
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/portal
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/portal
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/portal
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+`import Portal from '@madeinhaus/portal';`
 
 ## Props
 
-<ArgsTable story="Default" />
+The `Portal` component accepts two props:
 
-## Examples
+- `selector`: A string representing the CSS selector for the DOM element where the portal will be created. If no selector is provided, the default selector `#__portal__` will be used.
+- `children`: The child component(s) to be rendered within the portal.
 
-<Canvas>
-  <Story
-    name="Default"
-    argTypes={{
-      variant: {
-        options: ["primary", "secondary"],
-        control: { type: "radio" },
-      },
-    }}
-    args={{
-      children: "Hello World",
-      variant: "primary",
-    }}
-  >
-    {Template.bind({})}
-  </Story>
-</Canvas>
+## Usage
+
+Wrap your desired child component(s) within the `Portal` component:
+
+```tsx copy showLineNumbers
+function MyComponent() {
+  return (
+    <div>
+      <h1>My Component</h1>
+      <Portal>
+        <div>
+          <p>This component will be rendered outside of the parent hierarchy.</p>
+        </div>
+      </Portal>
+    </div>
+  );
+}
+````
+
+In the above example, the `div` element containing the `p` element will be rendered outside of the parent hierarchy of `MyComponent`, and will be placed within an element selected by the `selector` prop of the `Portal` component.
+
+## Example
+
+Here is an example of using the `Portal` component with a custom selector:
+
+```tsx copy showLineNumbers=true
+function MyComponent() {
+  return (
+    <div>
+      <h1>My Component</h1>
+      <Portal selector="#my-portal">
+        <div>
+          <p>
+            This component will be rendered outside of the parent hierarchy in a
+            custom portal.
+          </p>
+        </div>
+      </Portal>
+      <div id="my-portal"></div>
+    </div>
+  );
+}
 ```
 
-This example includes a few helpful Storybook scripts:
+In this example, the `div` with the id `my-portal` is used as the selector for the portal. The `Portal` component will render the `div` containing the `p` element within the `my-portal` element, which is located outside of the parent hierarchy of `MyComponent`.
 
-- `yarn dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
-- `yarn build`: Builds the Storybook UI and generates the static HTML files
-- `yarn preview-storybook`: Starts a local server to view the generated Storybook UI
+- `yarn dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
+- `yarn build`: Builds the Nextra app and generates the static files
 
 ## Versioning & Publishing Packages
 

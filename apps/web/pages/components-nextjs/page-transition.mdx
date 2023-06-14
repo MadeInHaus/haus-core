@@ -47,6 +47,7 @@ Takes care of
 ```tsx filename="_app.tsx" copy showLineNumbers=true
 import type { AppProps } from 'next/app';
 import PageTransition, { useAsPathWithoutHash } from '@madeinhaus/nextjs-page-transition';
+import '@madeinhaus/nextjs-page-transition/dist/index.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const key = useAsPathWithoutHash();
@@ -79,13 +80,14 @@ All props are optional.
 
 Use PageTransitionContext if you need more control over transitions.
 
-```tsx filename="_app.tsx" {11,16} copy showLineNumbers=true
+```tsx filename="_app.tsx" {12,17} copy showLineNumbers=true
 import type { AppProps } from 'next/app';
 import Header from 'components/Header';
 import PageTransition, {
   PageTransitionContext,
   useAsPathWithoutHash,
 } from '@madeinhaus/nextjs-page-transition';
+import '@madeinhaus/nextjs-page-transition/dist/index.css';
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const key = useAsPathWithoutHash();
