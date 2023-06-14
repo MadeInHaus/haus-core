@@ -122,7 +122,6 @@ The Portal component allows you to render a child component outside of its paren
 
 import { Tab, Tabs } from 'nextra-theme-docs';
 
-{/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
     <Tab>
         ```bash copy
