@@ -1,0 +1,54 @@
+# modulo
+
+Calculates the remainder of a number when divided by another number.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { modulo } from '@madeinhaus/utils';
+```
+
+
+## Parameters
+
+- `n (number)`: The number to calculate the modulo of.
+- `m (number)`: The modulo base.
+
+### Returns
+
+- `(number)`: The modulo of `n` with respect to `m`.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { modulo } from '@madeinhaus/utils';
+
+const n = 10;
+const m = 3;
+const result = modulo(n, m); // 1
+```
+
+In this example, we import the `modulo` function from the `@madeinhaus/utils` package and use it to calculate the modulo of a number.
