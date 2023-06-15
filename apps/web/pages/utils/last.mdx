@@ -1,0 +1,54 @@
+# last
+
+Get the last item of an array.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { last } from '@madeinhaus/hooks';
+```
+
+
+## Parameters
+
+- `(array)` (required): The array to get the last item from.
+
+### Returns
+
+- `(number)`: The last item of the array, or `undefined` if the array is empty.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { last } from '@madeinhaus/utils';
+
+const numbers = [1, 2, 3, 4, 5];
+const lastNumber = last(numbers); // 5
+
+const emptyArray = [];
+const lastItem = last(emptyArray); // undefined
+```
+In this example, we import the last function from the `@madeinhaus/hooks` package and use it to get the last item of an array of numbers. We also show that the function returns `undefined` when called with an empty array.

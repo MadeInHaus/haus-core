@@ -1,0 +1,53 @@
+# clamp
+
+Clamps a number between a minimum and maximum value.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { clamp } from '@madeinhaus/hooks';
+```
+
+## Parameters
+
+- `value (number)`: The number to clamp.
+- `min (number)`: The minimum value to clamp to.
+- `max (number)`: The maximum value to clamp to.
+
+### Returns
+- `(number)`: The clamped value.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { clamp } from '@madeinhaus/utils';
+
+const value = 10;
+const min = 0;
+const max = 5;
+const clampedValue = clamp(value, min, max); // 5
+```
+In this example, we import the clamp function from the `@madeinhaus/utils` module and use it to clamp a value between a minimum and maximum value.

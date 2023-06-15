@@ -1,0 +1,70 @@
+# easings
+
+Contains various easing functions for use in animations. Each easing function takes a single argument `x` that represents the progress of the animation as a value between `0` and `1`, and returns a value between `0` and `1` that represents the eased progress of the animation.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { easings } from '@madeinhaus/hooks';
+```
+
+## Functions
+
+- `linear(x: number): number`: Returns the progress of the animation linearly.
+- `easeInQuad(x: number): number`: Returns the progress of the animation with a quadratic easing in.
+- `easeOutQuad(x: number): number`: Returns the progress of the animation with a quadratic easing out.
+- `easeInOutQuad(x: number): number`: Returns the progress of the animation with a quadratic easing in and out.
+- `easeInCubic(x: number): number`: Returns the progress of the animation with a cubic easing in.
+- `easeOutCubic(x: number): number`: Returns the progress of the animation with a cubic easing out.
+- `easeInOutCubic(x: number): number`: Returns the progress of the animation with a cubic easing in and out.
+- `easeInQuart(x: number): number`: Returns the progress of the animation with a quartic easing in.
+- `easeOutQuart(x: number): number`: Returns the progress of the animation with a quartic easing out.
+- `easeInOutQuart(x: number): number`: Returns the progress of the animation with a quartic easing in and out.
+- `easeInQuint(x: number): number`: Returns the progress of the animation with a quintic easing in.
+- `easeOutQuint(x: number): number`: Returns the progress of the animation with a quintic easing out.
+- `easeInOutQuint(x: number): number`: Returns the progress of the animation with a quintic easing in and out.
+- `easeInSine(x: number): number`: Returns the progress of the animation with a sine easing in.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { easings } from '@madeinhus/utils';
+
+const duration = 1000; // 1 second
+const startTime = performance.now();
+
+function animate() {
+  const elapsedTime = performance.now() - startTime;
+  const progress = Math.min(elapsedTime / duration, 1);
+  const easedProgress = easings.easeInOutQuad(progress);
+  // Update animation based on eased progress
+  if (progress < 1) {
+    requestAnimationFrame(animate);
+  }
+}
+requestAnimationFrame(animate);
+```
+In this example, we import the easings object from the `@madeinhaus/utils` module and use the `easeInOutQuad` easing function to ease the progress of an animation over time.
