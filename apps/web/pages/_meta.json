@@ -3,7 +3,7 @@
   "components": "Components",
   "components-nextjs": "Components (for Next.js)",
   "hooks": "Hooks",
-  "utils": "Utils",
+  "utils": "Utilities",
   "contact": {
     "title": "Contact ↗",
     "type": "page",
