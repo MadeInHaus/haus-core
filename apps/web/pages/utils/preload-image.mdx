@@ -1,0 +1,56 @@
+# preloadImage
+
+Preloads an image from a URL.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { preloadImage } from '@madeinhaus/utils';
+```
+
+
+## Parameters
+
+- `url (string)`: The URL of the image to preload.
+
+
+## Returns
+
+- `(Promise<HTMLImageElement>)`: A promise that resolves with the preloaded image.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { preloadImage } from '@madeinhaus/utils';
+
+async function loadImage() {
+  const url = 'https://example.com/image.jpg';
+  const image = await preloadImage(url);
+  console.log('Image loaded:', image);
+}
+```
+
+In this example, we import the `preloadImage` function from the `@madeinhaus/utils` package and use it to preload an image from a URL.

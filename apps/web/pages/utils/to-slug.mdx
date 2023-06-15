@@ -1,6 +1,6 @@
-# modulo
+# toSlug
 
-Calculates the remainder of a number when divided by another number.
+Converts a string to a slug.
 
 ## Installation
 
@@ -28,26 +28,24 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 ## Import
 
 ```tsx
-import { modulo } from '@madeinhaus/utils';
+import { toSlug } from '@madeinhaus/utils';
 ```
 
 ## Parameters
 
-- `n (number)`: The number to calculate the modulo of.
-- `m (number)`: The modulo base.
+- `str (string)`: The string to convert to a slug.
 
 ## Returns
 
-- `(number)`: The modulo of `n` with respect to `m`.
+- `(string)`: The slugified string.
 
 ## Usage
 
 ```tsx copy showLineNumbers
-import { modulo } from '@madeinhaus/utils';
+import { toSlug } from '@madeinhaus/utils';
 
-const n = 10;
-const m = 3;
-const result = modulo(n, m); // 1
+const str = 'Hello, world!';
+const slug = toSlug(str); // 'hello-world'
 ```
 
-In this example, we import the `modulo` function from the `@madeinhaus/utils` package and use it to calculate the modulo of a number.
+In this example, we import the `toSlug` function from the `@madeinhaus/utils` package and use it to convert a string to a slug.

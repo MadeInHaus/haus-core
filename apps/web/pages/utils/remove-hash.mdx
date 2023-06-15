@@ -1,0 +1,51 @@
+# removeHash
+
+Removes the hash fragment from a URL.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { removeHash } from '@madeinhaus/utils';
+```
+
+## Parameters
+
+- `url (string)`: The URL to remove the hash fragment from.
+
+## Returns
+
+- `(string)`: The URL without the hash fragment.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { removeHash } from '@madeinhaus/utils';
+
+const url = 'https://example.com/#section1';
+const urlWithoutHash = removeHash(url); // 'https://example.com/'
+```
+
+In this example, we import the `removeHash` function from the `@madeinhaus/utils` package and use it to remove the hash fragment from a URL.
