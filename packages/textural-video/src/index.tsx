@@ -78,10 +78,10 @@ const TexturalVideo = ({
             playsInline
             {...rest}
         >
+            {webm && <source src={webm} type="video/webm" />}
             {mp4 && (
                 <source src={mp4} type={isTransparent ? 'video/mp4; codecs="hvc1"' : 'video/mp4'} />
             )}
-            {webm && <source src={webm} type="video/webm" />}
         </video>
     );
 };
