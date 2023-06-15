@@ -1,6 +1,8 @@
 {
     "clamp": "clamp",
     "easings": "easings",
+    "get-hash": "getHash",
+    "get-last-segment": "getLastSegment",
     "last": "last",
     "mappable": "mappable"
 }

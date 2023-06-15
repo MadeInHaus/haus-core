@@ -1,0 +1,50 @@
+# getLastSegement
+
+Returns the last segment of a URL path.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx
+import { getLastSegement } from '@madeinhaus/hooks';
+```
+
+## Parameters
+
+- `url (string)`: The URL to extract the last segment from.
+
+### Returns
+- `(string)`: The last segment of the URL path.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { getLastSegment } from '@madeinhaus/utils';
+
+const url = 'https://example.com/path/to/resource';
+const lastSegment = getLastSegment(url); // 'resource'
+```
+
+In this example, we import the `getLastSegment` function from the `@madeinhaus/utils` module and use it to extract the last segment of a URL path.

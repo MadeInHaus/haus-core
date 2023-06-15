@@ -1,6 +1,6 @@
-# mappable
+# getHash
 
-Returns an array of numbers from `0` to `size - 1`.
+Returns the hash portion of a URL.
 
 ## Installation
 
@@ -27,23 +27,24 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { mappable } from '@madeinhaus/utils';`
-
+```tsx
+import { getHash } from '@madeinhaus/hooks';
+```
 
 ## Parameters
 
-- `size` (required): The size of the array to create.
+- `url (string)`: The URL to extract the hash from.
 
 ### Returns
-
-- An array of numbers from `0` to `size - 1`.
+- `(string)`: The hash portion of the URL.
 
 ## Usage
 
 ```tsx copy showLineNumbers
-import { mappable } from '@madeinhaus/utils';
+import { getHash } from '@madeinhaus/utils';
 
-const numbers = mappable(5); // [0, 1, 2, 3, 4]
+const url = 'https://example.com/path/to/resource#section1';
+const hash = getHash(url); // 'section1'
 ```
 
-In this example, we import the `mappable` function from the `@madeinhaus/utils` module and use it to create an array of numbers from 0 to 4.
+In this example, we import the `getHash` function from the `@madeinhaus/utils` module and use it to extract the hash portion of a URL.
