@@ -4,8 +4,18 @@ import { useIntersectionObserver } from '../../hooks/src/useIntersectionObserver
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
     isTransparent?: boolean;
+    /**
+     * @deprecated Use `primaryVideoUrl` or `secondaryVideoUrl` instead
+     */
     mp4?: string;
+    /**
+     * @deprecated Use `primaryVideoUrl` or `secondaryVideoUrl` instead
+     */
     webm?: string;
+    primaryVideoUrl?: string;
+    primaryVideoType?: string;
+    secondaryVideoUrl?: string;
+    secondaryVideoType?: string;
     threshold?: number;
 }
 
@@ -14,14 +24,18 @@ const TexturalVideo = ({
     isTransparent = false,
     mp4,
     webm,
+    primaryVideoUrl = mp4,
+    primaryVideoType = isTransparent ? 'video/mp4; codecs="hvc1"' : 'video/mp4',
+    secondaryVideoUrl = webm,
+    secondaryVideoType = 'video/webm',
     poster,
     threshold = 0,
     title,
     ...rest
 }: TexturalVideoProps) => {
-    if (isTransparent && !(mp4 && webm)) {
+    if (isTransparent && !(primaryVideoUrl && secondaryVideoUrl)) {
         console.warn(
-            'TexturalVideo: Please make sure you have both webm and mp4 formats for cross-browser support for transparent videos.'
+            'TexturalVideo: Please make sure you have both webm and mp4/mov formats for cross-browser support for transparent videos.'
         );
     }
 
@@ -64,6 +78,14 @@ const TexturalVideo = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isIntersecting]);
 
+    const primaryVideoSource = primaryVideoUrl && (
+        <source src={primaryVideoUrl} type={primaryVideoType} />
+    );
+
+    const secondaryVideoSource = secondaryVideoUrl && (
+        <source src={secondaryVideoUrl} type={secondaryVideoType} />
+    );
+
     return (
         <video
             ref={videoRef}
@@ -78,10 +100,8 @@ const TexturalVideo = ({
             playsInline
             {...rest}
         >
-            {mp4 && (
-                <source src={mp4} type={isTransparent ? 'video/mp4; codecs="hvc1"' : 'video/mp4'} />
-            )}
-            {webm && <source src={webm} type="video/webm" />}
+            {primaryVideoSource}
+            {secondaryVideoSource}
         </video>
     );
 };
