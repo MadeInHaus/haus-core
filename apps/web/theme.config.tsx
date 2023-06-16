@@ -2,6 +2,11 @@ import React from 'react';
 import { DocsThemeConfig } from 'nextra-theme-docs';
 
 const config: DocsThemeConfig = {
+  head: (
+    <>
+      <link rel="icon" href="/favicon.svg"/>
+    </>
+  ),
   logo: (
     <svg x="0" y="0" viewBox="0 0 316.3 45" height="24">
       <path

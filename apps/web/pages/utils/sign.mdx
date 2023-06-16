@@ -1,0 +1,55 @@
+# sign
+
+Returns the sign of a number. The sign of a number indicates whether the number is positive, negative or zero.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```js copy
+import { sign } from '@madeinhaus/utils';
+```
+
+## Parameters
+
+- `n` _(number)_: The number to get the sign of.
+
+## Returns
+
+- _(number)_: `1` if the number is positive or 0, `-1` if the number is negative.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { sign } from '@madeinhaus/utils';
+
+const n1 = 10;
+const n2 = -10;
+const n3 = 0;
+const sign1 = sign(n1); // 1
+const sign2 = sign(n2); // -1
+const sign3 = sign(n3); // 1
+```
+
+In this example, we import the `sign` function from the `@madeinhaus/utils` package and use it to get the sign of three numbers.

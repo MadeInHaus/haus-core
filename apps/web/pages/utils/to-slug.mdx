@@ -1,0 +1,51 @@
+# toSlug
+
+Converts a string to a slug.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```js copy
+import { toSlug } from '@madeinhaus/utils';
+```
+
+## Parameters
+
+- `str` _(string)_: The string to convert to a slug.
+
+## Returns
+
+- _(string)_: The slugified string.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { toSlug } from '@madeinhaus/utils';
+
+const str = 'Hello, world!';
+const slug = toSlug(str); // 'hello-world'
+```
+
+In this example, we import the `toSlug` function from the `@madeinhaus/utils` package and use it to convert a string to a slug.

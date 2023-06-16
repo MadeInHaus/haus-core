@@ -1,0 +1,50 @@
+# mappable
+
+Returns an array of numbers from `0` to `size - 1`.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx copy
+import { mappable } from '@madeinhaus/utils';
+```
+
+## Parameters
+
+- `size` _(number)_: The size of the array to create.
+
+## Returns
+
+- _(array)_: An array of numbers from `0` to `size - 1`.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { mappable } from '@madeinhaus/utils';
+
+const numbers = mappable(5); // [0, 1, 2, 3, 4]
+```
+
+In this example, we import the `mappable` function from the `@madeinhaus/utils` package and use it to create an array of numbers from 0 to 4.

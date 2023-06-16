@@ -1,0 +1,55 @@
+# truncate
+
+Truncates a string to a maximum length and adds a suffix if it was truncated.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```js copy
+import { truncate } from '@madeinhaus/utils';
+```
+
+## Parameters
+
+- `str` _(string)_: The string to truncate.
+- `maxLength` _(number)_: The maximum length of the truncated string.
+- `suffix` _(string, optional)_: The suffix to add to the truncated string. Defaults to `"..."`.
+
+## Returns
+
+- _(string)_: The truncated string.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { truncate } from '@madeinhaus/utils';
+
+const str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+const maxLength = 20;
+const suffix = '...';
+const truncatedStr = truncate(str, maxLength, suffix); // 'Lorem ipsum dolor si...'
+```
+
+In this example, we import the `truncate` function from the `@madeinhaus/utils` package and use it to truncate a string to a maximum length and add a suffix if it was truncated.

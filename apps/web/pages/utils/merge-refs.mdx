@@ -1,0 +1,57 @@
+# mergeRefs
+
+Merges multiple React refs into a single ref.
+
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* prettier-ignore */}
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/utils
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/utils
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+```tsx copy
+import { mergeRefs } from '@madeinhaus/utils';
+```
+
+## Parameters
+
+- `...refs` _(Ref[])_: The React refs to merge.
+
+## Returns
+
+- _(Ref)_: A single React ref that merges all the input refs.
+
+## Usage
+
+```tsx copy showLineNumbers
+import { useRef } from 'react';
+import { mergeRefs } from '@madeinhaus/utils';
+
+function MyComponent() {
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const mergedRef = mergeRefs(ref1, ref2);
+
+  return <div ref={mergedRef}>Hello, world!</div>;
+}
+```
+
+In this example, we import the `mergeRefs` function from the `@madeinhaus/utils` package and use it to merge two React refs into a single ref.
