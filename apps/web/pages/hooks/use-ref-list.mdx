@@ -1,6 +1,6 @@
 # useRefList
 
-The quick brown fox jumps over the lazy dog.
+A React hook that creates refs for a list of elements.
 
 ## Installation
 
@@ -27,4 +27,39 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { useRefList } from '@madeinhaus/hooks';`
+```tsx copy
+import { useRefList } from '@madeinhaus/hooks';
+```
+
+## Returns
+- `refFn` _(function)_: A function that takes an index and returns a ref callback for an element at that index.
+- `refs` _(object)_: A mutable ref object that holds an array of elements.
+
+## Usage
+
+```tsx copy
+import { useEffect } from 'react';
+import { useRefList } from '@madeinhaus/hooks';
+
+function MyComponent({ someCollection }) {
+  const [refFn, refs] = useRefList<HTMLDivElement>();
+
+  useEffect(() => {
+    // refs.current is an array of elements
+    // refs.current[0] is the first element,
+    // refs.current[1] is the second element, etc.
+    refs.current.forEach(element => {
+        // do something with each element
+    });
+  }, [refs.current]);
+
+return (
+  <div>
+    {someCollection.map((item, index) => (
+      <div ref={refFn(index)} key={index}>
+        {item}
+      </div>
+    ))}
+  </div>
+);
+}

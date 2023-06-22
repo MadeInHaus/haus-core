@@ -1,6 +1,6 @@
 # useIntersectionObserver
 
-The quick brown fox jumps over the lazy dog.
+A React hook that uses the IntersectionObserver API to detect when an element is in view.
 
 ## Installation
 
@@ -27,4 +27,40 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { useIntersectionObserver } from '@madeinhaus/hooks';`
+```tsx copy
+import { useIntersectionObserver } from '@madeinhaus/hooks';
+```
+
+## Parameters
+- `options` _(IntersectionObserverOptions, optional)_: An optional object that can contain the following properties:
+    - `once` _(boolean, default: true)_: If true, the observer will unobserve the element after it becomes visible.
+    - `root` _(Element | Document, optional)_: The element that is used as the viewport for checking visibility of the target. Defaults to the browser viewport if not specified or if `null`.
+    - `rootMargin` _(string, optional)_: Margin around the root element. Can have values similar to the CSS margin property. Defaults to all zeros if not specified or if `null`.
+    - `threshold` _(number | number[], optional)_: Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. Defaults to `0` if not specified or if `null`.
+
+## Returns
+- `inView` _(boolean)_: A boolean indicating if the component is in view.
+- `ref` _(function)_: a callback ref that you pass to the element's ref prop.
+- `elRef` _(Ref)_: A ref object that you can use to access the Element if needed.
+
+## Usage
+
+```tsx copy
+import { useIntersectionObserver } from '@madeinhaus/hooks';
+
+function MyComponent() {
+  const [inView, ref] = useIntersectionObserver({
+    once: false,
+    rootMargin: '0px 0px -100px 0px',
+    threshold: 0.5,
+  });
+
+  return (
+    <div ref={ref}>
+      {inView ? 'In view' : 'Not in view'}
+    </div>
+  );
+}
+```
+
+In this example, we import the `useIntersectionObserver` hook from the `@madeinhaus/hooks` package and use it to detect when a div element is in view.

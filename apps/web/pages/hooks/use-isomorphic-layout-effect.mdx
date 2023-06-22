@@ -1,6 +1,8 @@
 # useIsomorphicLayoutEffect
 
-The quick brown fox jumps over the lazy dog.
+A React hook that is similar to `useLayoutEffect`, but can be safely used on the server.
+
+On the server, React emits a warning when calling `useLayoutEffect`. This is because neither `useLayoutEffect` nor `useEffect` run on the server. We use this safe version which suppresses the warning by replacing it with a noop on the server.
 
 ## Installation
 
@@ -27,4 +29,31 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { useIsomorphicLayoutEffect } from '@madeinhaus/hooks';`
+```tsx copy
+import { useIsomorphicLayoutEffect } from '@madeinhaus/hooks';
+```
+
+## Parameters
+- `effect` _(EffectCallback)_: A function that will be called after the component has rendered.
+- `deps` _(DependencyList, optional)_: An array of dependencies that will trigger the effect when they change. If not specified, the effect will run after every render.
+
+## Returns
+- _(void)_: This hook does not return anything.
+
+## Usage
+
+```tsx copy
+import { useIsomorphicLayoutEffect } from '@madeinhaus/hooks';
+
+function MyComponent() {
+  useIsomorphicLayoutEffect(() => {
+    console.log('Component has rendered');
+  });
+
+  return (
+    <div>Hello, world!</div>
+  );
+}
+```
+
+In this example, we import the `useIsomorphicLayoutEffect` hook from the `@madeinhaus/hooks` package and use it to log a message after the component has rendered.
