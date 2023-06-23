@@ -16,6 +16,10 @@ As well as a few others tools preconfigured:
 - [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
 - [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
 
+## Documentation
+
+Full documentation on the everything contained in this repo can be found at [hauscore.xyz](https://hauscore.xyz/)
+
 ## Clone the repo
 
 ```bash

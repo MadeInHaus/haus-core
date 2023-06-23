@@ -12,3 +12,7 @@ npm i @madeinhaus/slider
 import Slider from '@madeinhaus/slider';
 import '@madeinhaus/slider/dist/index.css';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components/slider](https://hauscore.xyz/components/slider)

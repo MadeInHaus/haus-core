@@ -12,3 +12,7 @@ npm i @madeinhaus/disclosure
 import Disclosure from '@madeinhaus/disclosure';
 import '@madeinhaus/disclosure/dist/index.css';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components/disclosure](https://hauscore.xyz/components/disclosure)
