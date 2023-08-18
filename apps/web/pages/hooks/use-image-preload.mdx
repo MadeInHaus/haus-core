@@ -1,6 +1,6 @@
 # useImagePreload
 
-The quick brown fox jumps over the lazy dog.
+A React hook that monitors the loading state of an image.
 
 ## Installation
 
@@ -27,4 +27,35 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { useImagePreload } from '@madeinhaus/hooks';`
+```tsx copy
+import { useImagePreload } from '@madeinhaus/hooks';
+```
+
+## Returns
+- `loaded` _(boolean)_: A boolean indicating whether the image has been loaded.
+- `fnRef` _(function)_: A callback ref that you pass to the image's ref prop.
+- `imgRef` _(Ref)_: A mutable ref object that holds the HTMLImageElement.
+
+## Usage
+
+```tsx copy
+import { useImagePreload } from '@madeinhaus/hooks';
+
+function MyComponent() {
+  const [loaded, fnRef, imgRef] = useImagePreload();
+
+  useEffect(() => {
+    if (loaded) {
+      console.log('Image loaded!', imgRef.current);
+    }
+  }, [loaded, imgRef]);
+
+  return (
+    <div>
+      <img ref={fnRef} src="https://example.com/image.jpg" alt="Example" />
+    </div>
+  );
+}
+```
+
+In this example, we import the `useImagePreload` hook from the `@madeinhaus/hooks` package, use it to monitor the loading state of an image and log a message when the image is loaded.

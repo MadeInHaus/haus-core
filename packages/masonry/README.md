@@ -11,3 +11,7 @@ npm i @madeinhaus/masonry
 ```javascript
 import Masonry from '@madeinhaus/masonry';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components/masonry](https://hauscore.xyz/components/masonry)

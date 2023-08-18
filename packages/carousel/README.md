@@ -12,3 +12,7 @@ npm i @madeinhaus/carousel
 import Carousel from '@madeinhaus/carousel';
 import '@madeinhaus/carousel/dist/index.css';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components/carousel](https://hauscore.xyz/components/carousel)

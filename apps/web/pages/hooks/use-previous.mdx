@@ -1,6 +1,6 @@
 # usePrevious
 
-The quick brown fox jumps over the lazy dog.
+A React hook that returns the previous value of a state or prop.
 
 ## Installation
 
@@ -27,4 +27,34 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { usePrevious } from '@madeinhaus/hooks';`
+```tsx copy
+import { usePrevious } from '@madeinhaus/hooks';
+```
+
+## Parameters
+
+- `value` _(T)_: The current value of the state or prop.
+
+## Returns
+
+- _(T | undefined)_: The previous value of the state or prop, or undefined if there is no previous value.
+
+
+## Usage
+
+```tsx copy
+import { usePrevious } from '@madeinhaus/hooks';
+
+function MyComponent({ count }) {
+  const previousCount = usePrevious(count);
+
+  return (
+    <div>
+      <p>Current count: {count}</p>
+      <p>Previous count: {previousCount}</p>
+    </div>
+  );
+}
+```
+
+In this example, we import the `usePrevious` hook from the `@madeinhaus/hooks` package and use it to get the previous value of a count prop.

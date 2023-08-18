@@ -1,6 +1,6 @@
 # useWindowSize
 
-The quick brown fox jumps over the lazy dog.
+A React hook that returns the current size of the browser window.
 
 ## Installation
 
@@ -27,4 +27,32 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Import
 
-`import { useWindowSize } from '@madeinhaus/hooks';`
+```tsx copy
+import { useWindowSize } from '@madeinhaus/hooks';
+```
+
+## Returns
+
+
+- `(Size)` _(object)_: An object with the following properties:
+  - `width` _(number | undefined)_: The current width of the browser window, or undefined if it has not been initialized yet.
+  - `height` _(number | undefined)_: The current height of the browser window, or undefined if it has not been initialized yet.
+
+## Usage
+
+```tsx copy
+import { useWindowSize } from '@madeinhaus/hooks';
+
+function MyComponent() {
+  const { width, height } = useWindowSize();
+
+  return (
+    <div>
+      <p>Window width: {width}</p>
+      <p>Window height: {height}</p>
+    </div>
+  );
+}
+```
+
+In this example, we import the `useWindowSize` hook from the `@madeinhaus/hooks` package and use it to get the current size of the browser window.

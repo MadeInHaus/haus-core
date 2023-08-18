@@ -11,3 +11,7 @@ npm i @madeinhaus/theme
 ```javascript
 import { ThemeProvider, ThemeScript, useTheme } from '@madeinhaus/theme';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components-nextjs/theme](https://hauscore.xyz/components-nextjs/theme)

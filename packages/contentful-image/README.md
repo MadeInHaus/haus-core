@@ -11,3 +11,7 @@ npm i @madeinhaus/contentful-image
 ```javascript
 import ContentfulImage from '@madeinhaus/contentful-image';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components/contentful-image](https://hauscore.xyz/components/contentful-image)

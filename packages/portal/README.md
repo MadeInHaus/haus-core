@@ -11,3 +11,7 @@ npm i @madeinhaus/portal
 ```javascript
 import Portal from '@madeinhaus/portal';
 ```
+
+**Documentation**:
+
+[hauscore.xyz/components/portal](https://hauscore.xyz/components/portal)
