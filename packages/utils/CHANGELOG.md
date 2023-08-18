@@ -1,5 +1,11 @@
 # @madeinhaus/utils
 
+## 1.1.3
+
+### Patch Changes
+
+- cbf442b: update readme files
+
 ## 1.1.2
 
 ### Patch Changes

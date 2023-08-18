@@ -1,5 +1,11 @@
 # @madeinhaus/portal
 
+## 1.2.1
+
+### Patch Changes
+
+- cbf442b: update readme files
+
 ## 1.2.0
 
 ### Minor Changes
