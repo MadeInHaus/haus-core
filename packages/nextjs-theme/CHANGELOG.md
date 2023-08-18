@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-theme
 
+## 1.1.1
+
+### Patch Changes
+
+- cbf442b: update readme files
+
 ## 1.1.0
 
 ### Minor Changes

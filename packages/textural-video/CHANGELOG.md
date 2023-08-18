@@ -1,5 +1,15 @@
 # @madeinhaus/textural-video
 
+## 1.4.0
+
+### Minor Changes
+
+- ba2202d: Deprecate mp4 and webm props in favor of primaryVideoUrl and secondaryVideoUrl
+
+### Patch Changes
+
+- cbf442b: update readme files
+
 ## 1.3.0
 
 ### Minor Changes

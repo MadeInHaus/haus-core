@@ -1,5 +1,11 @@
 # @madeinhaus/slider
 
+## 1.0.1
+
+### Patch Changes
+
+- cbf442b: update readme files
+
 ## 1.0.0
 
 ### Major Changes
