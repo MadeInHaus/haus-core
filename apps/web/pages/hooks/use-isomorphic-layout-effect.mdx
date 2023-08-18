@@ -34,7 +34,7 @@ import { useIsomorphicLayoutEffect } from '@madeinhaus/hooks';
 ```
 
 ## Parameters
-- `effect` _(EffectCallback)_: A function that will be called after the component has rendered.
+- `effect` _(EffectCallback)_: A function that will be called before the browser repaints the screen.
 - `deps` _(DependencyList, optional)_: An array of dependencies that will trigger the effect when they change. If not specified, the effect will run after every render.
 
 ## Returns
