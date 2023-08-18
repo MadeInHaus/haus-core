@@ -26,5 +26,6 @@
   },
   "dependencies": {
     "clsx": "^1.2.1"
-  }
+  },
+  "packageManager": "yarn@3.6.1"
 }
