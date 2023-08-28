@@ -21,7 +21,7 @@ export interface DisclosureRootProps {
 
 export interface DisclosureDetailProps {
     animationOptions?: OptionalEffectTiming | null;
-    index: number;
+    index?: number;
     handleClick?: (e: React.MouseEvent) => void;
     children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
     className?: string;
@@ -135,7 +135,7 @@ const DisclosureDetails = ({
     return (
         <DisclosureDetailsContext.Provider
             value={{
-                index,
+                index: index ?? 0,
                 animationOptions,
                 detailsEl,
                 setDetailsEl,
