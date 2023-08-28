@@ -48,7 +48,7 @@ const DisclosureContext = createContext<{
 });
 
 const DisclosureDetailsContext = createContext<{
-    index: number;
+    index?: number;
     handleClick?: (e: React.MouseEvent) => void;
     animationOptions?: OptionalEffectTiming | null;
     detailsEl: HTMLDetailsElement | null;
@@ -63,7 +63,7 @@ const DisclosureDetailsContext = createContext<{
     contentEl: null,
     setContentEl: () => {},
     setIsOpen: () => {},
-    index: 0,
+    index: undefined,
     handleClick: undefined,
 });
 
@@ -292,7 +292,7 @@ const DisclosureContent = ({ children, className }: DisclosureSharedProps) => {
 
     useEffect(() => {
         setContentEl(contentRef.current);
-    }, [setContentEl]);
+    }, []);
 
     return (
         <div ref={contentRef} className={className}>
