@@ -76,6 +76,7 @@ import {
   DisclosureDemo,
   DisclosureDemoRenderProp,
   DisclosureDemoWithStyles,
+  DisclosureDemoControlled,
 } from '../../components/DisclosureDemo';
 
 ### Basic Usage
@@ -168,3 +169,36 @@ export default DisclosureDemoWithStyles;
 ```
 
 <DisclosureDemoWithStyles />
+
+### Usage as Controlled Accordion
+
+```tsx filename="DisclosureDemoControlled.tsx" {1-2,11-22} copy showLineNumbers
+import Disclosure from '@madeinhaus/disclosure';
+import '@madeinhaus/disclosure/dist/index.css';
+import styles from './DisclosureDemo.module.css';
+
+const DisclosureDemoControlled: React.FC = ({
+  items,
+}: {
+  items: { heading: string; paragraph: string }[];
+}) => {
+  return (
+    <Disclosure.Root defaultOpenIndex={1} className={styles.root}>
+      {(registerDetails: RegisterDetails) =>
+        items.map(({ heading, paragraph }, index) => {
+          return (
+            <Disclosure.Details key={index} {...registerDetails()}>
+              <Disclosure.Summary className={styles.summary}>{heading}</Disclosure.Summary>
+              <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
+            </Disclosure.Details>
+          );
+        })
+      }
+    </Disclosure.Root>
+  );
+};
+
+export default DisclosureDemoControlled;
+```
+
+<DisclosureDemoControlled />
