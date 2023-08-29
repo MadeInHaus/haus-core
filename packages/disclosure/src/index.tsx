@@ -71,11 +71,11 @@ const Disclosure = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
-    defaultOpenIndex = 1,
+    defaultOpenIndex = 0,
 }: DisclosureRootProps) => {
     const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
 
-    let counter = 0;
+    let counter = -1;
 
     const registerDetails = () => {
         const _index = counter + 1;
