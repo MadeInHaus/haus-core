@@ -183,7 +183,7 @@ const DisclosureDemoControlled: React.FC = ({
   items: { heading: string; paragraph: string }[];
 }) => {
   return (
-    <Disclosure.Root defaultOpenIndex={1} className={styles.root}>
+    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
       {(registerDetails: RegisterDetails) =>
         items.map(({ heading, paragraph }, index) => {
           return (

@@ -6,7 +6,7 @@ import styles from './DisclosureDemo.module.css';
 
 const DisclosureDemoControlled: React.FC = () => {
   return (
-    <Disclosure.Root defaultOpenIndex={1} className={styles.root}>
+    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
       {(registerDetails: RegisterDetails) =>
         items.map(({ heading, paragraph }, index) => {
           return (
