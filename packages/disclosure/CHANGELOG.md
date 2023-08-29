@@ -1,5 +1,11 @@
 # @madeinhaus/disclosure
 
+## 2.1.0
+
+### Minor Changes
+
+- d99d441: Enhanced Disclosure component for Accordion behavior using registerDetails.
+
 ## 2.0.1
 
 ### Patch Changes
