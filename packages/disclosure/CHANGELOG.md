@@ -1,5 +1,11 @@
 # @madeinhaus/disclosure
 
+## 2.2.0
+
+### Minor Changes
+
+- fdbcf69: For NextJS 13 compatibility, prepend files with 'use client', if applicable
+
 ## 2.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @madeinhaus/textural-video
 
+## 1.5.0
+
+### Minor Changes
+
+- fdbcf69: For NextJS 13 compatibility, prepend files with 'use client', if applicable
+
 ## 1.4.0
 
 ### Minor Changes
