@@ -1,6 +1,8 @@
+'use client';
+
 import * as React from 'react';
 
-import { type EasingFunction, easings, modulo, clamp, sign, last } from '../../utils/src';;
+import { type EasingFunction, easings, modulo, clamp, sign, last } from '../../utils/src';
 
 import styles from './Carousel.module.scss';
 
@@ -14,7 +16,6 @@ interface CarouselItemProps {
 function joinClassNames(...items: (string | undefined | null)[]) {
     return [...items].filter(Boolean).join(' ');
 }
-
 
 const CarouselItem = ({ Wrapper, isDisabled, className, children }: CarouselItemProps) => {
     const props = isDisabled
