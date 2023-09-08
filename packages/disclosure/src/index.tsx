@@ -1,5 +1,3 @@
-'use client';
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import cx from 'clsx';
 import styles from './Disclosure.module.scss';
