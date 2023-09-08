@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-theme
 
+## 1.3.0
+
+### Minor Changes
+
+- 66602af: Remove "use client" directive, opting for handling outside package
+
 ## 1.2.0
 
 ### Minor Changes
