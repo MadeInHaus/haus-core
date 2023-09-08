@@ -1,5 +1,11 @@
 # @madeinhaus/textural-video
 
+## 1.6.0
+
+### Minor Changes
+
+- 66602af: Remove "use client" directive, opting for handling outside package
+
 ## 1.5.0
 
 ### Minor Changes
