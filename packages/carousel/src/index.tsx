@@ -827,10 +827,8 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
             autoScroll.current = values.autoScroll;
         }
         // Disable the carousel if needed
+        setIsDisabled(disabled.current);
         container.current.classList.toggle('disabled', disabled.current);
-        if (disabled.current !== isDisabled) {
-            setIsDisabled(disabled.current);
-        }
         if (disabled.current) {
             stopAllAnimations();
             items.forEach((_, index) => {
