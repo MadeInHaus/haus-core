@@ -1,5 +1,11 @@
 # @madeinhaus/carousel
 
+## 2.3.0
+
+### Minor Changes
+
+- e19efc6: Fix intermittent problem where the isDisabled state isn't updated
+
 ## 2.2.0
 
 ### Minor Changes
