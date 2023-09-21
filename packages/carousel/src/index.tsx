@@ -586,7 +586,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
     };
 
     const handleClick = (event: MouseEvent) => {
-        if (dragPreventClick.current) {
+        if (dragPreventClick.current && !disabled.current) {
             // Prevent-default click events:
             // After dragging, we don't want a dangling click to go through
             event.stopPropagation();
@@ -831,6 +831,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
         container.current.classList.toggle('disabled', disabled.current);
         if (disabled.current) {
             stopAllAnimations();
+            removePointerEvents();
             items.forEach((_, index) => {
                 const node = container.current?.childNodes[index] as HTMLElement;
                 if (node) {
