@@ -1,5 +1,11 @@
 # @madeinhaus/carousel
 
+## 2.3.1
+
+### Patch Changes
+
+- 1dbaeab: Bugfix: Allow click events to go through when disabled
+
 ## 2.3.0
 
 ### Minor Changes
