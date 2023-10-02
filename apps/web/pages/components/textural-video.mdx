@@ -33,15 +33,23 @@ import TexturalVideo from '@madeinhaus/textural-video';
 
 ## Props
 
-- `className`: A string that represents the class name(s) of the video element. Optional.
-- `primaryVideoUrl`: A string that represents the URL of the primary video file. Required.
-- `primaryVideoType`: A string that represents the type of the primary video file. Optional, defaults to `video/webm`.
-- `secondaryVideoUrl`: A string that represents the URL of the secondary video file. Required.
-- `secondaryVideoType`: A string that represents the type of the secondary video file. Optional, defaults to `video/mp4`.
-- `poster`: A string that represents the URL of the poster image for the video. Optional.
-- `threshold`: A number that represents the percentage of the video element that needs to be visible in the viewport to start playing the video. Optional.
-- `title`: A string that represents the title of the video element. Optional.
-- Other props: Any other valid HTML video attributes.
+- **`className`** _string_<br />
+  The CSS class name to apply to the container element.
+- **`primaryVideoUrl`**: _string (required)_<br />
+  The URL of the primary video file.
+- **`primaryVideoType`**: _string (default: "video/webm")_<br />
+  The type of the primary video file.
+- **`secondaryVideoUrl`**: _string_<br />
+  The URL of the secondary video file.
+- **`secondaryVideoType`**: _string (default: "video/mp4")_<br />
+  The type of the secondary video file.
+- **`poster`**: _string_<br />
+  The URL of the poster image for the video.
+- **`threshold`**: _number_<br />
+  The percentage of the video element that needs to be visible in the viewport to start playing the video.
+- **`title`**: _string_<br />
+  The title of the video element.
+- Other props: Any other valid HTML `<video>` attributes.
 
 ## Usage
 
