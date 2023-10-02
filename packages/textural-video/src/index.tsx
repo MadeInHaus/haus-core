@@ -18,7 +18,6 @@ const TexturalVideo = ({
     secondaryVideoType = 'video/mp4',
     poster,
     threshold = 0,
-    title,
     ...rest
 }: TexturalVideoProps) => {
     const [isIntersecting, videoRef, videoEl] = useIntersectionObserver<HTMLVideoElement>({
@@ -73,7 +72,6 @@ const TexturalVideo = ({
             ref={videoRef}
             className={className}
             poster={poster}
-            title={title}
             aria-hidden
             autoPlay
             disableRemotePlayback
