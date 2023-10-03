@@ -3,15 +3,6 @@ import { useIntersectionObserver } from '../../hooks/src/useIntersectionObserver
 
 export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     className?: string;
-    isTransparent?: boolean;
-    /**
-     * @deprecated Use `primaryVideoUrl` or `secondaryVideoUrl` instead
-     */
-    mp4?: string;
-    /**
-     * @deprecated Use `primaryVideoUrl` or `secondaryVideoUrl` instead
-     */
-    webm?: string;
     primaryVideoUrl?: string;
     primaryVideoType?: string;
     secondaryVideoUrl?: string;
@@ -21,24 +12,14 @@ export interface TexturalVideoProps extends React.VideoHTMLAttributes<HTMLVideoE
 
 const TexturalVideo = ({
     className,
-    isTransparent = false,
-    mp4,
-    webm,
-    primaryVideoUrl = mp4,
-    primaryVideoType = isTransparent ? 'video/mp4; codecs="hvc1"' : 'video/mp4',
-    secondaryVideoUrl = webm,
-    secondaryVideoType = 'video/webm',
+    primaryVideoUrl,
+    primaryVideoType = 'video/webm',
+    secondaryVideoUrl,
+    secondaryVideoType = 'video/mp4',
     poster,
     threshold = 0,
-    title,
     ...rest
 }: TexturalVideoProps) => {
-    if (isTransparent && !(primaryVideoUrl && secondaryVideoUrl)) {
-        console.warn(
-            'TexturalVideo: Please make sure you have both webm and mp4/mov formats for cross-browser support for transparent videos.'
-        );
-    }
-
     const [isIntersecting, videoRef, videoEl] = useIntersectionObserver<HTMLVideoElement>({
         once: false,
         threshold,
@@ -91,7 +72,6 @@ const TexturalVideo = ({
             ref={videoRef}
             className={className}
             poster={poster}
-            title={title}
             aria-hidden
             autoPlay
             disableRemotePlayback
