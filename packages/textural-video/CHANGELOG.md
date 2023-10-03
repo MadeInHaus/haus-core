@@ -1,5 +1,11 @@
 # @madeinhaus/textural-video
 
+## 2.0.0
+
+### Major Changes
+
+- e0ef130: Sunset mp4, webm and isTransparent props in favor of {primary/secondary}Video{Url/Type}, primaryVideoType now defaults to "video/webm", and secondaryVideoType to "video/mp4"
+
 ## 1.6.0
 
 ### Minor Changes
