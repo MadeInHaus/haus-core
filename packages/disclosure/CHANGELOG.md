@@ -1,5 +1,11 @@
 # @madeinhaus/disclosure
 
+## 2.4.0
+
+### Minor Changes
+
+- 5d1a6fa: Remove warning for adding a className to Details element
+
 ## 2.3.0
 
 ### Minor Changes
