@@ -2,4 +2,4 @@
 "@madeinhaus/disclosure": minor
 ---
 
-Remove warning when adding a className to Details element
+Remove warning for adding a className to Details element
