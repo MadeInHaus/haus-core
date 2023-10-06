@@ -121,13 +121,6 @@ const DisclosureDetails = ({
         }
     }, []);
 
-    if (className) {
-        console.warn('%c Disclosure from @madeinhaus/disclosure ↓ ', 'color: red; font-size: 14px');
-        console.warn(
-            'Use className to style the Disclosure.Details element, sparingly. To style the trigger, please apply style to Detail.Summary. To style the content within the Disclosure.Details, please apply styles to Disclosure.Content.'
-        );
-    }
-
     useEffect(() => {
         setDetailsEl(detailsRef.current);
     }, []);
