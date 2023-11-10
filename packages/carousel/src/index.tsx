@@ -27,7 +27,7 @@ const CarouselItem = ({ Wrapper, isDisabled, className, children }: CarouselItem
 
 export type CarouselRef = {
     refresh: () => void;
-    moveIntoView: (index: number) => void; // eslint-disable-line no-unused-vars
+    moveIntoView: (index: number, options?: { easeFn?: EasingFunction; duration?: number }) => void;
 };
 
 export interface CarouselProps {
@@ -401,9 +401,14 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
         options: { easeFn?: EasingFunction; duration?: number } = {}
     ) => {
         const { easeFn = easings.easeInOutCubic, duration = 700 } = options;
+        if (snap && onSnap) onSnap(targetIndex);
+        if (duration === 0) {
+            updateActiveItemIndex(targetIndex);
+            positionItems();
+            return;
+        }
         const startTime = performance.now();
         const startOffset = offset.current;
-        if (snap && onSnap) onSnap(targetIndex);
         const loop = () => {
             const currentTime = performance.now();
             const elapsedTime = currentTime - startTime;
@@ -801,9 +806,12 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
     // // INIT/RESIZE/API
     // ///////////////////////////////////////////////////////////////////////////
 
-    const moveIntoView = (index: number) => {
+    const moveIntoView = (
+        index: number,
+        options: { easeFn?: EasingFunction; duration?: number } = {}
+    ) => {
         stopAllAnimations();
-        animateEased(getClosestDistance(index), index, { duration: 700 });
+        animateEased(getClosestDistance(index), index, options);
     };
 
     const refresh = () => {
@@ -876,8 +884,11 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
             refresh: () => {
                 refresh();
             },
-            moveIntoView: (index: number) => {
-                moveIntoView(index);
+            moveIntoView: (
+                index: number,
+                options: { easeFn?: EasingFunction; duration?: number } = {}
+            ) => {
+                moveIntoView(index, options);
             },
         }),
         [] // eslint-disable-line react-hooks/exhaustive-deps

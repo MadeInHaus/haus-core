@@ -109,8 +109,15 @@ of the carousel's container.
 
 You may use the following methods via ref to programmatically control the carousel:
 
-- **`moveIntoView(index)`**<br />
-  Moves the item at the given index into view.
+- **`moveIntoView(index, options)`**<br />
+  Moves the item at the given index into view.<br/>
+  The `options` object takes the following keys:<br/>
+  <ul>
+    <li style={{ marginLeft: '1.5em' }}>
+      **`easeFn`** _EasingFunction (optional, default: easings.easeInOutCubic)_
+    </li>
+    <li style={{ marginLeft: '1.5em' }}>**`duration`** _number (optional, default: 700)_</li>
+  </ul>
 - **`refresh()`**<br />
   Re-renders the carousel. Useful if any of the CSS variables have changed programmatically
   (not triggered by resize).
@@ -133,8 +140,8 @@ You may use the following methods via ref to programmatically control the carous
   announce its state to screen readers.
 - The carousel can currently not be used as a controlled component. Even though it has a
   `activeItemIndex` prop, it is not used to control the active item (it can only be used to
-  initialize the active item on mount). Instead, use `moveIntoView(index)` to programmatically
-  move a specific item into view.
+  initialize the active item on mount). Instead, use `moveIntoView(index, options)` to
+  programmatically move a specific item into view.
 - The carousel may run into an infinite loop in certain conditions. This has only been
   observed on iPhones with 120Hz displays (13+) while quickly swiping left and right.
   The issue is duct-tape-fixed so that the carousel doesn't get stuck in an infinite loop anymore,
