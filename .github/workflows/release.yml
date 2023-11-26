@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Install Dependencies
         run: yarn
 
