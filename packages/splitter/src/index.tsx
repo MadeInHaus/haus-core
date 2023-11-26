@@ -6,6 +6,10 @@ import { SplitOptions, SplitResult } from './utils/types';
 
 import styles from './Splitter.module.scss';
 
+export type { SplitOptions, SplitResult, NodeInfo, NodeInfoSplit, Pair } from './utils/types';
+export { split, splitChars, splitLines, cleanUp } from './utils';
+export { fixKerning } from './utils/fixKerning';
+
 export interface SplitterProps extends SplitOptions {
     as?: React.ElementType<any>;
     enabled?: boolean;
