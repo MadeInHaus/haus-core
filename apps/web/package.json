@@ -28,6 +28,7 @@
     "@madeinhaus/nextjs-theme": "*",
     "@madeinhaus/portal": "*",
     "@madeinhaus/slider": "*",
+    "@madeinhaus/splitter": "*",
     "@madeinhaus/textural-video": "*",
     "@madeinhaus/utils": "*",
     "clsx": "^1.2.1",
