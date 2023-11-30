@@ -15,11 +15,21 @@ export interface SplitterProps extends SplitOptions {
     enabled?: boolean;
     onSplit?: (props: SplitResult) => void;
     className?: string;
-    children: React.ReactNode;
+    htmlString?: string;
+    children?: React.ReactNode;
 }
 
 const Splitter: React.FC<SplitterProps> = props => {
-    const { as: Container = 'div', enabled = false, onSplit, className, children, ...rest } = props;
+    const {
+        as: Container = 'div',
+        enabled = false,
+        onSplit,
+        className,
+        children,
+        htmlString,
+        ...rest
+    } = props;
+
     const {
         whitelistSelectors = ['img', 'svg'],
         graphemeSplitter = str => [...str.normalize('NFC')],
@@ -114,11 +124,27 @@ const Splitter: React.FC<SplitterProps> = props => {
         [enabled, resizeObserverCallback]
     );
 
-    return (
-        <Container ref={wrapperRef} className={cx(styles.root, className)}>
-            {children}
-        </Container>
-    );
+    if (!children && typeof htmlString !== 'string') {
+        console.error('Splitter: children or htmlString prop is required');
+        return null;
+    }
+
+    const rootClass = cx(styles.root, className);
+    if (children) {
+        return (
+            <Container ref={wrapperRef} className={rootClass}>
+                {children}
+            </Container>
+        );
+    } else {
+        return (
+            <Container
+                ref={wrapperRef}
+                className={rootClass}
+                dangerouslySetInnerHTML={{ __html: htmlString }}
+            />
+        );
+    }
 };
 
 export default Splitter;
