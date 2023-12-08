@@ -4,6 +4,8 @@ import { split, cx } from './utils';
 import { moveAttributes, moveChildNodes } from './utils/dom';
 import { SplitOptions, SplitResult } from './utils/types';
 
+import { mergeRefs } from '../../utils/src';
+
 import styles from './Splitter.module.scss';
 
 export type { SplitOptions, SplitResult, NodeInfo, NodeInfoSplit, Pair } from './utils/types';
@@ -19,7 +21,7 @@ export interface SplitterProps extends SplitOptions {
     children?: React.ReactNode;
 }
 
-const Splitter: React.FC<SplitterProps> = props => {
+const Splitter = React.forwardRef<Element, SplitterProps>((props, ref) => {
     const {
         as: Container = 'div',
         enabled = false,
@@ -130,21 +132,23 @@ const Splitter: React.FC<SplitterProps> = props => {
     }
 
     const rootClass = cx(styles.root, className);
+    const refs = mergeRefs([wrapperRef, ref]);
+
     if (children) {
         return (
-            <Container ref={wrapperRef} className={rootClass}>
+            <Container ref={refs} className={rootClass}>
                 {children}
             </Container>
         );
     } else {
         return (
             <Container
-                ref={wrapperRef}
+                ref={refs}
                 className={rootClass}
                 dangerouslySetInnerHTML={{ __html: htmlString }}
             />
         );
     }
-};
+});
 
 export default Splitter;
