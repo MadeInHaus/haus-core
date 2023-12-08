@@ -1,5 +1,11 @@
 # @madeinhaus/splitter
 
+## 0.2.0
+
+### Minor Changes
+
+- 17553ce: Add forwardRef
+
 ## 0.1.3
 
 ### Patch Changes
