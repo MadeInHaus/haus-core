@@ -1,5 +1,11 @@
 # @madeinhaus/textural-video
 
+## 2.1.0
+
+### Minor Changes
+
+- fb8acd3: Removes intersection play/pause logic as modern browsers handle this. Adds forwardRef.
+
 ## 2.0.0
 
 ### Major Changes
