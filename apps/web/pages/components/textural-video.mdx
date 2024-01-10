@@ -1,6 +1,6 @@
 # TexturalVideo
 
-The TexturalVideo component renders a HTML5 video element with primary and secondary video sources. It uses the useIntersectionObserver hook to play/pause the video based on whether it is currently in the viewport. It also has options to set the `className`, `poster` and `threshold` props, and other attributes of the HTML `<video>` element.
+The TexturalVideo component renders a HTML5 video element with primary and secondary video sources. It also has options to set the `className` and `poster` props, and other attributes of the HTML `<video>` element.
 
 ## Installation
 
@@ -45,8 +45,6 @@ import TexturalVideo from '@madeinhaus/textural-video';
   The type of the secondary video file.
 - **`poster`**: _string_<br />
   The URL of the poster image for the video.
-- **`threshold`**: _number_<br />
-  The percentage of the video element that needs to be visible in the viewport to start playing the video.
 - Other props: Any other valid HTML `<video>` attributes.
 
 ## Usage
@@ -86,7 +84,7 @@ const TexturalVideoDemoTransparent: React.FC = () => {
       primaryVideoUrl="https://example.com/transparent-video.mp4"
       primaryVideoType='video/mp4; codecs="hvc1"'
       secondaryVideoUrl="https://example.com/transparent-video.webm"
-      secondaryVideoType='video/webm'
+      secondaryVideoType="video/webm"
     />
   );
 };
