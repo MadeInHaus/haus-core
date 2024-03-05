@@ -5,7 +5,7 @@ import '@madeinhaus/disclosure/dist/index.css';
 import items from './data/items';
 import styles from './DisclosureDemo.module.css';
 
-const defaultOpenIndex = 2;
+const defaultOpenIndex = 0;
 
 const DisclosureDemoControlledWithExposedActiveIndex: React.FC = () => {
   const [openIndex, setOpenIndex] = React.useState(defaultOpenIndex);
