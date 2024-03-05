@@ -206,8 +206,9 @@ export default DisclosureDemoControlled;
 
 ### Usage as Controlled Accordion With Exposing Active Index
 
-```tsx filename="DisclosureDemoControlledWithExposedActiveIndex.tsx" {1-3,8,11,15-39} copy showLineNumbers
+```tsx filename="DisclosureDemoControlledWithExposedActiveIndex.tsx" {1-4,9,12,15-47} copy showLineNumbers
 import * as React from 'react';
+import cx from 'clsx';
 import Disclosure, { RegisterDetails } from '@madeinhaus/disclosure';
 import '@madeinhaus/disclosure/dist/index.css';
 
@@ -226,7 +227,13 @@ const DisclosureDemoControlledWithExposedActiveIndex: React.FC = () => {
         {(registerDetails: RegisterDetails) =>
           items.map(({ heading, paragraph }, index) => {
             return (
-              <Disclosure.Details className={styles.details} key={index} {...registerDetails()}>
+              <Disclosure.Details
+                className={cx({
+                  [styles.disabled]: index === openIndex,
+                })}
+                key={index}
+                {...registerDetails()}
+              >
                 {({ isOpen }) => {
                   if (isOpen) {
                     setOpenIndex(index);

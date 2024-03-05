@@ -24,3 +24,8 @@
   color: white;
   border-bottom: 1px solid white;
 }
+
+.disabled {
+  pointer-events: none;
+  user-select: none;
+}

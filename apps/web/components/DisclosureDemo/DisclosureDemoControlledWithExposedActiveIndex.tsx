@@ -1,4 +1,5 @@
 import * as React from 'react';
+import cx from 'clsx';
 import Disclosure, { RegisterDetails } from '@madeinhaus/disclosure';
 import '@madeinhaus/disclosure/dist/index.css';
 
@@ -17,7 +18,13 @@ const DisclosureDemoControlledWithExposedActiveIndex: React.FC = () => {
         {(registerDetails: RegisterDetails) =>
           items.map(({ heading, paragraph }, index) => {
             return (
-              <Disclosure.Details className={styles.details} key={index} {...registerDetails()}>
+              <Disclosure.Details
+                className={cx({
+                  [styles.disabled]: index === openIndex,
+                })}
+                key={index}
+                {...registerDetails()}
+              >
                 {({ isOpen }) => {
                   if (isOpen) {
                     setOpenIndex(index);
