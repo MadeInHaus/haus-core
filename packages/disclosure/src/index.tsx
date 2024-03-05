@@ -17,6 +17,7 @@ export interface DisclosureRootProps {
     className?: string;
     animationOptions?: OptionalEffectTiming;
     defaultOpenIndex?: number;
+    preventCloseAll?: boolean;
 }
 
 export interface DisclosureDetailProps {
@@ -72,6 +73,7 @@ const Disclosure = ({
     className,
     animationOptions = defaultAnimationOptions,
     defaultOpenIndex = 0,
+    preventCloseAll = false,
 }: DisclosureRootProps) => {
     const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
 
@@ -85,7 +87,7 @@ const Disclosure = ({
             index: _index,
             handleClick: (e: React.MouseEvent) => {
                 e.preventDefault();
-                setOpenIndex(openIndex !== _index ? _index : -1);
+                setOpenIndex(openIndex !== _index ? _index : preventCloseAll ? _index : -1);
             },
         };
     };
