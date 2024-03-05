@@ -42,10 +42,12 @@ const defaultAnimationOptions = {
 
 const DisclosureContext = createContext<{
     animationOptions: OptionalEffectTiming;
+    defaultOpenIndex: number;
     openIndex: number;
 }>({
     animationOptions: defaultAnimationOptions,
-    openIndex: 1,
+    defaultOpenIndex: -1,
+    openIndex: -1,
 });
 
 const DisclosureDetailsContext = createContext<{
@@ -72,7 +74,7 @@ const Disclosure = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
-    defaultOpenIndex = 0,
+    defaultOpenIndex = -1,
     preventCloseAll = false,
 }: DisclosureRootProps) => {
     const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
@@ -93,7 +95,7 @@ const Disclosure = ({
     };
 
     return (
-        <DisclosureContext.Provider value={{ animationOptions, openIndex }}>
+        <DisclosureContext.Provider value={{ animationOptions, defaultOpenIndex, openIndex }}>
             <section className={className}>
                 {typeof children === 'function' ? children(registerDetails) : children}
             </section>
@@ -115,7 +117,7 @@ const DisclosureDetails = ({
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
 
-    const { openIndex } = useContext(DisclosureContext);
+    const { openIndex, defaultOpenIndex } = useContext(DisclosureContext);
 
     useEffect(() => {
         if (detailsRef.current) {
@@ -137,10 +139,10 @@ const DisclosureDetails = ({
                 contentEl,
                 setContentEl,
                 setIsOpen,
-                handleClick: handleClick ? handleClick : undefined,
+                handleClick,
             }}
         >
-            <details ref={detailsRef} className={className}>
+            <details ref={detailsRef} className={className} open={defaultOpenIndex === index}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
         </DisclosureDetailsContext.Provider>
