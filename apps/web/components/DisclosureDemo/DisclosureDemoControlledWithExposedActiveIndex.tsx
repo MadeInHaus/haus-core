@@ -7,7 +7,7 @@ import styles from './DisclosureDemo.module.css';
 
 const defaultOpenIndex = 2;
 
-const DisclosureDemoControlled: React.FC = () => {
+const DisclosureDemoControlledWithExposedActiveIndex: React.FC = () => {
   const [openIndex, setOpenIndex] = React.useState(defaultOpenIndex);
 
   return (
@@ -41,4 +41,4 @@ const DisclosureDemoControlled: React.FC = () => {
   );
 };
 
-export default DisclosureDemoControlled;
+export default DisclosureDemoControlledWithExposedActiveIndex;
