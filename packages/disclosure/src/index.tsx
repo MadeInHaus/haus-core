@@ -71,7 +71,7 @@ const Disclosure = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
-    defaultOpenIndex = 0,
+    defaultOpenIndex = -1,
 }: DisclosureRootProps) => {
     const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
 
@@ -109,11 +109,12 @@ const DisclosureDetails = ({
 }: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
-    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
+    const { openIndex } = useContext(DisclosureContext);
+
+    const [isOpen, setIsOpen] = useState(defaultOpen || index === openIndex);
+
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
-
-    const { openIndex } = useContext(DisclosureContext);
 
     useEffect(() => {
         if (detailsRef.current) {
