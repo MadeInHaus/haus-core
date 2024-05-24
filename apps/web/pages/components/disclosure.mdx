@@ -77,6 +77,7 @@ import {
   DisclosureDemoRenderProp,
   DisclosureDemoWithStyles,
   DisclosureDemoControlled,
+  DisclosureDemoControlledWithIsOpen,
 } from '../../components/DisclosureDemo';
 
 ### Basic Usage
@@ -183,7 +184,7 @@ const DisclosureDemoControlled: React.FC = ({
   items: { heading: string; paragraph: string }[];
 }) => {
   return (
-    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
+    <Disclosure.Root className={styles.root}>
       {(registerDetails: RegisterDetails) =>
         items.map(({ heading, paragraph }, index) => {
           return (
@@ -202,3 +203,38 @@ export default DisclosureDemoControlled;
 ```
 
 <DisclosureDemoControlled />
+
+### Usage as Controlled Accordion with isOpen
+
+```tsx filename="DisclosureDemoControlled.tsx" {1-2,7-24} copy showLineNumbers
+import Disclosure, { RegisterDetails } from '@madeinhaus/disclosure';
+import '@madeinhaus/disclosure/dist/index.css';
+import styles from './DisclosureDemo.module.css';
+
+const DisclosureDemoControlledWithIsOpen: React.FC = () => {
+  return (
+    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
+      {(registerDetails: RegisterDetails) =>
+        items.map(({ heading, paragraph }, index) => {
+          return (
+            <Disclosure.Details key={index} {...registerDetails()}>
+              {({ isOpen }) => (
+                <>
+                  <Disclosure.Summary className={styles.summary}>
+                    {heading}: {isOpen ? 'isOpen' : ''}
+                  </Disclosure.Summary>
+                  <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
+                </>
+              )}
+            </Disclosure.Details>
+          );
+        })
+      }
+    </Disclosure.Root>
+  );
+};
+
+export default DisclosureDemoControlledWithIsOpen;
+```
+
+<DisclosureDemoControlledWithIsOpen />
