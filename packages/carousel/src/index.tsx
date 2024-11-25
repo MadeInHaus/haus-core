@@ -849,7 +849,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
             return;
         }
         // Initialize some other refs:
-        const { width } = container.current.getBoundingClientRect();
+        const width = container.current.offsetWidth;
         containerWidth.current = width;
         calculateItemWidths();
         calculateItemOffsets();
