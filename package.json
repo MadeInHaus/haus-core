@@ -22,7 +22,7 @@
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "turbo": "1"
+    "turbo": "latest"
   },
   "dependencies": {
     "clsx": "^2.1.1"
