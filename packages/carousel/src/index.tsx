@@ -33,14 +33,14 @@ export type CarouselRef = {
 export type CarouselDirection = 'horizontal' | 'vertical';
 
 export interface CarouselProps {
+    /** TBD */
+    direction?: CarouselDirection;
     /** The item's alignment axis */
     align?: 'start' | 'center';
     /** Damping factor for the inertia effect */
     damping?: number;
     /** Disable item snapping */
     disableSnap?: boolean;
-    /** Whether the carousel spins horizontally (default) or vertically */
-    direction?: CarouselDirection;
     /** Enable vertical scrolling */
     enableVerticalScroll?: boolean;
     /** Enable navigation gestures */
@@ -75,10 +75,10 @@ type WheelDataValue = { t: number; d: number; dt?: number };
 
 const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
     const {
+        direction = 'horizontal',
         align = 'start',
         damping = 200,
         disableSnap = false,
-        direction = 'horizontal',
         enableVerticalScroll = false,
         enableNavigationGestures = false,
         activeItemIndex = 0,
