@@ -112,21 +112,17 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
 
     const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
-    const items = React.useMemo<React.ReactNode[]>(
-        () =>
-            React.Children.map(children, child => {
-                return (
-                    <CarouselItem
-                        Wrapper={ChildWrapper}
-                        isDisabled={isDisabled}
-                        className={itemClassName}
-                    >
-                        {child}
-                    </CarouselItem>
-                );
-            }) as React.ReactNode[],
-        [children, ChildWrapper, isDisabled, itemClassName]
-    );
+    const items = React.Children.map(children, child => {
+        return (
+            <CarouselItem
+                Wrapper={ChildWrapper}
+                isDisabled={isDisabled}
+                className={joinClassNames(itemClassName, styles[direction])}
+            >
+                {child}
+            </CarouselItem>
+        );
+    }) as React.ReactNode[];
 
     ///////////////////////////////////////////////////////////////////////////
     // POSITIONING
@@ -791,7 +787,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
             el?.removeEventListener('wheel', handleWheel);
             clearTimeout(wheelTimeout.current);
         };
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // ///////////////////////////////////////////////////////////////////////////
     // // INIT/RESIZE/API
@@ -869,7 +865,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
         const resizeObserver = new ResizeObserver(() => refresh());
         resizeObserver.observe(el);
         return () => resizeObserver.unobserve(el);
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
     React.useImperativeHandle(
         ref,
@@ -884,7 +880,7 @@ const Carousel = React.forwardRef<CarouselRef, CarouselProps>((props, ref) => {
                 moveIntoView(index, options);
             },
         }),
-        [] // eslint-disable-line react-hooks/exhaustive-deps
+        [items] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     return (
