@@ -48,11 +48,11 @@ export interface CarouselProps {
     /** The carousel's item wrapper element (default: li) */
     childAs?: React.ElementType<any>;
     /** Called when the user presses on the carousel */
-    onPress?: (event: PointerEvent) => void; // eslint-disable-line no-unused-vars
+    onPress?: (event: PointerEvent) => void;
     /** Called when the user starts dragging the carousel */
     onDrag?: () => void;
     /** Called when the carousel snaps to an item */
-    onSnap?: (index: number) => void; // eslint-disable-line no-unused-vars
+    onSnap?: (index: number) => void;
     /** The carousel's container class name */
     className?: string;
     /** The carousel's item wrapper class name */
