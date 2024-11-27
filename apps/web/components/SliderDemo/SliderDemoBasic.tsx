@@ -1,11 +1,11 @@
 import Slider from '@madeinhaus/slider';
 import '@madeinhaus/slider/dist/index.css';
-import { useSSG } from 'nextra/ssg';
+import { useData } from 'nextra/hooks';
 
 import styles from './SliderDemoBasic.module.css';
 
 const SliderDemoBasic: React.FC = () => {
-  const { images }: { images: string[] } = useSSG();
+  const { images }: { images: string[] } = useData();
 
   return (
     <Slider>

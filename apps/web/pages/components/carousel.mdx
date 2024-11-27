@@ -1,3 +1,4 @@
+import { Tabs} from 'nextra/components'
 import { CarouselDemo, CarouselDemoTicker, CarouselDemoLazyLoad } from '../../components/Carousel';
 
 # Carousel
@@ -10,25 +11,23 @@ turned into an autoscrolling ticker:
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
-
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/carousel
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/carousel
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/carousel
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import

@@ -1,12 +1,11 @@
-# Haus Core
+# Turborepo Design System Starter
 
-Powered by:
+This guide explains how to use a React design system starter powered by:
 
 - 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
-- 🛠 [Rollup](https://rollupjs.org/guide/en/) — A module bundler for JavaScript
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
-- 📖 [Nextra](https://nextra.site/) — Simple, powerful and flexible site generation framework from Next.js.
+- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
 
 As well as a few others tools preconfigured:
 
@@ -16,25 +15,21 @@ As well as a few others tools preconfigured:
 - [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
 - [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
 
-## Documentation
+## Using this example
 
-Full documentation on the everything contained in this repo can be found at [hauscore.xyz](https://hauscore.xyz/)
+Run the following command:
 
-## Clone the repo
-
-```bash
-git clone https://github.com/MadeInHaus/haus-core.git
-cd haus-core
-yarn install
+```sh
+npx create-turbo@latest -e design-system
 ```
 
 ### Useful Commands
 
-- `yarn build` - Build all packages including the Nextra site
-- `yarn dev` - Run all packages locally and preview with Nextra
-- `yarn lint` - Lint all packages
-- `yarn changeset` - Generate a changeset
-- `yarn clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
+- `pnpm build` - Build all packages, including the Storybook site
+- `pnpm dev` - Run all packages locally and preview with Storybook
+- `pnpm lint` - Lint all packages
+- `pnpm changeset` - Generate a changeset
+- `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
 
 ## Turborepo
 
@@ -46,30 +41,33 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 
 This Turborepo includes the following packages and applications:
 
-- `apps/docs`: Component documentation site with Nextra
-- `packages/[package]`: React components
-- `packages/hooks`: Shared React hooks
-- `packages/utils`: Shared utilities
+- `apps/docs`: Component documentation site with Storybook
+- `packages/ui`: Core React components
+- `packages/utils`: Shared React utilities
+- `packages/typescript-config`: Shared `tsconfig.json`s used throughout the Turborepo
+- `packages/eslint-config`: ESLint preset
+
+Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
 
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
 
 ### Compilation
 
-To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `vite`, which uses `rollup` to greatly improve performance.
+To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `tsup`, which uses `esbuild` to greatly improve performance.
 
-Running `yarn build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
 
-For `ui`, the `build` command, which depends on `rollup.config.js` is the following:
+For `acme-core`, the `build` command is the following:
 
 ```bash
-rollup -c --bundleConfigAsCjs
+tsup src/index.tsx --format esm,cjs --dts --external react
 ```
 
-`rollup` compiles `src/index.ts`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. For example, the `package.json` for `textural-video` then instructs the consumer to select the correct format:
+`tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `acme-core` then instructs the consumer to select the correct format:
 
-```json:textural-video/package.json
+```json:acme-core/package.json
 {
-  "name": "@madeinhaus/textural-video",
+  "name": "@acme/core",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -78,104 +76,81 @@ rollup -c --bundleConfigAsCjs
 }
 ```
 
-Run `yarn build` to confirm compilation is working correctly. You should see a folder `[package]/dist` which contains the compiled output.
+Run `pnpm build` to confirm compilation is working correctly. You should see a folder `acme-core/dist` which contains the compiled output.
 
 ```bash
-textural-video
+acme-core
 └── dist
+    ├── index.d.ts  <-- Types
     ├── index.js    <-- CommonJS version
     └── index.mjs   <-- ES Modules version
 ```
 
-## Package
+## Components
 
-### Example
+Each file inside of `acme-core/src` is a component inside our design system. For example:
 
-```tsx:button/src/index.tsx
-import * as React from "react";
-import cx from 'clsx';
-import styles from "./Button.module.scss";
+```tsx:acme-core/src/Button.tsx
+import * as React from 'react';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  variant: "primary" | "secondary";
 }
 
-export default function Button({ children, variant }: ButtonProps) {
-  return (
-    <button className={cx(styles.root, styles[variant])}>{children}</button>
-  );
+export function Button(props: ButtonProps) {
+  return <button>{props.children}</button>;
 }
+
+Button.displayName = 'Button';
 ```
 
-## Nextra
+When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
 
-Nextra provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Nextra to:
+```tsx:acme-core/src/index.tsx
+import * as React from "react";
+export { Button, type ButtonProps } from "./Button";
+// Add new component exports here
+```
 
-- The Nextra repository uses PNPM Workspaces and Turborepo. To install dependencies, run yarn install in the project root directory.
+## Storybook
+
+Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Storybook to:
+
+- Use Vite to bundle stories instantly (in milliseconds)
+- Automatically find any stories inside the `stories/` folder
+- Support using module path aliases like `@acme-core` for imports
 - Write MDX for component documentation pages
 
-- `yarn dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
-- `yarn build`: Builds the Nextra app and generates the static files
+For example, here's the included Story for our `Button` component:
 
-For example, here's the Nextra markdown for our `Portal` component:
+```js:apps/docs/stories/button.stories.mdx
+import { Button } from '@acme-core/src';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 
-````js
-# Portal
+<Meta title="Components/Button" component={Button} />
 
-The Portal component allows you to render a child component outside of its parent hierarchy, by creating a portal to another part of the DOM. This can be useful in situations where you need to render a component in a specific part of the page or outside of the component tree.
+# Button
 
-## Installation
-
-import { Tab, Tabs } from 'nextra-theme-docs';
-
-<Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
-        ```bash copy
-        npm install @madeinhaus/portal
-        ```
-    </Tab>
-    <Tab>
-        ```bash copy
-        yarn add @madeinhaus/portal
-        ```
-    </Tab>
-    <Tab>
-        ```bash copy
-        pnpm add @madeinhaus/portal
-        ```
-    </Tab>
-</Tabs>
-
-## Import
-
-`import Portal from '@madeinhaus/portal';`
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
 
 ## Props
 
-The `Portal` component accepts two props:
+<Props of={Box} />
 
-- `selector`: A string representing the CSS selector for the DOM element where the portal will be created. If no selector is provided, the default selector `#__portal__` will be used.
-- `children`: The child component(s) to be rendered within the portal.
+## Examples
 
-## Usage
+<Preview>
+  <Story name="Default">
+    <Button>Hello</Button>
+  </Story>
+</Preview>
+```
 
-Wrap your desired child component(s) within the `Portal` component:
+This example includes a few helpful Storybook scripts:
 
-```tsx copy showLineNumbers
-function MyComponent() {
-  return (
-    <div>
-      <h1>My Component</h1>
-      <Portal>
-        <div>
-          <p>This component will be rendered outside of the parent hierarchy.</p>
-        </div>
-      </Portal>
-    </div>
-  );
-}
-````
+- `pnpm dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
+- `pnpm build`: Builds the Storybook UI and generates the static HTML files
+- `pnpm preview-storybook`: Starts a local server to view the generated Storybook UI
 
 ## Versioning & Publishing Packages
 
@@ -185,7 +160,7 @@ You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHu
 
 ### Generating the Changelog
 
-To generate your changelog, run `yarn changeset` locally:
+To generate your changelog, run `pnpm changeset` locally:
 
 1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
 1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
@@ -202,7 +177,11 @@ When you push your code to GitHub, the [GitHub Action](https://github.com/change
 turbo run build --filter=docs^... && changeset publish
 ```
 
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `madeinhaus` as the npm organization. To change this, do the following:
+Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `acme` as the npm organization. To change this, do the following:
+
+- Rename folders in `packages/*` to replace `acme` with your desired scope
+- Search and replace `acme` with your desired scope
+- Re-run `pnpm install`
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 
