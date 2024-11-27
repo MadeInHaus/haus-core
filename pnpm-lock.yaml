@@ -225,6 +225,9 @@ importers:
 
   packages/disclosure:
     dependencies:
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
       react:
         specifier: '>=18'
         version: 18.3.1
@@ -332,6 +335,9 @@ importers:
 
   packages/masonry:
     dependencies:
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
       react:
         specifier: '>=18'
         version: 18.3.1
@@ -378,6 +384,9 @@ importers:
 
   packages/nextjs-page-transition:
     dependencies:
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
       next:
         specifier: '>=13'
         version: 13.5.7(react-dom@18.3.1)(react@18.3.1)(sass@1.81.0)
@@ -519,6 +528,9 @@ importers:
 
   packages/slider:
     dependencies:
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
       react:
         specifier: '>=18'
         version: 18.3.1
@@ -627,6 +639,9 @@ importers:
       '@rollup/plugin-node-resolve':
         specifier: ^15.0.1
         version: 15.3.0(rollup@3.29.5)
+      '@rollup/plugin-typescript':
+        specifier: ^12.1.1
+        version: 12.1.1(rollup@3.29.5)(typescript@4.9.5)
       '@types/react':
         specifier: ^18.0.27
         version: 18.3.2
@@ -642,9 +657,6 @@ importers:
       rollup:
         specifier: ^3.10.1
         version: 3.29.5
-      rollup-plugin-ts:
-        specifier: ^3.2.0
-        version: 3.4.5(rollup@3.29.5)(typescript@4.9.5)
       sass:
         specifier: ^1.57.1
         version: 1.81.0
@@ -1644,7 +1656,7 @@ packages:
   /@formatjs/intl-localematcher@0.5.8:
     resolution: {integrity: sha512-I+WDNWWJFZie+jkfkiK5Mp4hEDyRSEvmyfYadflOno/mmKJKcB17fEpEH0oJu/OWhhCJ8kJBDz2YMd/6cDl7Mg==}
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.8.1
     dev: false
 
   /@headlessui/react@2.2.0(react-dom@18.3.1)(react@18.3.1):
@@ -2368,6 +2380,25 @@ packages:
       is-module: 1.0.0
       resolve: 1.22.8
       rollup: 3.29.5
+    dev: true
+
+  /@rollup/plugin-typescript@12.1.1(rollup@3.29.5)(typescript@4.9.5):
+    resolution: {integrity: sha512-t7O653DpfB5MbFrqPe/VcKFFkvRuFNp9qId3xq4Eth5xlyymzxNpye2z8Hrl0RIMuXTSr5GGcFpkdlMeacUiFQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0||^3.0.0||^4.0.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+      tslib:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.1.3(rollup@3.29.5)
+      resolve: 1.22.8
+      rollup: 3.29.5
+      typescript: 4.9.5
     dev: true
 
   /@rollup/pluginutils@5.1.3(rollup@3.29.5):
@@ -3489,6 +3520,7 @@ packages:
   /braces@3.0.2:
     resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       fill-range: 7.0.1
 
@@ -5018,7 +5050,7 @@ packages:
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
       synckit: 0.9.0
-      tslib: 2.6.2
+      tslib: 2.8.1
       unified: 11.0.4
       unified-engine: 11.2.1
       unist-util-visit: 5.0.0
@@ -5297,7 +5329,7 @@ packages:
       remark-mdx: 3.0.1
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
-      tslib: 2.6.2
+      tslib: 2.8.1
       unified: 11.0.4
       vfile: 6.0.1
     transitivePeerDependencies:
@@ -5751,6 +5783,7 @@ packages:
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       to-regex-range: 5.0.1
 
@@ -6573,6 +6606,7 @@ packages:
   /is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
+    requiresBuild: true
 
   /is-path-inside@3.0.3:
     resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
@@ -7688,6 +7722,7 @@ packages:
   /micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
+    requiresBuild: true
     dependencies:
       braces: 3.0.2
       picomatch: 2.3.1
@@ -8310,6 +8345,7 @@ packages:
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    requiresBuild: true
 
   /picomatch@4.0.2:
     resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
@@ -9901,7 +9937,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
       '@pkgr/core': 0.1.1
-      tslib: 2.6.2
+      tslib: 2.8.1
     dev: true
 
   /system-architecture@0.1.0:
@@ -9966,6 +10002,7 @@ packages:
   /to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
+    requiresBuild: true
     dependencies:
       is-number: 7.0.0
 
@@ -10029,9 +10066,6 @@ packages:
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
-
-  /tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
   /tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}

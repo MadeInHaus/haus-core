@@ -3,9 +3,9 @@
     "exclude": ["dist", "build", "node_modules"],
     "compilerOptions": {
         "jsx": "react-jsx",
-        "lib": ["DOM", "DOM.Iterable", "ES2015"],
+        "lib": ["DOM", "DOM.Iterable", "es2022"],
         "module": "ESNext",
-        "target": "es6",
+        "target": "ES2022",
         "composite": false,
         "declaration": true,
         "declarationMap": true,
