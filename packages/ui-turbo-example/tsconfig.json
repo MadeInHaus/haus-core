@@ -1,20 +1,24 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["dom", "es2022"],
+    "module": "ESNext",
+    "target": "ES2022",
     "composite": false,
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true
-  },
-  "exclude": ["node_modules"]
+  }
 }
