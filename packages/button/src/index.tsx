@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import styles from './Button.module.scss';
-
 export interface ButtonProps {
     children: React.ReactNode;
     variant: 'primary' | 'secondary';
@@ -9,7 +7,7 @@ export interface ButtonProps {
 
 export default function Button({ children, variant = 'primary', ...rest }: ButtonProps) {
     return (
-        <button className={`${styles.root} ${styles[variant]}`} {...rest}>
+        <button className={`root ${variant}`} {...rest}>
             {children}
         </button>
     );

@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/shuding/nextra-docs-template#readme",
   "dependencies": {
-    "@acme/ui": "*",
+    "@madeinhaus/button": "*",
     "@madeinhaus/carousel": "*",
     "@madeinhaus/contentful-image": "*",
     "@madeinhaus/disclosure": "*",
