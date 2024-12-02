@@ -24,7 +24,7 @@ importers:
   apps/web:
     dependencies:
       '@acme/ui':
-        specifier: workspace:*
+        specifier: '*'
         version: link:../../packages/ui
       '@madeinhaus/carousel':
         specifier: '*'
