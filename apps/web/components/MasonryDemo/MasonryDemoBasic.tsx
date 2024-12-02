@@ -1,11 +1,11 @@
 import Masonry from '@madeinhaus/masonry';
 import '@madeinhaus/masonry/dist/index.css';
-import { useSSG } from 'nextra/ssg';
+import { useData } from 'nextra/hooks';
 
 import styles from './MasonryDemo.module.css';
 
 const MasonryDemoBasic: React.FC = () => {
-  const { images }: { images: string[] } = useSSG();
+  const { images }: { images: string[] } = useData();
 
   return (
     <Masonry

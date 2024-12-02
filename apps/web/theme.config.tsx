@@ -1,7 +1,7 @@
 import React from 'react';
-import { DocsThemeConfig } from 'nextra-theme-docs';
 
-const config: DocsThemeConfig = {
+
+export default {
   head: (
     <>
       <link rel="icon" href="/favicon.svg"/>
@@ -41,4 +41,4 @@ const config: DocsThemeConfig = {
   primaryHue: 300,
 };
 
-export default config;
+
