@@ -9,5 +9,9 @@
     "eslint-config-next": "latest",
     "eslint-config-turbo": "latest",
     "eslint-plugin-react": "latest"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.1",
+    "typescript": "^5.7.2"
   }
 }

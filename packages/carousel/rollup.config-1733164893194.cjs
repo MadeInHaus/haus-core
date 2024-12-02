@@ -1,24 +1,26 @@
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import ts from '@rollup/plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var resolve = require('@rollup/plugin-node-resolve');
+var commonjs = require('@rollup/plugin-commonjs');
+var ts = require('@rollup/plugin-typescript');
+var postcss = require('rollup-plugin-postcss');
 
 const packageJson = require('./package.json');
 
-const config = {
+var rollup_config = {
     input: 'src/index.tsx',
     output: [
         {
             file: packageJson.main,
             format: 'cjs',
             globals: { react: 'React' },
-            exports: 'named',
         },
         {
             file: packageJson.module,
             format: 'esm',
             globals: { react: 'React' },
-            exports: 'named',
         },
     ],
     plugins: [
@@ -34,4 +36,4 @@ const config = {
     external: ['react', 'react-dom'],
 };
 
-export default config;
+exports.default = rollup_config;

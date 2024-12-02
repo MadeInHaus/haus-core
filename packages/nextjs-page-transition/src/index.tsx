@@ -3,7 +3,7 @@ import * as React from 'react';
 import cx from 'clsx';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { getHash, removeHash } from '../../utils/src/url';
+import { getHash, removeHash } from '../../utils';
 import { useNextCssRemovalPrevention } from './helpers/useNextCssRemovalPrevention';
 
 import styles from './PageTransition.module.scss';

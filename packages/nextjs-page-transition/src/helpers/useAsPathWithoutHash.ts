@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { removeHash } from '../../../utils/src/url';
+import { removeHash } from '../../../utils';
 
 export const useAsPathWithoutHash = (): string => {
     const router = useRouter();

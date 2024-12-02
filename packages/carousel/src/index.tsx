@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { type EasingFunction, easings, modulo, clamp, sign, last } from '../../utils/src';
+import { type EasingFunction, easings, modulo, clamp, sign, last } from '../../utils';
 
 import styles from './Carousel.module.scss';
 

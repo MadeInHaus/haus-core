@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import ts from 'rollup-plugin-ts';
+import ts from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 
 const packageJson = require('./package.json');
