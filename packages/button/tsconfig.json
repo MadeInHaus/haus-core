@@ -1,11 +1,12 @@
 {
     "include": ["."],
     "exclude": ["dist", "build", "node_modules"],
+    "outDir": "./dist",
     "compilerOptions": {
         "jsx": "react-jsx",
-        "lib": ["dom", "ES2015"],
+        "lib": ["dom", "es2022"],
         "module": "ESNext",
-        "target": "es6",
+        "target": "ES2022",
         "composite": false,
         "declaration": true,
         "declarationMap": true,

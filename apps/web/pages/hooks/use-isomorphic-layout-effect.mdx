@@ -6,25 +6,25 @@ On the server, React emits a warning when calling `useLayoutEffect`. This is bec
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tabs } from 'nextra/components';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/hooks
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -34,10 +34,12 @@ import { useIsomorphicLayoutEffect } from '@madeinhaus/hooks';
 ```
 
 ## Parameters
+
 - `effect` _(EffectCallback)_: A function that will be called before the browser repaints the screen.
 - `deps` _(DependencyList, optional)_: An array of dependencies that will trigger the effect when they change. If not specified, the effect will run after every render.
 
 ## Returns
+
 - _(void)_: This hook does not return anything.
 
 ## Usage
@@ -50,9 +52,7 @@ function MyComponent() {
     console.log('Component has rendered');
   });
 
-  return (
-    <div>Hello, world!</div>
-  );
+  return <div>Hello, world!</div>;
 }
 ```
 

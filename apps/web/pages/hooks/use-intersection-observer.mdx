@@ -4,25 +4,25 @@ A React hook that uses the IntersectionObserver API to detect when an element is
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tabs } from 'nextra/components';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/hooks
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -32,13 +32,15 @@ import { useIntersectionObserver } from '@madeinhaus/hooks';
 ```
 
 ## Parameters
+
 - `options` _(IntersectionObserverOptions, optional)_: An optional object that can contain the following properties:
-    - `once` _(boolean, default: true)_: If false, the observer will continue observing the element after it first becomes visible. If true (default), the observer will unobserve the element after it first becomes visible.
-    - `root` _(Element | Document, optional)_: The element that is used as the viewport for checking visibility of the target. Defaults to the browser viewport if not specified or if `null`.
-    - `rootMargin` _(string, optional)_: Margin around the root element. Can have values similar to the CSS margin property. Defaults to all zeros if not specified or if `null`.
-    - `threshold` _(number | number[], optional)_: Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. Defaults to `0` if not specified or if `null`.
+  - `once` _(boolean, default: true)_: If false, the observer will continue observing the element after it first becomes visible. If true (default), the observer will unobserve the element after it first becomes visible.
+  - `root` _(Element | Document, optional)_: The element that is used as the viewport for checking visibility of the target. Defaults to the browser viewport if not specified or if `null`.
+  - `rootMargin` _(string, optional)_: Margin around the root element. Can have values similar to the CSS margin property. Defaults to all zeros if not specified or if `null`.
+  - `threshold` _(number | number[], optional)_: Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. Defaults to `0` if not specified or if `null`.
 
 ## Returns
+
 - `inView` _(boolean)_: A boolean indicating if the component is in view.
 - `ref` _(function)_: A callback ref that you pass to the element's ref prop.
 - `elRef` _(Ref)_: A ref object that you can use to access the element if needed.
@@ -55,11 +57,7 @@ function MyComponent() {
     threshold: 0.5,
   });
 
-  return (
-    <div ref={ref}>
-      {inView ? 'In view' : 'Not in view'}
-    </div>
-  );
+  return <div ref={ref}>{inView ? 'In view' : 'Not in view'}</div>;
 }
 ```
 

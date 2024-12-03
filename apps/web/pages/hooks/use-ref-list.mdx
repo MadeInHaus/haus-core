@@ -4,25 +4,25 @@ A React hook that creates refs for a list of elements.
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tabs } from 'nextra/components';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/hooks
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -32,6 +32,7 @@ import { useRefList } from '@madeinhaus/hooks';
 ```
 
 ## Returns
+
 - `refFn` _(function)_: A function that takes an index and returns a ref callback for an element at that index.
 - `refs` _(object)_: A mutable ref object that holds an array of elements.
 
@@ -49,17 +50,18 @@ function MyComponent({ someCollection }) {
     // refs.current[0] is the first element,
     // refs.current[1] is the second element, etc.
     refs.current.forEach(element => {
-        // do something with each element
+      // do something with each element
     });
   }, []);
 
-return (
-  <div>
-    {someCollection.map((item, index) => (
-      <div ref={refFn(index)} key={index}>
-        {item}
-      </div>
-    ))}
-  </div>
-);
+  return (
+    <div>
+      {someCollection.map((item, index) => (
+        <div ref={refFn(index)} key={index}>
+          {item}
+        </div>
+      ))}
+    </div>
+  );
 }
+```

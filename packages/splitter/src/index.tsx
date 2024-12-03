@@ -4,7 +4,7 @@ import { split, cx } from './utils';
 import { moveAttributes, moveChildNodes } from './utils/dom';
 import { SplitOptions, SplitResult } from './utils/types';
 
-import { mergeRefs } from '../../utils/src';
+import { mergeRefs } from '../../utils';
 
 import styles from './Splitter.module.scss';
 

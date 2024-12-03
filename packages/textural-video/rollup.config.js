@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import ts from 'rollup-plugin-ts';
+import ts from '@rollup/plugin-typescript';
 
 const packageJson = require('./package.json');
 
@@ -18,6 +18,6 @@ export default {
             globals: { react: 'React' },
         },
     ],
-    plugins: [resolve(), commonjs(), ts({ useTsconfigDeclarationDir: true })],
+    plugins: [resolve(), commonjs(), ts()],
     external: ['react', 'react-dom'],
 };
