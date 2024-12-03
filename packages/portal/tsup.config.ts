@@ -4,7 +4,7 @@ export default defineConfig((options: Options) => ({
     entryPoints: ['src/index.tsx'],
     clean: true,
     dts: true,
-    format: ['cjs'],
+    format: ['cjs', 'esm'],
     loader: {
         '.css': 'local-css',
     },
