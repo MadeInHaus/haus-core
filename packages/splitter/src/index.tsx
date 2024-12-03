@@ -6,7 +6,7 @@ import { SplitOptions, SplitResult } from './utils/types';
 
 import { mergeRefs } from '../../utils';
 
-import styles from './Splitter.module.scss';
+import styles from './Splitter.module.css';
 
 export type { SplitOptions, SplitResult, NodeInfo, NodeInfoSplit, Pair } from './utils/types';
 export { split, splitChars, splitLines, cleanUp } from './utils';
