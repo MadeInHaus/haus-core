@@ -41,6 +41,7 @@
         "react-dom": ">=18"
     },
     "dependencies": {
+        "@madeinhaus/hooks": "*",
         "clsx": "^1.2.1"
     }
 }
