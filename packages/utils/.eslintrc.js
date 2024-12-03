@@ -5,7 +5,7 @@ module.exports = {
         es6: true,
         node: true,
     },
-    extends: ['next', 'turbo'],
+    extends: ['next', 'turbo', 'next/babel'],
     root: true,
     rules: {
         'import/no-unresolved': 'off',
