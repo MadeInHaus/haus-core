@@ -121,9 +121,6 @@ importers:
 
   packages/carousel:
     dependencies:
-      '@madeinhaus/utils':
-        specifier: workspace:*
-        version: link:../utils
       react:
         specifier: '>=18'
         version: 18.3.1
