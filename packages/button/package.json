@@ -18,7 +18,6 @@
         "@madeinhaus/prettier-config": "^1.2.1",
         "@types/react": "^18.0.27",
         "@types/react-dom": "^18.0.10",
-        "esbuild-sass-plugin": "^3.3.1",
         "eslint": "^8.32.0",
         "tsup": "^8.3.5",
         "typescript": "^5.7.2"
@@ -39,8 +38,5 @@
     "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
-    },
-    "dependencies": {
-        "esbuild": "0.24.0"
     }
 }
