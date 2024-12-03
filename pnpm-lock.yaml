@@ -117,7 +117,7 @@ importers:
         version: 8.57.0
       tsup:
         specifier: ^8.3.5
-        version: 8.3.5(typescript@5.7.2)
+        version: 8.3.5(postcss@8.4.31)(typescript@5.7.2)
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -134,15 +134,6 @@ importers:
       '@madeinhaus/prettier-config':
         specifier: ^1.2.1
         version: 1.2.1
-      '@rollup/plugin-commonjs':
-        specifier: ^24.0.1
-        version: 24.1.0(rollup@3.29.5)
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.0.1
-        version: 15.3.0(rollup@3.29.5)
-      '@rollup/plugin-typescript':
-        specifier: ^12.1.1
-        version: 12.1.1(rollup@3.29.5)(typescript@5.7.2)
       '@types/react':
         specifier: ^18.0.27
         version: 18.3.2
@@ -152,18 +143,9 @@ importers:
       eslint:
         specifier: ^8.32.0
         version: 8.57.0
-      postcss:
-        specifier: ^8.4.21
-        version: 8.4.31
-      rollup:
-        specifier: ^3.10.1
-        version: 3.29.5
-      rollup-plugin-postcss:
-        specifier: ^4.0.2
-        version: 4.0.2(postcss@8.4.31)
-      sass:
-        specifier: ^1.57.1
-        version: 1.81.0
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(typescript@5.7.2)
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -7538,6 +7520,28 @@ packages:
       lilconfig: 3.1.1
     dev: true
 
+  /postcss-load-config@6.0.1(postcss@8.4.31):
+    resolution: {integrity: sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      jiti: '>=1.21.0'
+      postcss: '>=8.0.9'
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      jiti:
+        optional: true
+      postcss:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+    dependencies:
+      lilconfig: 3.1.1
+      postcss: 8.4.31
+    dev: true
+
   /postcss-merge-longhand@5.1.7(postcss@8.4.31):
     resolution: {integrity: sha512-YCI9gZB+PLNskrK0BB3/2OzPnGhPkBEwmwhfYk1ilBHYVAZB7/tkTHFBAnCrvBBOmeYyMYw3DMjT55SyxMBzjQ==}
     engines: {node: ^10 || ^12 || >=14.0}
@@ -8971,6 +8975,50 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - ts-node
+    dev: true
+
+  /tsup@8.3.5(postcss@8.4.31)(typescript@5.7.2):
+    resolution: {integrity: sha512-Tunf6r6m6tnZsG9GYWndg0z8dEV7fD733VBFzFJ5Vcm1FtlXB8xBD/rtrBi2a3YKEV7hHtxiZtW5EAVADoe1pA==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      '@microsoft/api-extractor': ^7.36.0
+      '@swc/core': ^1
+      postcss: ^8.4.12
+      typescript: '>=4.5.0'
+    peerDependenciesMeta:
+      '@microsoft/api-extractor':
+        optional: true
+      '@swc/core':
+        optional: true
+      postcss:
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      bundle-require: 5.0.0(esbuild@0.24.0)
+      cac: 6.7.14
+      chokidar: 4.0.1
+      consola: 3.2.3
+      debug: 4.3.7
+      esbuild: 0.24.0
+      joycon: 3.1.1
+      picocolors: 1.1.1
+      postcss: 8.4.31
+      postcss-load-config: 6.0.1(postcss@8.4.31)
+      resolve-from: 5.0.0
+      rollup: 4.28.0
+      source-map: 0.8.0-beta.0
+      sucrase: 3.35.0
+      tinyexec: 0.3.1
+      tinyglobby: 0.2.10
+      tree-kill: 1.2.2
+      typescript: 5.7.2
+    transitivePeerDependencies:
+      - jiti
+      - supports-color
+      - tsx
+      - yaml
     dev: true
 
   /tsup@8.3.5(typescript@5.7.2):
