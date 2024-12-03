@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { getHash, removeHash } from '../../utils';
 import { useNextCssRemovalPrevention } from './helpers/useNextCssRemovalPrevention';
 
-import styles from './PageTransition.module.scss';
+import styles from './PageTransition.module.css';
 
 export interface PageTransitionProps {
     /** The container element (default: main) */
