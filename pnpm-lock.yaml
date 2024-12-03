@@ -193,15 +193,6 @@ importers:
       '@madeinhaus/prettier-config':
         specifier: ^1.2.1
         version: 1.2.1
-      '@rollup/plugin-commonjs':
-        specifier: ^24.0.1
-        version: 24.1.0(rollup@3.29.5)
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.0.1
-        version: 15.3.0(rollup@3.29.5)
-      '@rollup/plugin-typescript':
-        specifier: ^12.1.1
-        version: 12.1.1(rollup@3.29.5)(typescript@5.7.2)
       '@types/react':
         specifier: ^18.0.27
         version: 18.3.2
@@ -211,18 +202,9 @@ importers:
       eslint:
         specifier: ^8.32.0
         version: 8.57.0
-      postcss:
-        specifier: ^8.4.21
-        version: 8.4.31
-      rollup:
-        specifier: ^3.10.1
-        version: 3.29.5
-      rollup-plugin-postcss:
-        specifier: ^4.0.2
-        version: 4.0.2(postcss@8.4.31)
-      sass:
-        specifier: ^1.57.1
-        version: 1.81.0
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(typescript@5.7.2)
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
