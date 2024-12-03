@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import cx from 'clsx';
 import { useWindowSize } from '../../hooks';
 
-import styles from './Masonry.module.scss';
+import styles from './Masonry.module.css';
 
 export interface MasonryProps {
     breakpointCols?: {
