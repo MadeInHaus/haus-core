@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useIntersectionObserver } from '../../../hooks';
+import { useIntersectionObserver } from '@madeinhaus/hooks';
 
 const Slide = ({
     children,

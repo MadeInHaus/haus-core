@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { useMeasure } from '../../hooks';
-import { mergeRefs } from '../../utils';
+import { useMeasure } from '@madeinhaus/hooks';
+import { mergeRefs } from '@madeinhaus/utils';
 import cx from 'clsx';
 
 import Slide from './Slide';

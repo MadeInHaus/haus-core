@@ -131,6 +131,9 @@ importers:
       '@madeinhaus/prettier-config':
         specifier: ^1.2.1
         version: 1.2.1
+      '@madeinhaus/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@types/react':
         specifier: ^18.0.27
         version: 18.3.2
@@ -308,6 +311,9 @@ importers:
       '@madeinhaus/prettier-config':
         specifier: ^1.2.1
         version: 1.2.1
+      '@madeinhaus/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@types/react':
         specifier: ^18.0.27
         version: 18.3.2
@@ -395,9 +401,15 @@ importers:
         specifier: '>=18'
         version: 18.3.1(react@18.3.1)
     devDependencies:
+      '@madeinhaus/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@madeinhaus/prettier-config':
         specifier: ^1.2.1
         version: 1.2.1
+      '@madeinhaus/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@types/react':
         specifier: ^18.0.27
         version: 18.3.2
