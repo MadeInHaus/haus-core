@@ -5,7 +5,7 @@ import { mergeRefs } from '../../utils';
 import cx from 'clsx';
 
 import Slide from './Slide';
-import styles from './Slider.module.scss';
+import styles from './Slider.module.css';
 
 export type SliderContextType = {
     activeIndices: number[];
