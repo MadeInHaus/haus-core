@@ -1,16 +1,26 @@
 {
-    "include": ["."],
-    "exclude": ["dist", "build", "node_modules"],
-    "outDir": "./dist",
+    "include": [
+        "."
+    ],
+    "exclude": [
+        "dist",
+        "build",
+        "node_modules",
+        "tsup.config.ts"
+    ],
     "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist",
         "jsx": "react-jsx",
-        "lib": ["dom", "es2022"],
+        "lib": [
+            "dom",
+            "es2022"
+        ],
         "module": "ESNext",
         "target": "ES2022",
         "composite": false,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "./dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "inlineSources": false,

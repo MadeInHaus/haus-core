@@ -10,8 +10,8 @@
         "dist/**"
     ],
     "scripts": {
-        "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
-        "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
+        "build": "tsup",
+        "dev": "tsup --watch",
         "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
@@ -23,7 +23,7 @@
         "eslint-config-next": "^13.1.5",
         "eslint-config-turbo": "^0.0.7",
         "eslint-plugin-react": "^7.32.1",
-        "tsup": "^6.5.0",
+        "tsup": "^8.3.5",
         "typescript": "^5.7.2"
     },
     "publishConfig": {
