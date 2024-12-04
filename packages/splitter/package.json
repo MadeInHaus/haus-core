@@ -41,6 +41,6 @@
         "react-dom": ">=18"
     },
     "dependencies": {
-        "@madeinhaus/utils": "workspace:^"
+        "@madeinhaus/utils": "workspace:*"
     }
 }

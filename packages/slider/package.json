@@ -17,7 +17,7 @@
     },
     "devDependencies": {
         "@madeinhaus/prettier-config": "^1.2.1",
-        "@madeinhaus/utils": "workspace:^",
+        "@madeinhaus/utils": "workspace:*",
         "@types/react": "^18.0.27",
         "@types/react-dom": "^18.0.10",
         "eslint": "^8.32.0",

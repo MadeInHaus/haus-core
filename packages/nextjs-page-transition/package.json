@@ -42,7 +42,7 @@
         "react-dom": ">=18"
     },
     "dependencies": {
-        "@madeinhaus/utils": "workspace:^",
+        "@madeinhaus/utils": "workspace:*",
         "clsx": "^1.2.1"
     }
 }
