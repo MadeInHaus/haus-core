@@ -5,7 +5,11 @@
     "build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "@madeinhaus/utils#build",
+        "@madeinhaus/hooks#build",
+        "^build"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
