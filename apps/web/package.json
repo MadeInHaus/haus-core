@@ -4,7 +4,7 @@
   "private": true,
   "description": "Nextra docs template",
   "scripts": {
-    "dev": "next dev",
+    "dev-web": "next dev",
     "build": "next build",
     "start": "next start",
     "clean": "rm -rf .next && rm -rf node_modules"

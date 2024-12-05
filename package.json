@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo watch dev-web",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules && rm pnpm-lock.yaml",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
