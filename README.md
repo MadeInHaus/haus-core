@@ -1,11 +1,11 @@
-# Turborepo Design System Starter
+# Haus Core
 
-This guide explains how to use a React design system starter powered by:
+Powered by:
 
 - 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
-- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
+- 📖 [Nextra](https://nextra.site/) — Simple, powerful and flexible site generation framework from Next.js.
 
 As well as a few others tools preconfigured:
 
@@ -15,12 +15,16 @@ As well as a few others tools preconfigured:
 - [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
 - [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
 
-## Using this example
+## Documentation
 
-Run the following command:
+Full documentation on the everything contained in this repo can be found at [hauscore.xyz](https://hauscore.xyz/)
 
-```sh
-npx create-turbo@latest -e design-system
+## Clone the repo
+
+```bash
+git clone https://github.com/MadeInHaus/haus-core.git
+cd haus-core
+pnpm install
 ```
 
 ### Useful Commands
@@ -41,23 +45,20 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 
 This Turborepo includes the following packages and applications:
 
-- `apps/docs`: Component documentation site with Storybook
-- `packages/ui`: Core React components
-- `packages/utils`: Shared React utilities
-- `packages/typescript-config`: Shared `tsconfig.json`s used throughout the Turborepo
-- `packages/eslint-config`: ESLint preset
-
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
+- `apps/docs`: Component documentation site with Nextra
+- `packages/[package]`: React components
+- `packages/hooks`: Shared React hooks
+- `packages/utils`: Shared utilities
 
 This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
 
 ### Compilation
 
-To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `tsup`, which uses `esbuild` to greatly improve performance.
+To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `vite`, which uses `rollup` to greatly improve performance.
 
 Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
 
-For `acme-core`, the `build` command is the following:
+For `ui`, the `build` command is the following:
 
 ```bash
 tsup src/index.tsx --format esm,cjs --dts --external react
@@ -65,9 +66,9 @@ tsup src/index.tsx --format esm,cjs --dts --external react
 
 `tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `acme-core` then instructs the consumer to select the correct format:
 
-```json:acme-core/package.json
+```json:textural-video/package.json
 {
-  "name": "@acme/core",
+  "name": "@madeinhaus/textural-video",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -76,81 +77,104 @@ tsup src/index.tsx --format esm,cjs --dts --external react
 }
 ```
 
-Run `pnpm build` to confirm compilation is working correctly. You should see a folder `acme-core/dist` which contains the compiled output.
+Run `pnpm build` to confirm compilation is working correctly. You should see a folder `[package]/dist` which contains the compiled output.
 
 ```bash
-acme-core
+textural-video
 └── dist
-    ├── index.d.ts  <-- Types
     ├── index.js    <-- CommonJS version
     └── index.mjs   <-- ES Modules version
 ```
 
-## Components
+## Package
 
-Each file inside of `acme-core/src` is a component inside our design system. For example:
+### Example
 
-```tsx:acme-core/src/Button.tsx
-import * as React from 'react';
+```tsx:button/src/index.tsx
+import * as React from "react";
+import cx from 'clsx';
+import styles from "./Button.module.scss";
 
 export interface ButtonProps {
   children: React.ReactNode;
+  variant: "primary" | "secondary";
 }
 
-export function Button(props: ButtonProps) {
-  return <button>{props.children}</button>;
+export default function Button({ children, variant }: ButtonProps) {
+  return (
+    <button className={cx(styles.root, styles[variant])}>{children}</button>
+  );
 }
-
-Button.displayName = 'Button';
 ```
 
-When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
+## Nextra
 
-```tsx:acme-core/src/index.tsx
-import * as React from "react";
-export { Button, type ButtonProps } from "./Button";
-// Add new component exports here
-```
+Nextra provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Nextra to:
 
-## Storybook
-
-Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Storybook to:
-
-- Use Vite to bundle stories instantly (in milliseconds)
-- Automatically find any stories inside the `stories/` folder
-- Support using module path aliases like `@acme-core` for imports
+- The Nextra repository uses PNPM Workspaces and Turborepo. To install dependencies, run pnpm install in the project root directory.
 - Write MDX for component documentation pages
 
-For example, here's the included Story for our `Button` component:
+- `pnpm dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
+- `pnpm build`: Builds the Nextra app and generates the static files
 
-```js:apps/docs/stories/button.stories.mdx
-import { Button } from '@acme-core/src';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+For example, here's the Nextra markdown for our `Portal` component:
 
-<Meta title="Components/Button" component={Button} />
+````js
+# Portal
 
-# Button
+The Portal component allows you to render a child component outside of its parent hierarchy, by creating a portal to another part of the DOM. This can be useful in situations where you need to render a component in a specific part of the page or outside of the component tree.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+## Installation
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+    <Tab>
+        ```bash copy
+        npm install @madeinhaus/portal
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        yarn add @madeinhaus/portal
+        ```
+    </Tab>
+    <Tab>
+        ```bash copy
+        pnpm add @madeinhaus/portal
+        ```
+    </Tab>
+</Tabs>
+
+## Import
+
+`import Portal from '@madeinhaus/portal';`
 
 ## Props
 
-<Props of={Box} />
+The `Portal` component accepts two props:
 
-## Examples
+- `selector`: A string representing the CSS selector for the DOM element where the portal will be created. If no selector is provided, the default selector `#__portal__` will be used.
+- `children`: The child component(s) to be rendered within the portal.
 
-<Preview>
-  <Story name="Default">
-    <Button>Hello</Button>
-  </Story>
-</Preview>
-```
+## Usage
 
-This example includes a few helpful Storybook scripts:
+Wrap your desired child component(s) within the `Portal` component:
 
-- `pnpm dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
-- `pnpm build`: Builds the Storybook UI and generates the static HTML files
-- `pnpm preview-storybook`: Starts a local server to view the generated Storybook UI
+```tsx copy showLineNumbers
+function MyComponent() {
+  return (
+    <div>
+      <h1>My Component</h1>
+      <Portal>
+        <div>
+          <p>This component will be rendered outside of the parent hierarchy.</p>
+        </div>
+      </Portal>
+    </div>
+  );
+}
+````
 
 ## Versioning & Publishing Packages
 
@@ -176,12 +200,6 @@ When you push your code to GitHub, the [GitHub Action](https://github.com/change
 ```bash
 turbo run build --filter=docs^... && changeset publish
 ```
-
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `acme` as the npm organization. To change this, do the following:
-
-- Rename folders in `packages/*` to replace `acme` with your desired scope
-- Search and replace `acme` with your desired scope
-- Re-run `pnpm install`
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 
