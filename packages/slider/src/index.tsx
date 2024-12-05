@@ -28,7 +28,6 @@ export const SliderContext = React.createContext<SliderContextType>({
 });
 
 export type SliderProps = {
-    children: React.ReactNode[];
     className?: string;
     slideClassName?: string;
     renderNavigation?: (props: {
@@ -38,7 +37,12 @@ export type SliderProps = {
     }) => React.ReactNode;
 };
 
-const Slider = ({ children, className, slideClassName, renderNavigation }: SliderProps) => {
+const Slider = ({
+    children,
+    className,
+    slideClassName,
+    renderNavigation,
+}: React.PropsWithChildren<SliderProps>) => {
     const [scrollLeft, setScrollLeft] = React.useState(0);
     const [activeIndices, setActiveIndices] = React.useState([0]);
     const [hasOverflow, setHasOverflow] = React.useState(true);
@@ -48,7 +52,7 @@ const Slider = ({ children, className, slideClassName, renderNavigation }: Slide
 
     const [widthRef, { width: containerWidth }] = useMeasure();
     const trackWidth = trackRef?.current?.scrollWidth ?? 0;
-    const slideWith = trackWidth / children.length;
+    const slideWith = trackWidth / React.Children.count(children);
 
     const isBeginning = Math.floor(scrollLeft) === 0;
     const isEnd = Math.ceil(containerWidth + scrollLeft) >= trackWidth;

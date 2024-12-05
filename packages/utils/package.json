@@ -17,12 +17,12 @@
     },
     "devDependencies": {
         "@madeinhaus/prettier-config": "^1.2.1",
-        "@types/react": "^18.0.27",
-        "@types/react-dom": "^18.0.10",
-        "eslint": "^8.32.0",
-        "eslint-config-next": "^13.1.5",
-        "eslint-config-turbo": "^0.0.7",
-        "eslint-plugin-react": "^7.32.1",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "eslint": "^9.16.0",
+        "eslint-config-next": "^15.0.3",
+        "eslint-config-turbo": "^2.3.3",
+        "eslint-plugin-react": "^7.37.2",
         "tsup": "^8.3.5",
         "typescript": "^5.7.2"
     },

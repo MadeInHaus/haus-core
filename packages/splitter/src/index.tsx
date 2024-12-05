@@ -66,9 +66,9 @@ const Splitter = React.forwardRef<Element, SplitterProps>((props, ref) => {
         ]
     );
 
-    const elSourceRef = React.useRef<HTMLElement>();
-    const elSourceCloneRef = React.useRef<HTMLElement>();
-    const resizeObserverRef = React.useRef<ResizeObserver>();
+    const elSourceRef = React.useRef<HTMLElement>(undefined);
+    const elSourceCloneRef = React.useRef<HTMLElement>(undefined);
+    const resizeObserverRef = React.useRef<ResizeObserver>(undefined);
 
     const resizeObserverCallback = React.useCallback(
         ([entry]: ResizeObserverEntry[]) => {

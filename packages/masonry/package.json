@@ -17,9 +17,9 @@
     },
     "devDependencies": {
         "@madeinhaus/prettier-config": "^1.2.1",
-        "@types/react": "^18.0.27",
-        "@types/react-dom": "^18.0.10",
-        "eslint": "^8.32.0",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "eslint": "^9.16.0",
         "tsup": "^8.3.5",
         "typescript": "^5.7.2"
     },
@@ -37,11 +37,11 @@
     },
     "homepage": "https://github.com/MadeInHaus/haus-core#readme",
     "peerDependencies": {
-        "react": ">=18",
-        "react-dom": ">=18"
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     },
     "dependencies": {
         "@madeinhaus/hooks": "workspace:*",
-        "clsx": "^1.2.1"
+        "clsx": "^2.1.1"
     }
 }

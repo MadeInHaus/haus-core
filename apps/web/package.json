@@ -33,16 +33,16 @@
     "@madeinhaus/splitter": "workspace:*",
     "@madeinhaus/textural-video": "workspace:*",
     "@madeinhaus/utils": "workspace:*",
-    "clsx": "^1.2.1",
-    "next": "^13.0.6",
-    "nextra": "latest",
-    "nextra-theme-docs": "latest",
+    "clsx": "^2.1.1",
+    "next": "^15.0.3",
+    "nextra": "^3.2.4",
+    "nextra-theme-docs": "^3.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@madeinhaus/prettier-config": "^1.2.1",
-    "@types/node": "18.11.10",
+    "@types/node": "22.10.1",
     "typescript": "^5.7.2"
   }
 }
