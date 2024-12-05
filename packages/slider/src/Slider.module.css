@@ -12,26 +12,25 @@
     overflow-y: hidden;
     scroll-behavior: smooth;
     scroll-snap-type: var(--slider-scroll-snap-type);
+}
 
-    &::-webkit-scrollbar {
-        width: 1.5rem;
+.hasOverflow::-webkit-scrollbar {
+    width: 1.5rem;
+}
+
+.hasOverflow::-webkit-scrollbar-thumb {
+    border: var(--slider-scrollbar-border-width) solid transparent;
+    background-clip: content-box;
+    border-radius: var(--slider-scrollbar-border-radius);
+    background-color: var(--slider-scrollbar-color);
+}
+
+@media (hover: hover) {
+    .hasOverflow::-webkit-scrollbar-thumb {
+        background-color: transparent;
     }
-
-    &::-webkit-scrollbar-thumb {
-        border: var(--slider-scrollbar-border-width) solid transparent;
-        background-clip: content-box;
-        border-radius: var(--slider-scrollbar-border-radius);
+    .hasOverflow:hover::-webkit-scrollbar-thumb {
         background-color: var(--slider-scrollbar-color);
-    }
-
-    @media (hover: hover) {
-        &::-webkit-scrollbar-thumb {
-            background-color: transparent;
-        }
-
-        &:hover::-webkit-scrollbar-thumb {
-            background-color: var(--slider-scrollbar-color);
-        }
     }
 }
 

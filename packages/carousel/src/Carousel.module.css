@@ -6,7 +6,6 @@
     width: 100%;
     touch-action: pan-y;
 }
-
 :where(.root:not([class~='disabled']) > .item) {
     grid-area: 1 / -1;
     width: fit-content;
@@ -14,8 +13,7 @@
     transform: translate3d(-200%, 0, 0);
     user-select: none;
     list-style: none;
-
-    img {
-        pointer-events: none;
-    }
+}
+:where(.root:not([class~='disabled']) > .item) img {
+    pointer-events: none;
 }

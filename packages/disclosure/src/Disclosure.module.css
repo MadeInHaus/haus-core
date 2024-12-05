@@ -2,9 +2,10 @@
     list-style: none;
     appearance: none;
     cursor: pointer;
-
-    &::marker, /* Latest Chrome, Edge, Firefox */ 
-    &::-webkit-details-marker /* Safari */ {
-        display: none;
-    }
+}
+.summary::marker,
+.summary::-webkit-details-marker {
+    /* Latest Chrome, Edge, Firefox */
+    /* Safari */
+    display: none;
 }
