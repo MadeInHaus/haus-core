@@ -287,40 +287,22 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         };
 
         const positionRight = (index: number, x1: number) => {
-            let failSafeCounter = 0;
             while (x1 < containerWidth.current) {
                 const width = getItemWidth(index);
                 const x2 = x1 + width;
                 position(index, x1, x2);
                 index = modulo(index + 1, items.length);
                 x1 = x2 + (gap.current ?? 0);
-                if (failSafeCounter++ >= 50000) {
-                    console.log('[positionRight] fail safe triggered', {
-                        index,
-                        x1,
-                        x2,
-                    });
-                    break;
-                }
             }
         };
 
         const positionLeft = (index: number, x2: number) => {
-            let failSafeCounter = 0;
             while (x2 > 0) {
                 const width = getItemWidth(index);
                 const x1 = x2 - width;
                 position(index, x1, x2);
                 index = modulo(index - 1, items.length);
                 x2 = x1 - (gap.current ?? 0);
-                if (failSafeCounter++ >= 50000) {
-                    console.log('[positionLeft] fail safe triggered', {
-                        index,
-                        x1,
-                        x2,
-                    });
-                    break;
-                }
             }
         };
 
@@ -605,6 +587,8 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             removePointerEvents();
             // Discard first sample
             dragRegister.current.shift();
+            // Discard zero dt values
+            dragRegister.current = dragRegister.current.filter(sample => sample.dt > 0);
             // Calculate total distance the pointer moved
             const distance = dragRegister.current.reduce((a, sample) => a + Math.abs(sample.dx), 0);
             // Calculate age of last pointer move
