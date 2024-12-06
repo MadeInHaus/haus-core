@@ -3,7 +3,7 @@
 
     --image-size: 300px;
     --carousel-gap: 20px;
-    --carousel-item-width: var(--image-size);
+    --carousel-item-size: var(--image-size);
 }
 
 .carouselItem {
