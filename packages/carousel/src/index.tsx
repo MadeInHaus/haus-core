@@ -649,7 +649,6 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         const dragThrow = (v0: number, t0: number) => {
             if (Math.abs(v0) > 0.1 && damping > 0) {
                 // Throw it!
-                // console.log(`[dragThrow] calling animateThrow`, { v0, t0 });
                 animateThrow(v0, t0);
             } else {
                 // This was not a throw.
@@ -659,7 +658,6 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                 } else if (snap) {
                     // Snap back
                     let { distance, index } = findSnapDistance(0);
-                    // console.log(`[dragThrow] snap back `, { index, distance });
                     animateEased(offset.current + distance, index);
                 }
             }
@@ -779,9 +777,6 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                     if (latestData?.dt) {
                         const v0 = -latestData.d / latestData.dt;
                         if (v0 !== 0) {
-                            // console.log(`[handleWheel] calling animateThrow`, {
-                            //     v0,
-                            // });
                             animateThrow(v0, performance.now());
                             wheelInertia.current = true;
                         }
