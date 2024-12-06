@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-theme
 
+## 2.0.0
+
+### Major Changes
+
+- 4d730c8: Replace yarn with pnpm, rollup with tsup and other updates
+
 ## 1.3.0
 
 ### Minor Changes
