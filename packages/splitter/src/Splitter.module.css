@@ -1,0 +1,66 @@
+:where(.root[data-type='splitter']) {
+    font-feature-settings: 'kern' off;
+}
+
+:where(.root [data-type='char']),
+:where(.root [data-type='space']),
+:where(.root [data-type='whitelisted']) {
+    margin-right: var(--kerning, 0);
+}
+
+:where(.root [data-type='space']:first-of-type),
+:where(.root [data-type='space']:last-of-type) {
+    margin-right: 0;
+}
+
+:where(.root [data-type='line']) {
+    display: block;
+}
+
+:where(.root [data-type='line'] [data-type='char']),
+:where(.root [data-type='line'] [data-type='space']),
+:where(.root [data-type='line'] [data-type='whitelisted']) {
+    display: inline-block;
+    text-decoration: inherit;
+    vertical-align: top;
+}
+
+:where(.root [data-type='line'] [data-type='char']),
+:where(.root [data-type='line'] [data-type='whitelisted']) {
+    position: relative;
+}
+
+:where(.root [data-type='line'] [data-type='char'] [data-type='char-inner']),
+:where(.root [data-type='line'] [data-type='whitelisted'] [data-type='char-inner']),
+:where(.root [data-type='line'] [data-type='char'] [data-type='whitelisted-inner']),
+:where(.root [data-type='line'] [data-type='whitelisted']) [data-type='whitelisted-inner'] {
+    display: inline-block;
+    text-decoration: inherit;
+}
+
+:where(.root [data-type='line'] [data-type='space']:not(:first-of-type, :last-of-type)) {
+    white-space: pre;
+}
+
+:where(.root [data-type='kern']),
+:where(.root [data-type='nokern']) {
+    position: absolute;
+}
+
+:where(.root [data-type='kern'] > div),
+:where(.root [data-type='nokern'] > div) {
+    all: unset;
+    display: block;
+    white-space: pre;
+    width: fit-content;
+}
+
+:where(.root [data-type='kern']) {
+    font-kerning: normal;
+    font-feature-settings: 'kern' on;
+}
+
+:where(.root [data-type='nokern']) {
+    font-kerning: none;
+    font-feature-settings: 'kern' off;
+}

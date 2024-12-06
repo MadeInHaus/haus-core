@@ -4,7 +4,6 @@ Powered by:
 
 - 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
 - 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
-- 🛠 [Rollup](https://rollupjs.org/guide/en/) — A module bundler for JavaScript
 - 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
 - 📖 [Nextra](https://nextra.site/) — Simple, powerful and flexible site generation framework from Next.js.
 
@@ -25,16 +24,16 @@ Full documentation on the everything contained in this repo can be found at [hau
 ```bash
 git clone https://github.com/MadeInHaus/haus-core.git
 cd haus-core
-yarn install
+pnpm install
 ```
 
 ### Useful Commands
 
-- `yarn build` - Build all packages including the Nextra site
-- `yarn dev` - Run all packages locally and preview with Nextra
-- `yarn lint` - Lint all packages
-- `yarn changeset` - Generate a changeset
-- `yarn clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
+- `pnpm build` - Build all packages, including the Storybook site
+- `pnpm dev` - Run all packages locally and preview with Storybook
+- `pnpm lint` - Lint all packages
+- `pnpm changeset` - Generate a changeset
+- `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
 
 ## Turborepo
 
@@ -57,15 +56,15 @@ This example sets up your `.gitignore` to exclude all generated files, other fol
 
 To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `vite`, which uses `rollup` to greatly improve performance.
 
-Running `yarn build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
 
-For `ui`, the `build` command, which depends on `rollup.config.js` is the following:
+For `ui`, the `build` command is the following:
 
 ```bash
-rollup -c --bundleConfigAsCjs
+tsup src/index.tsx --format esm,cjs --dts --external react
 ```
 
-`rollup` compiles `src/index.ts`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. For example, the `package.json` for `textural-video` then instructs the consumer to select the correct format:
+`tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `acme-core` then instructs the consumer to select the correct format:
 
 ```json:textural-video/package.json
 {
@@ -78,7 +77,7 @@ rollup -c --bundleConfigAsCjs
 }
 ```
 
-Run `yarn build` to confirm compilation is working correctly. You should see a folder `[package]/dist` which contains the compiled output.
+Run `pnpm build` to confirm compilation is working correctly. You should see a folder `[package]/dist` which contains the compiled output.
 
 ```bash
 textural-video
@@ -112,11 +111,11 @@ export default function Button({ children, variant }: ButtonProps) {
 
 Nextra provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Nextra to:
 
-- The Nextra repository uses PNPM Workspaces and Turborepo. To install dependencies, run yarn install in the project root directory.
+- The Nextra repository uses PNPM Workspaces and Turborepo. To install dependencies, run pnpm install in the project root directory.
 - Write MDX for component documentation pages
 
-- `yarn dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
-- `yarn build`: Builds the Nextra app and generates the static files
+- `pnpm dev`: Starts Nextra in dev mode with hot reloading at `localhost:3001`
+- `pnpm build`: Builds the Nextra app and generates the static files
 
 For example, here's the Nextra markdown for our `Portal` component:
 
@@ -185,7 +184,7 @@ You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHu
 
 ### Generating the Changelog
 
-To generate your changelog, run `yarn changeset` locally:
+To generate your changelog, run `pnpm changeset` locally:
 
 1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
 1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
@@ -201,8 +200,6 @@ When you push your code to GitHub, the [GitHub Action](https://github.com/change
 ```bash
 turbo run build --filter=docs^... && changeset publish
 ```
-
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `madeinhaus` as the npm organization. To change this, do the following:
 
 To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
 

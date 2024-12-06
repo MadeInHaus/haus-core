@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import cx from 'clsx';
-import styles from './Disclosure.module.scss';
+import styles from './Disclosure.module.css';
 
 export interface DisclosureSharedProps {
     children: React.ReactNode;

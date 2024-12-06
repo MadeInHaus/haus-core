@@ -1,0 +1,11 @@
+.summary {
+    list-style: none;
+    appearance: none;
+    cursor: pointer;
+}
+.summary::marker,
+.summary::-webkit-details-marker {
+    /* Latest Chrome, Edge, Firefox */
+    /* Safari */
+    display: none;
+}

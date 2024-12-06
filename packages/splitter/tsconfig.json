@@ -1,15 +1,27 @@
 {
-    "include": ["."],
-    "exclude": ["dist", "build", "node_modules"],
+    "include": [
+        "."
+    ],
+    "exclude": [
+        "dist",
+        "build",
+        "node_modules",
+        "tsup.config.ts"
+    ],
     "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist",
         "jsx": "react-jsx",
-        "lib": ["DOM", "DOM.Iterable", "ES2015"],
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es2022"
+        ],
         "module": "ESNext",
-        "target": "es6",
+        "target": "ES2022",
         "composite": false,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "./dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "inlineSources": false,

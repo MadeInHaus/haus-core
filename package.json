@@ -1,31 +1,20 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --no-cache --parallel --continue",
+    "dev": "turbo watch dev-web",
     "lint": "turbo run lint",
-    "clean": "turbo run clean && rm -rf node_modules",
+    "clean": "turbo run clean && rm -rf node_modules && rm pnpm-lock.yaml",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=web^... && changeset publish"
+    "release": "turbo run build --filter=@madeinhaus/web^... && changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.10",
-    "@madeinhaus/prettier-config": "1.2.1",
-    "eslint": "^9.15.0",
-    "next": "^15.0.3",
-    "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "turbo": "latest"
+    "@changesets/cli": "^2.27.1",
+    "@madeinhaus/prettier-config": "^1.2.1",
+    "prettier": "^3.2.5",
+    "turbo": "^2.3.3"
   },
-  "dependencies": {
-    "clsx": "^2.1.1"
-  },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "pnpm@9.14.4"
 }

@@ -4,25 +4,25 @@ Contains various easing functions for use in animations. Each easing function ta
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tabs } from 'nextra/components';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/utils
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/utils
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/utils
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -39,8 +39,8 @@ import { easings } from '@madeinhaus/utils';
 
 Returns the progress of the animation linearly.
 
-
 ### easeInQuad
+
 `easeInQuad(x: number): number`
 
 Returns the progress of the animation with a quadratic easing in.
@@ -69,18 +69,20 @@ Returns the progress of the animation with a cubic easing in.
 
 Returns the progress of the animation with a cubic easing out.
 
-
 ### easeInOutCubic
+
 `easeInOutCubic(x: number): number`
 
 Returns the progress of the animation with a cubic easing in and out.
 
 ### easeInQuart
+
 `easeInQuart(x: number): number`
 
 Returns the progress of the animation with a quartic easing in.
 
 ### easeOutQuart
+
 `easeOutQuart(x: number): number`
 
 Returns the progress of the animation with a quartic easing out.
