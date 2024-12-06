@@ -1,5 +1,16 @@
 # @madeinhaus/masonry
 
+## 3.0.0
+
+### Major Changes
+
+- 4d730c8: Replace yarn with pnpm, rollup with tsup and other updates
+
+### Patch Changes
+
+- Updated dependencies [4d730c8]
+    - @madeinhaus/hooks@2.0.0
+
 ## 2.2.0
 
 ### Minor Changes
