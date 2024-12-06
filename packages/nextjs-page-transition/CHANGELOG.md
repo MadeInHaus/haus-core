@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-page-transition
 
+## 4.0.1
+
+### Patch Changes
+
+- b4af716: Update README
+
 ## 4.0.0
 
 ### Major Changes

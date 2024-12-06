@@ -1,5 +1,11 @@
 # @madeinhaus/nextjs-theme
 
+## 2.0.1
+
+### Patch Changes
+
+- b4af716: Update README
+
 ## 2.0.0
 
 ### Major Changes
