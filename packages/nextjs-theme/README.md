@@ -1,4 +1,4 @@
-# Theme
+# Next.js Theme
 
 **Install**:
 
