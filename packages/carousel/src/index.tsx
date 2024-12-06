@@ -30,6 +30,8 @@ export type CarouselRef = {
     moveIntoView: (index: number, options?: { easeFn?: EasingFunction; duration?: number }) => void;
 };
 
+export type CarouselDirection = 'horizontal' | 'vertical';
+
 export interface CarouselProps {
     /** The item's alignment axis */
     align?: 'start' | 'center';
@@ -37,6 +39,8 @@ export interface CarouselProps {
     damping?: number;
     /** Disable item snapping */
     disableSnap?: boolean;
+    /** Whether the carousel spins horizontally (default) or vertically */
+    direction?: CarouselDirection;
     /** Enable vertical scrolling */
     enableVerticalScroll?: boolean;
     /** Enable navigation gestures */
@@ -62,9 +66,9 @@ export interface CarouselProps {
 }
 
 type SnapDistanceResult = { index: number; distance: number };
-type ItemPositionResult = { x1: number; x2: number };
-type DragStartValue = { t: number; x: number };
-type DragRegisterValue = { t: number; x: number; dt: number; dx: number };
+type ItemPositionResult = { startEdgePos: number; endEdgePos: number };
+type DragStartValue = { t: number; pos: number };
+type DragRegisterValue = { t: number; pos: number; dt: number; dpos: number };
 type WheelDataValue = { t: number; d: number; dt?: number };
 
 const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselProps>>(
@@ -73,6 +77,7 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             align = 'start',
             damping = 200,
             disableSnap = false,
+            direction = 'horizontal',
             enableVerticalScroll = false,
             enableNavigationGestures = false,
             activeItemIndex = 0,
@@ -90,15 +95,15 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         const snap = !disableSnap;
 
         const container = React.useRef<HTMLElement>(undefined);
-        const containerWidth = React.useRef<number>(0);
+        const containerSize = React.useRef<number>(0);
         const gap = React.useRef<number>(0);
         const disabled = React.useRef<boolean>(undefined);
         const autoScroll = React.useRef<number>(0);
         const snapPos = React.useRef<number>(undefined);
         const snapPosStart = React.useRef<number>(0);
         const snapPosEnd = React.useRef<number>(undefined);
-        const itemWidth = React.useRef<number>(undefined);
-        const itemWidths = React.useRef<Map<number, number>>(undefined);
+        const itemSize = React.useRef<number>(undefined);
+        const itemSizes = React.useRef<Map<number, number>>(undefined);
         const itemOffsets = React.useRef<Map<number, number>>(undefined);
         const visibleItems = React.useRef<Set<number>>(new Set());
         const activeItemIndexInternal = React.useRef<number>(activeItemIndex);
@@ -126,27 +131,29 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         // POSITIONING
         ///////////////////////////////////////////////////////////////////////////
 
-        const calculateItemWidths = () => {
-            itemWidths.current = new Map();
+        const calculateItemSizes = () => {
+            itemSizes.current = new Map();
             container.current?.childNodes.forEach((child, index) => {
-                itemWidths.current?.set(index, (child as HTMLElement).offsetWidth);
+                const el = child as HTMLElement;
+                const size = direction === 'horizontal' ? el.offsetWidth : el.offsetHeight;
+                itemSizes.current?.set(index, size);
             });
         };
 
-        const getItemWidth = (index: number): number => itemWidths.current?.get(index) ?? 0;
+        const getItemSize = (index: number): number => itemSizes.current?.get(index) ?? 0;
 
         const getDistanceToNeighbor = (i: number, dir: number) => {
             const totalItems = items.length;
             const index = modulo(i, totalItems);
             if (align === 'center') {
                 const indexNeighbor = modulo(i - dir, totalItems);
-                const currHalf = getItemWidth(index) / 2;
-                const nextHalf = getItemWidth(indexNeighbor) / 2;
+                const currHalf = getItemSize(index) / 2;
+                const nextHalf = getItemSize(indexNeighbor) / 2;
                 return dir * ((gap.current ?? 0) + currHalf + nextHalf);
             } else {
                 const indexNeighbor = modulo(i - Math.max(dir, 0), totalItems);
-                const width = getItemWidth(indexNeighbor);
-                return dir * ((gap.current ?? 0) + width);
+                const size = getItemSize(indexNeighbor);
+                return dir * ((gap.current ?? 0) + size);
             }
         };
 
@@ -168,29 +175,29 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             const totalItems = items.length;
             const offsets = new Map<number, number>();
             const iActive = activeItemIndexInternal.current;
-            if (itemWidth.current) {
+            if (itemSize.current) {
                 for (let i = 0; i < totalItems; i++) {
-                    offsets.set(i, (iActive - i) * (itemWidth.current + (gap.current ?? 0)));
+                    offsets.set(i, (iActive - i) * (itemSize.current + (gap.current ?? 0)));
                 }
             } else {
                 offsets.set(iActive, 0); // Offset of activeItem is by definition 0
                 const maxDist = Math.max(iActive, totalItems - iActive);
                 for (let i = 1; i < maxDist; i++) {
-                    const iLeft = iActive - i;
-                    const iRight = iActive + i;
-                    if (iLeft >= 0) {
-                        const iLeft0 = iLeft + 1;
-                        const iLeft0Offset = offsets.get(iLeft0) ?? 0;
-                        const neighborOffset = getDistanceToNeighbor(iLeft0, 1);
-                        const offset = iLeft0Offset + neighborOffset;
-                        offsets.set(iLeft, offset);
+                    const iPrev = iActive - i;
+                    const iNext = iActive + i;
+                    if (iPrev >= 0) {
+                        const iPrev0 = iPrev + 1;
+                        const iPrev0Offset = offsets.get(iPrev0) ?? 0;
+                        const neighborOffset = getDistanceToNeighbor(iPrev0, 1);
+                        const offset = iPrev0Offset + neighborOffset;
+                        offsets.set(iPrev, offset);
                     }
-                    if (iRight < totalItems) {
-                        const iRight0 = iRight - 1;
-                        const iRight0Offset = offsets.get(iRight0) ?? 0;
-                        const neighborOffset = getDistanceToNeighbor(iRight0, -1);
-                        const offset = iRight0Offset + neighborOffset;
-                        offsets.set(iRight, offset);
+                    if (iNext < totalItems) {
+                        const iNext0 = iNext - 1;
+                        const iNext0Offset = offsets.get(iNext0) ?? 0;
+                        const neighborOffset = getDistanceToNeighbor(iNext0, -1);
+                        const offset = iNext0Offset + neighborOffset;
+                        offsets.set(iNext, offset);
                     }
                 }
             }
@@ -257,22 +264,22 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         };
 
         const getItemPosition = (index: number): ItemPositionResult => {
-            let x1, x2;
-            const itemWidth = getItemWidth(index);
+            let startEdgePos, endEdgePos;
+            const itemSize = getItemSize(index);
             const itemOffset = getItemOffset(index);
-            const x = offset.current + snapPosStart.current - itemOffset;
+            const pos = offset.current + snapPosStart.current - itemOffset;
             if (align === 'center') {
-                x1 = x - itemWidth / 2;
-                x2 = x + itemWidth / 2;
+                startEdgePos = pos - itemSize / 2;
+                endEdgePos = pos + itemSize / 2;
             } else {
-                x1 = x;
-                x2 = x + itemWidth;
+                startEdgePos = pos;
+                endEdgePos = pos + itemSize;
             }
-            return { x1, x2 };
+            return { startEdgePos, endEdgePos };
         };
 
-        const position = (index: number, x1: number, x2: number) => {
-            const isVisible = x1 < containerWidth.current && x2 > 0;
+        const position = (index: number, startEdgePos: number, endEdgePos: number) => {
+            const isVisible = startEdgePos < containerSize.current && endEdgePos > 0;
             if (isVisible) {
                 if (visibleItems.current.has(index)) {
                     throw new Error();
@@ -280,29 +287,32 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                     visibleItems.current.add(index);
                     const node = container.current?.childNodes[index] as HTMLElement;
                     if (node) {
-                        node.style.transform = `translate3d(${x1}px, 0, 0)`;
+                        node.style.transform =
+                            direction === 'horizontal'
+                                ? `translate3d(${startEdgePos}px, 0, 0)`
+                                : `translate3d(0, ${startEdgePos}px, 0)`;
                     }
                 }
             }
         };
 
-        const positionRight = (index: number, x1: number) => {
-            while (x1 < containerWidth.current) {
-                const width = getItemWidth(index);
-                const x2 = x1 + width;
-                position(index, x1, x2);
+        const positionRight = (index: number, startEdgePos: number) => {
+            while (startEdgePos < containerSize.current) {
+                const size = getItemSize(index);
+                const endEdgePos = startEdgePos + size;
+                position(index, startEdgePos, endEdgePos);
                 index = modulo(index + 1, items.length);
-                x1 = x2 + (gap.current ?? 0);
+                startEdgePos = endEdgePos + (gap.current ?? 0);
             }
         };
 
-        const positionLeft = (index: number, x2: number) => {
-            while (x2 > 0) {
-                const width = getItemWidth(index);
-                const x1 = x2 - width;
-                position(index, x1, x2);
+        const positionLeft = (index: number, endEdgePos: number) => {
+            while (endEdgePos > 0) {
+                const size = getItemSize(index);
+                const startEdgePos = endEdgePos - size;
+                position(index, startEdgePos, endEdgePos);
                 index = modulo(index - 1, items.length);
-                x2 = x1 - (gap.current ?? 0);
+                endEdgePos = startEdgePos - (gap.current ?? 0);
             }
         };
 
@@ -311,10 +321,10 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             const visibleItemsPrev = new Set(visibleItems.current);
             visibleItems.current = new Set();
             const index = activeItemIndexInternal.current;
-            const { x1, x2 } = getItemPosition(index);
-            position(index, x1, x2);
-            positionRight(modulo(index + 1, items.length), x2 + (gap.current ?? 0));
-            positionLeft(modulo(index - 1, items.length), x1 - (gap.current ?? 0));
+            const { startEdgePos, endEdgePos } = getItemPosition(index);
+            position(index, startEdgePos, endEdgePos);
+            positionRight(modulo(index + 1, items.length), endEdgePos + (gap.current ?? 0));
+            positionLeft(modulo(index - 1, items.length), startEdgePos - (gap.current ?? 0));
             visibleItemsPrev.forEach(index => {
                 if (!visibleItems.current.has(index)) {
                     const node = container.current?.childNodes[index] as HTMLElement;
@@ -473,7 +483,7 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         // // POINTER EVENTS, DRAGGING, THROWING
         // ///////////////////////////////////////////////////////////////////////////
 
-        const dragStart = React.useRef<DragStartValue>({ t: 0, x: 0 });
+        const dragStart = React.useRef<DragStartValue>({ t: 0, pos: 0 });
         const dragRegister = React.useRef<DragRegisterValue[]>([]);
         const dragScrollLock = React.useRef<boolean>(undefined);
         const dragPreventClick = React.useRef<boolean>(undefined);
@@ -505,7 +515,8 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             if (event.pointerType === 'mouse' && event.button !== 0) return;
             stopAllAnimations();
             addPointerEvents();
-            dragStart.current = { t: performance.now(), x: event.screenX };
+            const pos = direction === 'horizontal' ? event.screenX : event.screenY;
+            dragStart.current = { t: performance.now(), pos };
             dragRegister.current = [];
             dragScrollLock.current = false;
             dragPreventClick.current = false;
@@ -523,11 +534,12 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         };
 
         const handlePointerMove = (event: PointerEvent) => {
+            const screenPos = direction === 'horizontal' ? event.screenX : event.screenY;
             if (!event.isPrimary) return;
             if (!dragScrollLock.current) {
                 // Dragged horizontally for at least 5px: This is a legit swipe.
                 // Prevent-default touchmoves to stop browser from taking over.
-                const distTotal = Math.abs(event.screenX - dragStart.current.x);
+                const distTotal = Math.abs(screenPos - dragStart.current.pos);
                 const isDrag = distTotal >= 5;
                 if (isDrag) {
                     dragScrollLock.current = true;
@@ -542,18 +554,22 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             // Determine current position and velocity:
             const prev = last(dragRegister.current) || dragStart.current;
             const t = performance.now();
-            const x = event.screenX;
+            const pos = screenPos;
             const dt = t - prev.t;
-            const dx = x - prev.x;
-            if (dx !== 0) {
-                dragRegister.current.push({ t, x, dt, dx });
-                offset.current += dx;
+            const dpos = pos - prev.pos;
+            if (dpos !== 0) {
+                dragRegister.current.push({ t, pos, dt, dpos });
+                offset.current += dpos;
                 positionItems();
             }
         };
 
         const handleTouchStart = (event: TouchEvent) => {
-            if (!enableNavigationGestures) {
+            if (
+                !enableNavigationGestures &&
+                direction === 'horizontal' &&
+                event.touches.length === 1
+            ) {
                 const { pageX } = event.touches[0];
                 if (pageX < 30 || pageX > window.innerWidth - 30) {
                     // Prevent navigation gestures from edges of screen
@@ -590,7 +606,10 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             // Discard zero dt values
             dragRegister.current = dragRegister.current.filter(sample => sample.dt > 0);
             // Calculate total distance the pointer moved
-            const distance = dragRegister.current.reduce((a, sample) => a + Math.abs(sample.dx), 0);
+            const distance = dragRegister.current.reduce(
+                (a, sample) => a + Math.abs(sample.dpos),
+                0
+            );
             // Calculate age of last pointer move
             const currentTime = performance.now();
             const lastTime = last(dragRegister.current)?.t ?? currentTime;
@@ -618,7 +637,7 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                     let v0 = 0;
                     let weightSum = 0;
                     relevantSamples.forEach((sample, i) => {
-                        v0 += ((i + 1) * sample.dx) / sample.dt;
+                        v0 += ((i + 1) * sample.dpos) / sample.dt;
                         weightSum += i + 1;
                     });
                     v0 /= weightSum;
@@ -802,9 +821,9 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             // --carousel-item-width
             // --carousel-autoscroll
             // --carousel-disabled
-            const values = getCSSValues(container.current);
+            const values = getCSSValues(container.current, direction);
             gap.current = values.gap;
-            itemWidth.current = values.width;
+            itemSize.current = values.width;
             snapPos.current = values.snap;
             snapPosStart.current = values.snapStart;
             snapPosEnd.current = values.snapEnd;
@@ -827,9 +846,11 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                 return;
             }
             // Initialize some other refs:
-            const width = container.current.offsetWidth;
-            containerWidth.current = width;
-            calculateItemWidths();
+            containerSize.current =
+                direction === 'horizontal'
+                    ? container.current.offsetWidth
+                    : container.current.offsetHeight;
+            calculateItemSizes();
             calculateItemOffsets();
             // console.log(activeItemIndexInternal.current, activeItemIndex);
             if (activeItemIndexInternal.current !== activeItemIndex) {
@@ -895,27 +916,31 @@ type CSSValues = {
     disabled: boolean;
 };
 
-function getCSSValues(container: HTMLElement): CSSValues {
+function getCSSValues(container: HTMLElement, direction: CarouselDirection): CSSValues {
     const GAP = '--carousel-gap';
     const SNAP = '--carousel-snap-position';
     const SNAPSTART = '--carousel-snap-position-start';
     const SNAPEND = '--carousel-snap-position-end';
+    const SIZE = '--carousel-item-size';
     const WIDTH = '--carousel-item-width';
     const SCROLL = '--carousel-autoscroll';
     const DISABLED = '--carousel-disabled';
     const styles = [
-        `position: relative`,
+        `width: 100%`,
         `padding-left: var(${GAP})`,
         `padding-right: var(${SNAP})`,
         `margin-left: var(${SNAPSTART})`,
         `margin-right: var(${SNAPEND})`,
-        `left: var(${WIDTH})`,
-        'position: absolute',
-        'width: 100%',
+        `left: var(${SIZE}, ${WIDTH})`, // --carousel-item-width is deprecated
     ];
+    const isHorizontal = direction === 'horizontal';
+    const containerSize = isHorizontal ? container.offsetWidth : container.offsetHeight;
     const dummy = document.createElement('div');
     dummy.setAttribute('style', styles.join(';'));
-    container.appendChild(dummy);
+    const dummyContainer = document.createElement('div');
+    dummyContainer.setAttribute('style', `position: absolute; width: ${containerSize}px`);
+    dummyContainer.appendChild(dummy);
+    container.appendChild(dummyContainer);
     const computed = getComputedStyle(dummy);
     const hasSnapStart = computed.getPropertyValue(SNAPSTART) !== '';
     const hasSnapEnd = computed.getPropertyValue(SNAPEND) !== '';
@@ -926,7 +951,7 @@ function getCSSValues(container: HTMLElement): CSSValues {
     const width = parseFloat(computed.getPropertyValue('left'));
     const autoScroll = parseFloat(computed.getPropertyValue(SCROLL));
     const disabled = parseInt(computed.getPropertyValue(DISABLED), 10);
-    container.removeChild(dummy);
+    container.removeChild(dummyContainer);
     return {
         gap: Math.max(Number.isFinite(gap) ? gap : 0, 0),
         snap: Number.isFinite(snap) ? snap : 0,
