@@ -1,5 +1,11 @@
 # @madeinhaus/carousel
 
+## 3.1.0
+
+### Minor Changes
+
+- 65f7375: Fixes bug that caused infinite loops under certain conditions, adds direction prop and implements vertical carousels, Fixes carousel not reacting to changes in children
+
 ## 3.0.0
 
 ### Major Changes
