@@ -1,5 +1,28 @@
 # @madeinhaus/carousel
 
+## 3.1.0
+
+### Minor Changes
+
+- 65f7375: Fixes bug that caused infinite loops under certain conditions, adds direction prop and implements vertical carousels, Fixes carousel not reacting to changes in children
+
+## 3.0.0
+
+### Major Changes
+
+- 4d730c8: Replace yarn with pnpm, rollup with tsup and other updates
+
+### Patch Changes
+
+- Updated dependencies [4d730c8]
+    - @madeinhaus/utils@2.0.0
+
+## 2.5.0
+
+### Minor Changes
+
+- 583fef3: bugfix: Measure container width using offsetWidth instead of getBoundingClientRect
+
 ## 2.4.0
 
 ### Minor Changes

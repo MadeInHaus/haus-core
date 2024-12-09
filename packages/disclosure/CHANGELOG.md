@@ -1,5 +1,17 @@
 # @madeinhaus/disclosure
 
+## 3.0.0
+
+### Major Changes
+
+- 4d730c8: Replace yarn with pnpm, rollup with tsup and other updates
+
+## 2.5.0
+
+### Minor Changes
+
+- 2c2e578: Default controlled open index to -1, Add isOpen default awareness of defaultOpenIndex
+
 ## 2.4.0
 
 ### Minor Changes

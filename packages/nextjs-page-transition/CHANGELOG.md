@@ -1,5 +1,22 @@
 # @madeinhaus/nextjs-page-transition
 
+## 4.0.1
+
+### Patch Changes
+
+- b4af716: Update README
+
+## 4.0.0
+
+### Major Changes
+
+- 4d730c8: Replace yarn with pnpm, rollup with tsup and other updates
+
+### Patch Changes
+
+- Updated dependencies [4d730c8]
+    - @madeinhaus/utils@2.0.0
+
 ## 3.1.1
 
 ### Patch Changes

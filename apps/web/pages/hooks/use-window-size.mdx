@@ -4,25 +4,25 @@ A React hook that returns the current size of the browser window.
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tabs } from 'nextra/components';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/hooks
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -32,7 +32,6 @@ import { useWindowSize } from '@madeinhaus/hooks';
 ```
 
 ## Returns
-
 
 - `(Size)` _(object)_: An object with the following properties:
   - `width` _(number | undefined)_: The current width of the browser window, or undefined if it has not been initialized yet.

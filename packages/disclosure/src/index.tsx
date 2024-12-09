@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import cx from 'clsx';
-import styles from './Disclosure.module.scss';
+import styles from './Disclosure.module.css';
 
 export interface DisclosureSharedProps {
     children: React.ReactNode;
@@ -113,11 +113,12 @@ const DisclosureDetails = ({
 }: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
-    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
+    const { openIndex } = useContext(DisclosureContext);
+
+    const [isOpen, setIsOpen] = useState(defaultOpen || index === openIndex);
+
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
-
-    const { openIndex, defaultOpenIndex } = useContext(DisclosureContext);
 
     useEffect(() => {
         if (detailsRef.current) {
@@ -142,7 +143,7 @@ const DisclosureDetails = ({
                 handleClick,
             }}
         >
-            <details ref={detailsRef} className={className} open={defaultOpenIndex === index}>
+            <details ref={detailsRef} className={className} open={isOpen}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
         </DisclosureDetailsContext.Provider>

@@ -4,25 +4,25 @@ A React hook that monitors the loading state of an image.
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tabs } from 'nextra/components';
 
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/hooks
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/hooks
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -32,6 +32,7 @@ import { useImagePreload } from '@madeinhaus/hooks';
 ```
 
 ## Returns
+
 - `loaded` _(boolean)_: A boolean indicating whether the image has been loaded.
 - `fnRef` _(function)_: A callback ref that you pass to the image's ref prop.
 - `imgRef` _(Ref)_: A mutable ref object that holds the HTMLImageElement.

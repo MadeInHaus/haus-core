@@ -1,3 +1,4 @@
+import { Tabs } from 'nextra/components';
 import { CarouselDemo, CarouselDemoTicker, CarouselDemoLazyLoad } from '../../components/Carousel';
 
 # Carousel
@@ -10,25 +11,23 @@ turned into an autoscrolling ticker:
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
-
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/carousel
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/carousel
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/carousel
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -43,7 +42,7 @@ import '@madeinhaus/carousel/dist/index.css';
 All props are optional.
 
 - **`activeItemIndex`** _number (default: 0)_<br />
-  The index of the active item.
+  The index of the active item on mount.
 - **`align`** _"start"_ | _"center" (default: "start")_<br/>
   The alignment of the active item.
 - **`as`** _React.ElementType (default: 'ul')_<br />
@@ -55,6 +54,9 @@ All props are optional.
 - **`damping`** _number (default: 200)_<br/>
   The damping factor applied to the velocity of the carousel after throwing.
   Lower values make the carousel stop more abruptly.
+- **`direction`** _"horizontal"_ | _"vertical" (default: "horizontal")_<br />
+  The scroll direction.<br/>
+  If set to `"vertical"`, `enableVerticalScroll` must be set to `true`.
 - **`disableSnap`** _boolean (default: false)_<br/>
   Whether to disable snapping. If snapping is disabled, the carousel will
   not snap to the `--carousel-snap-position`.
@@ -66,7 +68,8 @@ All props are optional.
   will re-enable these gestures.
 - **`enableVerticalScroll`** _boolean (default: false)_<br/>
   Whether to enable vertical scrolling. If enabled, the carousel will
-  scroll horizontally when swiping or scrolling up or down.
+  scroll horizontally when swiping or scrolling up or down (or scroll
+  vertically when `direction` is set to `"vertical"`).
 - **`itemClassName`** _string (default: undefined)_<br />
   The CSS class name to apply to the item wrapper elements.
 - **`onDrag`** _() => void (default: undefined)_<br />
@@ -84,10 +87,10 @@ Responsive props are passed to the carousel via CSS variables. Define these on t
 
 - **`--carousel-gap`** _length value (default: 0)_<br />
   The gap between carousel items.
-- **`--carousel-item-width`** _length value (default: 0)_<br />
-  The width of the carousel items. Set this to a length value !== 0 if _all items_ are
-  the same width. This helps with performance because the carousel doesn't have to measure
-  the width of each item.
+- **`--carousel-item-size`** _length value (default: 0)_<br />
+  The width (or height for vertical carousels) of the carousel items. Set this to a
+  length value !== 0 if _all items_ are the same width (or height). This helps with
+  performance because the carousel doesn't have to measure the size of each item.
 - **`--carousel-snap-position`** _length value (default: 0)_<br />
   If snapping is enabled, this defines the position (measured from the left edge of the
   carousel's container) that an item snaps to. Use this in combination with the `align` prop
@@ -181,7 +184,7 @@ export default CarouselDemo;
 .carousel {
   --image-size: 300px;
   --carousel-gap: 20px;
-  --carousel-item-width: var(--image-size);
+  --carousel-item-size: var(--image-size);
 }
 
 .carouselItem {
@@ -251,7 +254,7 @@ export default CarouselDemo;
 .carousel {
   --image-size: 300px;
   --carousel-gap: 20px;
-  --carousel-item-width: var(--image-size);
+  --carousel-item-size: var(--image-size);
 }
 
 .carouselItem {

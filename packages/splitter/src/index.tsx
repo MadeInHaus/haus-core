@@ -4,9 +4,9 @@ import { split, cx } from './utils';
 import { moveAttributes, moveChildNodes } from './utils/dom';
 import { SplitOptions, SplitResult } from './utils/types';
 
-import { mergeRefs } from '../../utils/src';
+import { mergeRefs } from '@madeinhaus/utils';
 
-import styles from './Splitter.module.scss';
+import styles from './Splitter.module.css';
 
 export type { SplitOptions, SplitResult, NodeInfo, NodeInfoSplit, Pair } from './utils/types';
 export { split, splitChars, splitLines, cleanUp } from './utils';
@@ -66,9 +66,9 @@ const Splitter = React.forwardRef<Element, SplitterProps>((props, ref) => {
         ]
     );
 
-    const elSourceRef = React.useRef<HTMLElement>();
-    const elSourceCloneRef = React.useRef<HTMLElement>();
-    const resizeObserverRef = React.useRef<ResizeObserver>();
+    const elSourceRef = React.useRef<HTMLElement>(undefined);
+    const elSourceCloneRef = React.useRef<HTMLElement>(undefined);
+    const resizeObserverRef = React.useRef<ResizeObserver>(undefined);
 
     const resizeObserverCallback = React.useCallback(
         ([entry]: ResizeObserverEntry[]) => {

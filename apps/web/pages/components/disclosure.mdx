@@ -1,3 +1,10 @@
+import { Tabs } from 'nextra/components';
+
+export const meta = {
+  title: 'Disclosure',
+  description: 'Learn about the Disclosure component.',
+}; // Declare metadata
+
 # Disclosure
 
 WAAPI animated disclosure component consisting of a root, details, summary, and content.
@@ -12,25 +19,23 @@ All components, includeing `Disclosure.Summary` and `Disclosure.Content`, have a
 
 ## Installation
 
-import { Tab, Tabs } from 'nextra-theme-docs';
-
 {/* prettier-ignore */}
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-    <Tab>
+    <Tabs.Tab>
         ```bash copy
         npm install @madeinhaus/disclosure
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         yarn add @madeinhaus/disclosure
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash copy
         pnpm add @madeinhaus/disclosure
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Import
@@ -78,6 +83,7 @@ import {
   DisclosureDemoWithStyles,
   DisclosureDemoControlled,
   DisclosureDemoControlledWithExposedActiveIndex,
+  DisclosureDemoControlledWithIsOpen,
 } from '../../components/DisclosureDemo';
 
 ### Basic Usage
@@ -184,7 +190,7 @@ const DisclosureDemoControlled: React.FC = ({
   items: { heading: string; paragraph: string }[];
 }) => {
   return (
-    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
+    <Disclosure.Root className={styles.root}>
       {(registerDetails: RegisterDetails) =>
         items.map(({ heading, paragraph }, index) => {
           return (
@@ -204,53 +210,37 @@ export default DisclosureDemoControlled;
 
 <DisclosureDemoControlled />
 
-### Usage as Controlled Accordion With Exposing Active Index
+### Usage as Controlled Accordion with isOpen
 
-```tsx filename="DisclosureDemoControlledWithExposedActiveIndex.tsx" {1-3,8,11,14-40} copy showLineNumbers
-import * as React from 'react';
+```tsx filename="DisclosureDemoControlled.tsx" {1-2,7-24} copy showLineNumbers
 import Disclosure, { RegisterDetails } from '@madeinhaus/disclosure';
 import '@madeinhaus/disclosure/dist/index.css';
-
-import items from './data/items';
 import styles from './DisclosureDemo.module.css';
 
-const defaultOpenIndex = 0;
-
-const DisclosureDemoControlledWithExposedActiveIndex: React.FC = () => {
-  const [openIndex, setOpenIndex] = React.useState(defaultOpenIndex);
-
+const DisclosureDemoControlledWithIsOpen: React.FC = () => {
   return (
-    <>
-      <h2>openIndex: {openIndex}</h2>
-      <Disclosure.Root className={styles.root} defaultOpenIndex={defaultOpenIndex} preventCloseAll>
-        {(registerDetails: RegisterDetails) =>
-          items.map(({ heading, paragraph }, index) => {
-            return (
-              <Disclosure.Details key={index} {...registerDetails()}>
-                {({ isOpen }) => {
-                  if (isOpen) {
-                    setOpenIndex(index);
-                  }
-
-                  return (
-                    <>
-                      <Disclosure.Summary className={styles.summary}>{heading}</Disclosure.Summary>
-                      <Disclosure.Content className={styles.content}>
-                        {paragraph}
-                      </Disclosure.Content>
-                    </>
-                  );
-                }}
-              </Disclosure.Details>
-            );
-          })
-        }
-      </Disclosure.Root>
-    </>
+    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
+      {(registerDetails: RegisterDetails) =>
+        items.map(({ heading, paragraph }, index) => {
+          return (
+            <Disclosure.Details key={index} {...registerDetails()}>
+              {({ isOpen }) => (
+                <>
+                  <Disclosure.Summary className={styles.summary}>
+                    {heading}: {isOpen ? 'isOpen' : ''}
+                  </Disclosure.Summary>
+                  <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
+                </>
+              )}
+            </Disclosure.Details>
+          );
+        })
+      }
+    </Disclosure.Root>
   );
 };
 
-export default DisclosureDemoControlledWithExposedActiveIndex;
+export default DisclosureDemoControlledWithIsOpen;
 ```
 
-<DisclosureDemoControlledWithExposedActiveIndex />
+<DisclosureDemoControlledWithIsOpen />
