@@ -13,7 +13,10 @@ export type RegisterDetails = () => {
 };
 
 export interface DisclosureRootProps {
-    children: (registerDetails: RegisterDetails) => React.ReactNode | React.ReactNode[];
+    children:
+        | ((registerDetails: RegisterDetails) => React.ReactNode | React.ReactNode[])
+        | React.ReactNode
+        | React.ReactNode[];
     className?: string;
     animationOptions?: OptionalEffectTiming;
     defaultOpenIndex?: number;
@@ -158,7 +161,7 @@ const DisclosureDetails = ({
 };
 
 // Inspired by: https://css-tricks.com/how-to-animate-the-details-element-using-waapi/
-const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
+const DisclosureSummary: React.FC<DisclosureSharedProps> = ({ children, className }) => {
     const summaryRef = React.useRef<HTMLElement>(null);
 
     const [animation, setAnimation] = useState<Animation | null | undefined>(null);
