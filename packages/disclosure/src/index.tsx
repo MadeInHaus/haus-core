@@ -13,10 +13,14 @@ export type RegisterDetails = () => {
 };
 
 export interface DisclosureRootProps {
-    children: (registerDetails: RegisterDetails) => React.ReactNode | React.ReactNode[];
+    children:
+        | ((registerDetails: RegisterDetails) => React.ReactNode | React.ReactNode[])
+        | React.ReactNode
+        | React.ReactNode[];
     className?: string;
     animationOptions?: OptionalEffectTiming;
     defaultOpenIndex?: number;
+    preventCloseAll?: boolean;
 }
 
 export interface DisclosureDetailProps {
@@ -41,10 +45,12 @@ const defaultAnimationOptions = {
 
 const DisclosureContext = createContext<{
     animationOptions: OptionalEffectTiming;
+    defaultOpenIndex: number;
     openIndex: number;
 }>({
     animationOptions: defaultAnimationOptions,
-    openIndex: 1,
+    defaultOpenIndex: -1,
+    openIndex: -1,
 });
 
 const DisclosureDetailsContext = createContext<{
@@ -67,12 +73,20 @@ const DisclosureDetailsContext = createContext<{
     handleClick: undefined,
 });
 
-const Disclosure = ({
+interface DisclosureComponent extends React.FC<DisclosureRootProps> {
+    Root: React.FC<DisclosureRootProps>;
+    Details: React.MemoExoticComponent<React.FC<DisclosureDetailProps>>;
+    Summary: React.FC<DisclosureSharedProps>;
+    Content: React.FC<DisclosureSharedProps>;
+}
+
+const Disclosure: DisclosureComponent = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
     defaultOpenIndex = -1,
-}: DisclosureRootProps) => {
+    preventCloseAll = false,
+}) => {
     const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
 
     let counter = -1;
@@ -85,13 +99,13 @@ const Disclosure = ({
             index: _index,
             handleClick: (e: React.MouseEvent) => {
                 e.preventDefault();
-                setOpenIndex(openIndex !== _index ? _index : -1);
+                setOpenIndex(openIndex !== _index ? _index : preventCloseAll ? _index : -1);
             },
         };
     };
 
     return (
-        <DisclosureContext.Provider value={{ animationOptions, openIndex }}>
+        <DisclosureContext.Provider value={{ animationOptions, defaultOpenIndex, openIndex }}>
             <section className={className}>
                 {typeof children === 'function' ? children(registerDetails) : children}
             </section>
@@ -136,10 +150,10 @@ const DisclosureDetails = ({
                 contentEl,
                 setContentEl,
                 setIsOpen,
-                handleClick: handleClick ? handleClick : undefined,
+                handleClick,
             }}
         >
-            <details ref={detailsRef} className={className}>
+            <details ref={detailsRef} className={className} open={isOpen}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
         </DisclosureDetailsContext.Provider>
@@ -147,7 +161,7 @@ const DisclosureDetails = ({
 };
 
 // Inspired by: https://css-tricks.com/how-to-animate-the-details-element-using-waapi/
-const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
+const DisclosureSummary: React.FC<DisclosureSharedProps> = ({ children, className }) => {
     const summaryRef = React.useRef<HTMLElement>(null);
 
     const [animation, setAnimation] = useState<Animation | null | undefined>(null);
