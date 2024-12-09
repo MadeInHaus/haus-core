@@ -70,13 +70,20 @@ const DisclosureDetailsContext = createContext<{
     handleClick: undefined,
 });
 
-const Disclosure = ({
+interface DisclosureComponent extends React.FC<DisclosureRootProps> {
+    Root: React.FC<DisclosureRootProps>;
+    Details: React.MemoExoticComponent<React.FC<DisclosureDetailProps>>;
+    Summary: React.FC<DisclosureSharedProps>;
+    Content: React.FC<DisclosureSharedProps>;
+}
+
+const Disclosure: DisclosureComponent = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
     defaultOpenIndex = -1,
     preventCloseAll = false,
-}: DisclosureRootProps) => {
+}) => {
     const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
 
     let counter = -1;
