@@ -1,6 +1,6 @@
 {
     "name": "@madeinhaus/nextjs-theme",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
@@ -38,7 +38,7 @@
     "homepage": "https://hauscore.xyz/components-nextjs/theme",
     "peerDependencies": {
         "next": ">=13",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react": ">=18.2.0",
+        "react-dom": ">=18.2.0"
     }
 }

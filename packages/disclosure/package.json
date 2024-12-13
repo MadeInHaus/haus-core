@@ -1,6 +1,6 @@
 {
     "name": "@madeinhaus/disclosure",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
@@ -37,8 +37,8 @@
     },
     "homepage": "https://github.com/MadeInHaus/haus-core#readme",
     "peerDependencies": {
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react": ">=18.2.0",
+        "react-dom": ">=18.2.0"
     },
     "dependencies": {
         "clsx": "^2.1.1"

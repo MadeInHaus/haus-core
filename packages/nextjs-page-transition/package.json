@@ -1,6 +1,6 @@
 {
     "name": "@madeinhaus/nextjs-page-transition",
-    "version": "4.0.1",
+    "version": "4.1.0",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
@@ -38,8 +38,8 @@
     "homepage": "https://github.com/MadeInHaus/haus-core#readme",
     "peerDependencies": {
         "next": ">=13",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react": ">=18.2.0",
+        "react-dom": ">=18.2.0"
     },
     "dependencies": {
         "@madeinhaus/utils": "workspace:*",
