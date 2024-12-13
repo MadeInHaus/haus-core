@@ -11,9 +11,9 @@
     "release": "turbo run build --filter=web^... && changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.27.10",
     "@madeinhaus/prettier-config": "^1.2.1",
-    "prettier": "^3.2.5",
+    "prettier": "^3.4.2",
     "turbo": "^2.3.3"
   },
   "packageManager": "pnpm@9.14.4"
