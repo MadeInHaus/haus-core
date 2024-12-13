@@ -1,5 +1,16 @@
 # @madeinhaus/nextjs-page-transition
 
+## 4.2.0
+
+### Minor Changes
+
+- f1653d8: Add aupport for React 19
+
+### Patch Changes
+
+- Updated dependencies [f1653d8]
+    - @madeinhaus/utils@2.2.0
+
 ## 4.1.0
 
 ### Minor Changes

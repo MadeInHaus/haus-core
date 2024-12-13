@@ -1,5 +1,11 @@
 # @madeinhaus/hooks
 
+## 2.2.0
+
+### Minor Changes
+
+- f1653d8: Add aupport for React 19
+
 ## 2.1.0
 
 ### Minor Changes
