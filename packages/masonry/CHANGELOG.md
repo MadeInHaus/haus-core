@@ -1,5 +1,16 @@
 # @madeinhaus/masonry
 
+## 3.2.0
+
+### Minor Changes
+
+- f1653d8: Add aupport for React 19
+
+### Patch Changes
+
+- Updated dependencies [f1653d8]
+    - @madeinhaus/hooks@2.2.0
+
 ## 3.1.0
 
 ### Minor Changes
