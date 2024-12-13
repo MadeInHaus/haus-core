@@ -30,6 +30,6 @@
         "access": "public"
     },
     "peerDependencies": {
-        "react": "^18.2.0"
+        "react": ">=18.2.0"
     }
 }
