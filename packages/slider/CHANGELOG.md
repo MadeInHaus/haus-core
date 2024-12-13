@@ -1,5 +1,17 @@
 # @madeinhaus/slider
 
+## 2.1.0
+
+### Minor Changes
+
+- 88e7be9: Add aupport for React 19
+
+### Patch Changes
+
+- Updated dependencies [88e7be9]
+    - @madeinhaus/hooks@2.1.0
+    - @madeinhaus/utils@2.1.0
+
 ## 2.0.0
 
 ### Major Changes

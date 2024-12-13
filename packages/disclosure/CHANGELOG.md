@@ -1,5 +1,11 @@
 # @madeinhaus/disclosure
 
+## 3.1.0
+
+### Minor Changes
+
+- 88e7be9: Add aupport for React 19
+
 ## 3.0.0
 
 ### Major Changes
