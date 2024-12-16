@@ -1,22 +1,11 @@
 {
-    "include": [
-        "."
-    ],
-    "exclude": [
-        "dist",
-        "build",
-        "node_modules",
-        "tsup.config.ts"
-    ],
+    "include": ["."],
+    "exclude": ["dist", "build", "node_modules", "tsup.config.js"],
     "compilerOptions": {
         "rootDir": "./src",
         "outDir": "./dist",
         "jsx": "react-jsx",
-        "lib": [
-            "dom",
-            "dom.iterable",
-            "es2022"
-        ],
+        "lib": ["dom", "dom.iterable", "es2022"],
         "module": "ESNext",
         "target": "ES2022",
         "composite": false,

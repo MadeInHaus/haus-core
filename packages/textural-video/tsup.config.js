@@ -1,10 +1,12 @@
-import { defineConfig, type Options } from 'tsup';
+import { defineConfig } from 'tsup';
 
-export default defineConfig((options: Options) => ({
+export default defineConfig({
     entryPoints: ['src/index.tsx'],
     clean: true,
     dts: true,
     tsconfig: 'tsconfig.json',
     format: ['cjs', 'esm'],
-    ...options,
-}));
+    loader: {
+        '.css': 'local-css',
+    },
+});
