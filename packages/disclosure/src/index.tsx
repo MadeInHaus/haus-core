@@ -170,29 +170,41 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const onAnimationFinish = (open: boolean) => {
-        detailsElement!.open = open;
-        detailsElement!.style.height = '';
-        detailsElement!.style.overflow = '';
+        if (!detailsElement) {
+            return;
+        }
+
+        detailsElement.open = open;
+        detailsElement.style.height = '';
+        detailsElement.style.overflow = '';
 
         setAnimation(null);
         setAnimationState(AnimationState.IDLE);
     };
 
     const handleOpen = () => {
-        detailsElement!.style.height = `${detailsElement!.offsetHeight}px`;
-        detailsElement!.open = true;
+        if (!detailsElement) {
+            return;
+        }
+
+        detailsElement.style.height = `${detailsElement.offsetHeight}px`;
+        detailsElement.open = true;
         setIsOpen(true);
 
         requestAnimationFrame(() => handleExpand());
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        detailsElement!.style.overflow = 'hidden';
+        if (!detailsElement) {
+            return;
+        }
 
-        if (animationState === AnimationState.SHRINKING || !detailsElement!.open) {
+        e.preventDefault();
+        detailsElement.style.overflow = 'hidden';
+
+        if (animationState === AnimationState.SHRINKING || !detailsElement.open) {
             handleOpen();
-        } else if (animationState === AnimationState.EXPANDING || detailsElement!.open) {
+        } else if (animationState === AnimationState.EXPANDING || detailsElement.open) {
             handleShrink();
         }
     };
