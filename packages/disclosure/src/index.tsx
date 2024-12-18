@@ -19,6 +19,7 @@ export interface DisclosureDetailProps {
     handleClick?: (e: React.MouseEvent) => void;
     children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
     className?: string;
+    defaultOpen?: boolean;
 }
 
 enum AnimationState {
@@ -66,7 +67,12 @@ const Disclosure = ({
     );
 };
 
-const DisclosureDetails = ({ animationOptions, children, className }: DisclosureDetailProps) => {
+const DisclosureDetails = ({
+    animationOptions,
+    children,
+    className,
+    defaultOpen = false,
+}: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
@@ -75,6 +81,12 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
     useEffect(() => {
         setDetailsEl(detailsRef.current);
     }, []);
+
+    useEffect(() => {
+        if (defaultOpen) {
+            setIsOpen(true);
+        }
+    }, [defaultOpen]);
 
     return (
         <DisclosureDetailsContext.Provider
@@ -87,7 +99,7 @@ const DisclosureDetails = ({ animationOptions, children, className }: Disclosure
                 setIsOpen,
             }}
         >
-            <details ref={detailsRef} className={className}>
+            <details ref={detailsRef} className={className} open={defaultOpen}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
         </DisclosureDetailsContext.Provider>
