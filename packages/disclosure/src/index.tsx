@@ -41,17 +41,17 @@ const DisclosureContext = createContext<{
 
 const DisclosureDetailsContext = createContext<{
     animationOptions?: OptionalEffectTiming | null;
-    detailsEl: HTMLDetailsElement | null;
-    setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
-    contentEl: HTMLElement | null;
-    setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+    detailsElement: HTMLDetailsElement | null;
+    setDetailsElement: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
+    contentElement: HTMLElement | null;
+    setContentElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     animationOptions: defaultAnimationOptions,
-    detailsEl: null,
-    setDetailsEl: () => {},
-    contentEl: null,
-    setContentEl: () => {},
+    detailsElement: null,
+    setDetailsElement: () => {},
+    contentElement: null,
+    setContentElement: () => {},
     setIsOpen: () => {},
 });
 
@@ -74,31 +74,28 @@ const DisclosureDetails = ({
     defaultOpen = false,
 }: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+    const [detailsElement, setDetailsElement] = useState<HTMLDetailsElement | null>(null);
+    const [contentElement, setContentElement] = useState<HTMLElement | null>(null);
 
-    useEffect(() => {
-        setDetailsEl(detailsRef.current);
-    }, []);
+    useEffect(() => setDetailsElement(detailsRef.current), []);
 
-    useEffect(() => {
-        if (defaultOpen) {
-            setIsOpen(true);
-        }
-    }, [defaultOpen]);
+    const value = React.useMemo(
+        () => ({
+            animationOptions,
+            detailsElement,
+            setDetailsElement,
+            contentElement,
+            setContentElement,
+            setIsOpen,
+        }),
+        [animationOptions, detailsElement, contentElement]
+    );
+
+    useEffect(() => setDetailsElement(detailsRef.current), []);
 
     return (
-        <DisclosureDetailsContext.Provider
-            value={{
-                animationOptions,
-                detailsEl,
-                setDetailsEl,
-                contentEl,
-                setContentEl,
-                setIsOpen,
-            }}
-        >
+        <DisclosureDetailsContext.Provider value={value}>
             <details ref={detailsRef} className={className} open={defaultOpen}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
@@ -117,8 +114,8 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 
     const {
         animationOptions: detailsAnimationOptions,
-        detailsEl,
-        contentEl,
+        detailsElement,
+        contentElement,
         setIsOpen,
     } = useContext(DisclosureDetailsContext);
 
@@ -141,7 +138,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
             animation.cancel();
         }
 
-        const _animation = detailsEl?.animate(
+        const _animation = detailsElement?.animate(
             { height: [`${startHeight}px`, `${endHeight}px`] },
             animationOptions
         );
@@ -153,7 +150,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleShrink = () => {
-        const startHeight = detailsEl?.offsetHeight ?? 0;
+        const startHeight = detailsElement?.offsetHeight ?? 0;
         const endHeight = (summaryRef?.current && summaryRef.current.offsetHeight) || 0;
 
         handleAnimateHeight({
@@ -165,8 +162,9 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleExpand = () => {
-        const startHeight = detailsEl?.offsetHeight ?? 0;
-        const endHeight = (summaryRef.current?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
+        const startHeight = detailsElement?.offsetHeight ?? 0;
+        const endHeight =
+            (summaryRef.current?.offsetHeight || 0) + (contentElement?.offsetHeight || 0);
 
         handleAnimateHeight({
             animationState: AnimationState.EXPANDING,
@@ -177,17 +175,17 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const onAnimationFinish = (open: boolean) => {
-        detailsEl!.open = open;
-        detailsEl!.style.height = '';
-        detailsEl!.style.overflow = '';
+        detailsElement!.open = open;
+        detailsElement!.style.height = '';
+        detailsElement!.style.overflow = '';
 
         setAnimation(null);
         setAnimationState(AnimationState.IDLE);
     };
 
     const handleOpen = () => {
-        detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
-        detailsEl!.open = true;
+        detailsElement!.style.height = `${detailsElement!.offsetHeight}px`;
+        detailsElement!.open = true;
         setIsOpen(true);
 
         requestAnimationFrame(() => handleExpand());
@@ -195,11 +193,11 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        detailsEl!.style.overflow = 'hidden';
+        detailsElement!.style.overflow = 'hidden';
 
-        if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
+        if (animationState === AnimationState.SHRINKING || !detailsElement!.open) {
             handleOpen();
-        } else if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
+        } else if (animationState === AnimationState.EXPANDING || detailsElement!.open) {
             handleShrink();
         }
     };
@@ -214,10 +212,10 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 const DisclosureContent = ({ children, className }: DisclosureSharedProps) => {
     const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { setContentEl } = useContext(DisclosureDetailsContext);
+    const { setContentElement } = useContext(DisclosureDetailsContext);
 
     useEffect(() => {
-        setContentEl(contentRef.current);
+        setContentElement(contentRef.current);
     }, []);
 
     return (
