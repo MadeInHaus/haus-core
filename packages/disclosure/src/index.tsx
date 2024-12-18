@@ -7,16 +7,10 @@ export interface DisclosureSharedProps {
     className?: string;
 }
 
-export type RegisterDetails = () => {
-    handleClick: (e: React.MouseEvent) => void;
-    index: number;
-};
-
 export interface DisclosureRootProps {
-    children: (registerDetails: RegisterDetails) => React.ReactNode | React.ReactNode[];
+    children: React.ReactNode[];
     className?: string;
     animationOptions?: OptionalEffectTiming;
-    defaultOpenIndex?: number;
 }
 
 export interface DisclosureDetailProps {
@@ -25,7 +19,6 @@ export interface DisclosureDetailProps {
     handleClick?: (e: React.MouseEvent) => void;
     children: React.ReactNode | (({ isOpen }: { isOpen: boolean }) => React.ReactNode);
     className?: string;
-    defaultOpen?: boolean;
 }
 
 enum AnimationState {
@@ -41,15 +34,11 @@ const defaultAnimationOptions = {
 
 const DisclosureContext = createContext<{
     animationOptions: OptionalEffectTiming;
-    openIndex: number;
 }>({
     animationOptions: defaultAnimationOptions,
-    openIndex: 1,
 });
 
 const DisclosureDetailsContext = createContext<{
-    index?: number;
-    handleClick?: (e: React.MouseEvent) => void;
     animationOptions?: OptionalEffectTiming | null;
     detailsEl: HTMLDetailsElement | null;
     setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
@@ -63,64 +52,25 @@ const DisclosureDetailsContext = createContext<{
     contentEl: null,
     setContentEl: () => {},
     setIsOpen: () => {},
-    index: undefined,
-    handleClick: undefined,
 });
 
 const Disclosure = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
-    defaultOpenIndex = -1,
 }: DisclosureRootProps) => {
-    const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
-
-    let counter = -1;
-
-    const registerDetails = () => {
-        const _index = counter + 1;
-        counter = _index;
-
-        return {
-            index: _index,
-            handleClick: (e: React.MouseEvent) => {
-                e.preventDefault();
-                setOpenIndex(openIndex !== _index ? _index : -1);
-            },
-        };
-    };
-
     return (
-        <DisclosureContext.Provider value={{ animationOptions, openIndex }}>
-            <section className={className}>
-                {typeof children === 'function' ? children(registerDetails) : children}
-            </section>
+        <DisclosureContext.Provider value={{ animationOptions }}>
+            <section className={className}>{children}</section>
         </DisclosureContext.Provider>
     );
 };
 
-const DisclosureDetails = ({
-    animationOptions,
-    children,
-    className,
-    index,
-    handleClick,
-    defaultOpen = false,
-}: DisclosureDetailProps) => {
+const DisclosureDetails = ({ animationOptions, children, className }: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
-
-    const { openIndex } = useContext(DisclosureContext);
-
-    const [isOpen, setIsOpen] = useState(defaultOpen || index === openIndex);
-
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
     const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
-
-    useEffect(() => {
-        if (detailsRef.current) {
-            detailsRef.current.open = index === openIndex;
-        }
-    }, []);
 
     useEffect(() => {
         setDetailsEl(detailsRef.current);
@@ -129,14 +79,12 @@ const DisclosureDetails = ({
     return (
         <DisclosureDetailsContext.Provider
             value={{
-                index: index ?? 0,
                 animationOptions,
                 detailsEl,
                 setDetailsEl,
                 contentEl,
                 setContentEl,
                 setIsOpen,
-                handleClick: handleClick ? handleClick : undefined,
             }}
         >
             <details ref={detailsRef} className={className}>
@@ -153,15 +101,13 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const [animation, setAnimation] = useState<Animation | null | undefined>(null);
     const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
 
-    const { animationOptions: rootAnimationOptions, openIndex } = useContext(DisclosureContext);
+    const { animationOptions: rootAnimationOptions } = useContext(DisclosureContext);
 
     const {
         animationOptions: detailsAnimationOptions,
         detailsEl,
         contentEl,
         setIsOpen,
-        index,
-        handleClick: handleAccordionClick,
     } = useContext(DisclosureDetailsContext);
 
     const animationOptions = detailsAnimationOptions ?? rootAnimationOptions;
@@ -236,10 +182,6 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-        if (handleAccordionClick) {
-            return;
-        }
-
         e.preventDefault();
         detailsEl!.style.overflow = 'hidden';
 
@@ -250,30 +192,8 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
         }
     };
 
-    useEffect(() => {
-        if (!detailsEl || !handleAccordionClick) {
-            return;
-        }
-
-        detailsEl!.style.overflow = 'hidden';
-
-        if (openIndex === index) {
-            if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
-                handleOpen();
-            }
-        } else {
-            if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
-                handleShrink();
-            }
-        }
-    }, [index, openIndex, animationState, detailsEl]);
-
     return (
-        <summary
-            ref={summaryRef}
-            className={cx(styles.summary, className)}
-            onClick={handleAccordionClick ?? handleClick}
-        >
+        <summary ref={summaryRef} className={cx(styles.summary, className)} onClick={handleClick}>
             {children}
         </summary>
     );

@@ -1,8 +1,8 @@
-import { Tabs } from 'nextra/components'
+import { Tabs } from 'nextra/components';
 
 export const meta = {
-  title: "Disclosure",
-  description: "Learn about the Disclosure component.",
+  title: 'Disclosure',
+  description: 'Learn about the Disclosure component.',
 }; // Declare metadata
 
 # Disclosure
@@ -38,8 +38,6 @@ All components, includeing `Disclosure.Summary` and `Disclosure.Content`, have a
     </Tabs.Tab>
 </Tabs>
 
-
-
 ## Import
 
 ```tsx copy
@@ -62,7 +60,6 @@ The `Disclosure.Details` component is used to wrap the content that will be reve
 
 - `className`: An optional string that can be used to add custom styles to the `Disclosure.Details` container.
 - `animationOptions`: An object that specifies the duration and easing function of the animation that occurs when the `Disclosure.Details` component is expanded or collapsed.
-- `defaultOpen`: An optional boolean that determines whether the `Disclosure.Details` component is initially expanded or collapsed.
 - `children`: A function or a ReactNode that is revealed or hidden when the `Disclosure` trigger is clicked. If a function is passed, it receives an object with the `isOpen` property, which is a boolean that indicates whether the `Disclosure.Details` component is currently expanded or collapsed.
 
 ### Disclosure.Summary
@@ -83,8 +80,6 @@ import {
   DisclosureDemo,
   DisclosureDemoRenderProp,
   DisclosureDemoWithStyles,
-  DisclosureDemoControlled,
-  DisclosureDemoControlledWithIsOpen,
 } from '../../components/DisclosureDemo';
 
 ### Basic Usage
@@ -177,71 +172,3 @@ export default DisclosureDemoWithStyles;
 ```
 
 <DisclosureDemoWithStyles />
-
-### Usage as Controlled Accordion
-
-```tsx filename="DisclosureDemoControlled.tsx" {1-2,11-22} copy showLineNumbers
-import Disclosure, { RegisterDetails } from '@madeinhaus/disclosure';
-import '@madeinhaus/disclosure/dist/index.css';
-import styles from './DisclosureDemo.module.css';
-
-const DisclosureDemoControlled: React.FC = ({
-  items,
-}: {
-  items: { heading: string; paragraph: string }[];
-}) => {
-  return (
-    <Disclosure.Root className={styles.root}>
-      {(registerDetails: RegisterDetails) =>
-        items.map(({ heading, paragraph }, index) => {
-          return (
-            <Disclosure.Details key={index} {...registerDetails()}>
-              <Disclosure.Summary className={styles.summary}>{heading}</Disclosure.Summary>
-              <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
-            </Disclosure.Details>
-          );
-        })
-      }
-    </Disclosure.Root>
-  );
-};
-
-export default DisclosureDemoControlled;
-```
-
-<DisclosureDemoControlled />
-
-### Usage as Controlled Accordion with isOpen
-
-```tsx filename="DisclosureDemoControlled.tsx" {1-2,7-24} copy showLineNumbers
-import Disclosure, { RegisterDetails } from '@madeinhaus/disclosure';
-import '@madeinhaus/disclosure/dist/index.css';
-import styles from './DisclosureDemo.module.css';
-
-const DisclosureDemoControlledWithIsOpen: React.FC = () => {
-  return (
-    <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
-      {(registerDetails: RegisterDetails) =>
-        items.map(({ heading, paragraph }, index) => {
-          return (
-            <Disclosure.Details key={index} {...registerDetails()}>
-              {({ isOpen }) => (
-                <>
-                  <Disclosure.Summary className={styles.summary}>
-                    {heading}: {isOpen ? 'isOpen' : ''}
-                  </Disclosure.Summary>
-                  <Disclosure.Content className={styles.content}>{paragraph}</Disclosure.Content>
-                </>
-              )}
-            </Disclosure.Details>
-          );
-        })
-      }
-    </Disclosure.Root>
-  );
-};
-
-export default DisclosureDemoControlledWithIsOpen;
-```
-
-<DisclosureDemoControlledWithIsOpen />
