@@ -80,22 +80,17 @@ const DisclosureDetails = ({
 
     useEffect(() => setDetailsElement(detailsRef.current), []);
 
-    const value = React.useMemo(
-        () => ({
-            animationOptions,
-            detailsElement,
-            setDetailsElement,
-            contentElement,
-            setContentElement,
-            setIsOpen,
-        }),
-        [animationOptions, detailsElement, contentElement]
-    );
-
-    useEffect(() => setDetailsElement(detailsRef.current), []);
-
     return (
-        <DisclosureDetailsContext.Provider value={value}>
+        <DisclosureDetailsContext.Provider
+            value={{
+                animationOptions,
+                detailsElement,
+                setDetailsElement,
+                contentElement,
+                setContentElement,
+                setIsOpen,
+            }}
+        >
             <details ref={detailsRef} className={className} open={defaultOpen}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
