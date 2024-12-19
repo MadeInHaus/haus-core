@@ -8,7 +8,7 @@ export interface DisclosureSharedProps {
 }
 
 export interface DisclosureRootProps {
-    children: React.ReactNode[];
+    children: React.ReactNode;
     className?: string;
     animationOptions?: OptionalEffectTiming;
 }
