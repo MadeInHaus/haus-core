@@ -7,16 +7,10 @@ export interface DisclosureSharedProps {
     className?: string;
 }
 
-export type RegisterDetails = () => {
-    handleClick: (e: React.MouseEvent) => void;
-    index: number;
-};
-
 export interface DisclosureRootProps {
-    children: (registerDetails: RegisterDetails) => React.ReactNode | React.ReactNode[];
+    children: React.ReactNode;
     className?: string;
     animationOptions?: OptionalEffectTiming;
-    defaultOpenIndex?: number;
 }
 
 export interface DisclosureDetailProps {
@@ -41,60 +35,34 @@ const defaultAnimationOptions = {
 
 const DisclosureContext = createContext<{
     animationOptions: OptionalEffectTiming;
-    openIndex: number;
 }>({
     animationOptions: defaultAnimationOptions,
-    openIndex: 1,
 });
 
 const DisclosureDetailsContext = createContext<{
-    index?: number;
-    handleClick?: (e: React.MouseEvent) => void;
     animationOptions?: OptionalEffectTiming | null;
-    detailsEl: HTMLDetailsElement | null;
-    setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
-    contentEl: HTMLElement | null;
-    setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+    detailsElement: HTMLDetailsElement | null;
+    setDetailsElement: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
+    contentElement: HTMLElement | null;
+    setContentElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     animationOptions: defaultAnimationOptions,
-    detailsEl: null,
-    setDetailsEl: () => {},
-    contentEl: null,
-    setContentEl: () => {},
+    detailsElement: null,
+    setDetailsElement: () => {},
+    contentElement: null,
+    setContentElement: () => {},
     setIsOpen: () => {},
-    index: undefined,
-    handleClick: undefined,
 });
 
 const Disclosure = ({
     children,
     className,
     animationOptions = defaultAnimationOptions,
-    defaultOpenIndex = -1,
 }: DisclosureRootProps) => {
-    const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex);
-
-    let counter = -1;
-
-    const registerDetails = () => {
-        const _index = counter + 1;
-        counter = _index;
-
-        return {
-            index: _index,
-            handleClick: (e: React.MouseEvent) => {
-                e.preventDefault();
-                setOpenIndex(openIndex !== _index ? _index : -1);
-            },
-        };
-    };
-
     return (
-        <DisclosureContext.Provider value={{ animationOptions, openIndex }}>
-            <section className={className}>
-                {typeof children === 'function' ? children(registerDetails) : children}
-            </section>
+        <DisclosureContext.Provider value={{ animationOptions }}>
+            <section className={className}>{children}</section>
         </DisclosureContext.Provider>
     );
 };
@@ -103,43 +71,27 @@ const DisclosureDetails = ({
     animationOptions,
     children,
     className,
-    index,
-    handleClick,
     defaultOpen = false,
 }: DisclosureDetailProps) => {
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+    const [detailsElement, setDetailsElement] = useState<HTMLDetailsElement | null>(null);
+    const [contentElement, setContentElement] = useState<HTMLElement | null>(null);
 
-    const { openIndex } = useContext(DisclosureContext);
-
-    const [isOpen, setIsOpen] = useState(defaultOpen || index === openIndex);
-
-    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
-
-    useEffect(() => {
-        if (detailsRef.current) {
-            detailsRef.current.open = index === openIndex;
-        }
-    }, []);
-
-    useEffect(() => {
-        setDetailsEl(detailsRef.current);
-    }, []);
+    useEffect(() => setDetailsElement(detailsRef.current), []);
 
     return (
         <DisclosureDetailsContext.Provider
             value={{
-                index: index ?? 0,
                 animationOptions,
-                detailsEl,
-                setDetailsEl,
-                contentEl,
-                setContentEl,
+                detailsElement,
+                setDetailsElement,
+                contentElement,
+                setContentElement,
                 setIsOpen,
-                handleClick: handleClick ? handleClick : undefined,
             }}
         >
-            <details ref={detailsRef} className={className}>
+            <details ref={detailsRef} className={className} open={defaultOpen}>
                 {typeof children === 'function' ? children({ isOpen }) : children}
             </details>
         </DisclosureDetailsContext.Provider>
@@ -153,15 +105,13 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     const [animation, setAnimation] = useState<Animation | null | undefined>(null);
     const [animationState, setAnimationState] = useState<AnimationState>(AnimationState.IDLE);
 
-    const { animationOptions: rootAnimationOptions, openIndex } = useContext(DisclosureContext);
+    const { animationOptions: rootAnimationOptions } = useContext(DisclosureContext);
 
     const {
         animationOptions: detailsAnimationOptions,
-        detailsEl,
-        contentEl,
+        detailsElement,
+        contentElement,
         setIsOpen,
-        index,
-        handleClick: handleAccordionClick,
     } = useContext(DisclosureDetailsContext);
 
     const animationOptions = detailsAnimationOptions ?? rootAnimationOptions;
@@ -183,7 +133,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
             animation.cancel();
         }
 
-        const _animation = detailsEl?.animate(
+        const _animation = detailsElement?.animate(
             { height: [`${startHeight}px`, `${endHeight}px`] },
             animationOptions
         );
@@ -195,7 +145,7 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleShrink = () => {
-        const startHeight = detailsEl?.offsetHeight ?? 0;
+        const startHeight = detailsElement?.offsetHeight ?? 0;
         const endHeight = (summaryRef?.current && summaryRef.current.offsetHeight) || 0;
 
         handleAnimateHeight({
@@ -207,8 +157,9 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const handleExpand = () => {
-        const startHeight = detailsEl?.offsetHeight ?? 0;
-        const endHeight = (summaryRef.current?.offsetHeight || 0) + (contentEl?.offsetHeight || 0);
+        const startHeight = detailsElement?.offsetHeight ?? 0;
+        const endHeight =
+            (summaryRef.current?.offsetHeight || 0) + (contentElement?.offsetHeight || 0);
 
         handleAnimateHeight({
             animationState: AnimationState.EXPANDING,
@@ -219,61 +170,47 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
     };
 
     const onAnimationFinish = (open: boolean) => {
-        detailsEl!.open = open;
-        detailsEl!.style.height = '';
-        detailsEl!.style.overflow = '';
+        if (!detailsElement) {
+            return;
+        }
+
+        detailsElement.open = open;
+        detailsElement.style.height = '';
+        detailsElement.style.overflow = '';
 
         setAnimation(null);
         setAnimationState(AnimationState.IDLE);
     };
 
     const handleOpen = () => {
-        detailsEl!.style.height = `${detailsEl?.offsetHeight}px`;
-        detailsEl!.open = true;
+        if (!detailsElement) {
+            return;
+        }
+
+        detailsElement.style.height = `${detailsElement.offsetHeight}px`;
+        detailsElement.open = true;
         setIsOpen(true);
 
         requestAnimationFrame(() => handleExpand());
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-        if (handleAccordionClick) {
+        if (!detailsElement) {
             return;
         }
 
         e.preventDefault();
-        detailsEl!.style.overflow = 'hidden';
+        detailsElement.style.overflow = 'hidden';
 
-        if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
+        if (animationState === AnimationState.SHRINKING || !detailsElement.open) {
             handleOpen();
-        } else if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
+        } else if (animationState === AnimationState.EXPANDING || detailsElement.open) {
             handleShrink();
         }
     };
 
-    useEffect(() => {
-        if (!detailsEl || !handleAccordionClick) {
-            return;
-        }
-
-        detailsEl!.style.overflow = 'hidden';
-
-        if (openIndex === index) {
-            if (animationState === AnimationState.SHRINKING || !detailsEl!.open) {
-                handleOpen();
-            }
-        } else {
-            if (animationState === AnimationState.EXPANDING || detailsEl!.open) {
-                handleShrink();
-            }
-        }
-    }, [index, openIndex, animationState, detailsEl]);
-
     return (
-        <summary
-            ref={summaryRef}
-            className={cx(styles.summary, className)}
-            onClick={handleAccordionClick ?? handleClick}
-        >
+        <summary ref={summaryRef} className={cx(styles.summary, className)} onClick={handleClick}>
             {children}
         </summary>
     );
@@ -282,10 +219,10 @@ const DisclosureSummary = ({ children, className }: DisclosureSharedProps) => {
 const DisclosureContent = ({ children, className }: DisclosureSharedProps) => {
     const contentRef = React.useRef<HTMLDivElement>(null);
 
-    const { setContentEl } = useContext(DisclosureDetailsContext);
+    const { setContentElement } = useContext(DisclosureDetailsContext);
 
     useEffect(() => {
-        setContentEl(contentRef.current);
+        setContentElement(contentRef.current);
     }, []);
 
     return (
