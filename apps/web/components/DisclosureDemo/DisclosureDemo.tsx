@@ -9,7 +9,7 @@ const DisclosureDemoBasic: React.FC = () => {
     <Disclosure.Root defaultOpenIndex={2} className={styles.root}>
       {items.map(({ heading, paragraph }, index) => (
         <Disclosure.Details key={index}>
-          <Disclosure.Summary>Minka: {heading}</Disclosure.Summary>
+          <Disclosure.Summary>{heading}</Disclosure.Summary>
           <Disclosure.Content>{paragraph}</Disclosure.Content>
         </Disclosure.Details>
       ))}
