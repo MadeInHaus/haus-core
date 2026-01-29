@@ -6,7 +6,4 @@ export default defineConfig({
     dts: true,
     tsconfig: 'tsconfig.json',
     format: ['cjs', 'esm'],
-    loader: {
-        '.css': 'local-css',
-    },
 });

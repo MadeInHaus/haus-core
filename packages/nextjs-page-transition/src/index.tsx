@@ -1,12 +1,10 @@
 import * as React from 'react';
 
 import cx from 'clsx';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getHash, removeHash } from '@madeinhaus/utils';
 import { useNextCssRemovalPrevention } from './helpers/useNextCssRemovalPrevention';
-
-import styles from './PageTransition.module.css';
+import { injectTransitionStyles } from './styles/inject';
 
 export interface PageTransitionProps {
     /** The container element (default: main) */
@@ -26,6 +24,11 @@ export interface PageTransitionProps {
     /** The content */
     children: React.ReactElement;
 }
+
+// Helper to get class name for phase
+const getPhaseClassName = (phase: PageTransitionPhase): string => {
+    return `transition-${phase.toLowerCase()}`;
+};
 
 export enum PageTransitionPhase {
     IDLE = 'IDLE',
@@ -276,22 +279,15 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
         };
     }, []);
 
-    const defaultStyles = disableDefaultStyles ? null : styles[`transition-${phase.toLowerCase()}`];
-    const rootClasses = cx(defaultStyles, className);
+    const phaseClassName = disableDefaultStyles ? null : getPhaseClassName(phase);
+    const rootClasses = cx(phaseClassName, className);
     const rootStyle = {
         '--transition-in-duration': `${inPhaseDuration}ms`,
         '--transition-out-duration': `${outPhaseDuration}ms`,
-    };
+    } as React.CSSProperties;
 
     return (
         <Wrapper ref={ref} className={rootClasses} style={rootStyle}>
-            {!disableDefaultStyles && (
-                <Head>
-                    <style type="text/css">
-                        {`${styles['transition-appear']} { opacity: 0.001; }`}
-                    </style>
-                </Head>
-            )}
             {currentChild}
         </Wrapper>
     );
@@ -299,9 +295,24 @@ const PageTransition = React.forwardRef<HTMLElement, PageTransitionProps>((props
 
 interface PageTransitionContextProps {
     children: React.ReactNode;
+    /**
+     * Whether to automatically inject transition styles
+     * @default true
+     */
+    autoInjectStyles?: boolean;
 }
-export const PageTransitionContext: React.FC<PageTransitionContextProps> = ({ children }) => {
+export const PageTransitionContext: React.FC<PageTransitionContextProps> = ({
+    children,
+    autoInjectStyles = true,
+}) => {
     const [state, setState] = React.useState<PageTransitionState>(initialState);
+
+    React.useEffect(() => {
+        if (autoInjectStyles) {
+            injectTransitionStyles();
+        }
+    }, [autoInjectStyles]);
+
     return (
         <DispatchContext.Provider value={setState}>
             <StateContext.Provider value={state}>{children}</StateContext.Provider>
@@ -312,6 +323,8 @@ export const PageTransitionContext: React.FC<PageTransitionContextProps> = ({ ch
 export const usePageTransitionState = (): PageTransitionState => {
     return React.useContext(StateContext);
 };
+
+export { injectTransitionStyles, removeTransitionStyles, hasTransitionStyles } from './styles/inject';
 
 export { Link, type LinkProps } from './helpers/Link';
 export { useAsPathWithoutHash } from './helpers/useAsPathWithoutHash';
