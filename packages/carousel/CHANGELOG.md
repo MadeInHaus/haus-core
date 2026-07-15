@@ -1,5 +1,16 @@
 # @madeinhaus/carousel
 
+## 4.0.0
+
+### Major Changes
+
+- 0d9af81: Feature parity with Astro version of Carousel:
+
+    - add next() and prev() methods
+    - add onPosition() callback
+    - add auto advance functionality
+    - Interruption-Free Physics Easing: Quintic polynomial path planning to match position, velocity, and acceleration on-the-fly when starting or interrupting an eased movement
+
 ## 3.3.0
 
 ### Minor Changes
