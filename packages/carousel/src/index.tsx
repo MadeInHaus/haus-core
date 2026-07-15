@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { type EasingFunction, easings, modulo, clamp, sign, last } from '@madeinhaus/utils';
+import { type EasingFunction, modulo, clamp, sign, last } from '@madeinhaus/utils';
 
 import styles from './Carousel.module.css';
 
@@ -28,9 +28,29 @@ const CarouselItem = ({ Wrapper, isDisabled, className, children }: CarouselItem
 export type CarouselRef = {
     refresh: () => void;
     moveIntoView: (index: number, options?: { easeFn?: EasingFunction; duration?: number }) => void;
+    next: (duration?: number) => void;
+    prev: (duration?: number) => void;
 };
 
 export type CarouselDirection = 'horizontal' | 'vertical';
+
+type VisibleItem = {
+    index: number;
+    element: HTMLElement;
+    startPos: number;
+    endPos: number;
+};
+
+type VisibleItemPosition = {
+    startPos: number;
+    endPos: number;
+};
+
+type AnimationState = {
+    targetIndex: number;
+    targetOffset: number;
+    trigger?: string;
+};
 
 export interface CarouselProps {
     /** Whether the carousel spins horizontally (default) or vertically */
@@ -56,7 +76,14 @@ export interface CarouselProps {
     /** Called when the user starts dragging the carousel */
     onDrag?: () => void;
     /** Called when the carousel snaps to an item */
-    onSnap?: (index: number) => void;
+    onSnap?: (index: number, element: HTMLElement) => void;
+    /** Called on position updates with visibility data */
+    onPosition?: (data: {
+        containerSize: number;
+        snapPosition: number;
+        gap: number;
+        visibleItems: VisibleItem[];
+    }) => void;
     /** The carousel's container class name */
     className?: string;
     /** The carousel's item wrapper class name */
@@ -86,6 +113,7 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             onPress,
             onDrag,
             onSnap,
+            onPosition,
             className,
             itemClassName,
             style,
@@ -99,15 +127,28 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         const gap = React.useRef<number>(0);
         const disabled = React.useRef<boolean>(undefined);
         const autoScroll = React.useRef<number>(0);
+        const autoAdvance = React.useRef<number>(0);
+        const autoAdvanceDelay = React.useRef<number>(0);
+        const autoAdvanceDuration = React.useRef<number>(0);
         const snapPos = React.useRef<number>(undefined);
         const snapPosStart = React.useRef<number>(0);
         const snapPosEnd = React.useRef<number>(undefined);
         const itemSize = React.useRef<number>(undefined);
         const itemSizes = React.useRef<Map<number, number>>(undefined);
         const itemOffsets = React.useRef<Map<number, number>>(undefined);
-        const visibleItems = React.useRef<Set<number>>(new Set());
+        const visibleItems = React.useRef<Map<number, VisibleItemPosition>>(new Map());
         const activeItemIndexInternal = React.useRef<number>(activeItemIndex);
         const offset = React.useRef<number>(0);
+
+        // Physics/Easing refs
+        const velocity = React.useRef<number>(0);
+        const accel = React.useRef<number>(0);
+        const quinticPlan = React.useRef<any>(null);
+        const quinticT0 = React.useRef<number>(0);
+        const animationState = React.useRef<AnimationState | null>(null);
+
+        // Auto Advance interval ref
+        const intervalAutoAdvance = React.useRef<number>(0);
 
         const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
@@ -202,9 +243,13 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
 
         const getItemOffset = (index: number): number => itemOffsets.current?.get(index) ?? 0;
 
-        const updateActiveItemIndex = (index: number) => {
-            activeItemIndexInternal.current = index;
+        const updateActiveItemIndex = () => {
+            activeItemIndexInternal.current = modulo(
+                animationState.current?.targetIndex ?? activeItemIndexInternal.current,
+                items.length
+            );
             offset.current = 0;
+            animationState.current = null;
             calculateItemOffsets();
         };
 
@@ -278,9 +323,9 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             const isVisible = startEdgePos < containerSize.current && endEdgePos > 0;
             if (isVisible) {
                 if (visibleItems.current.has(index)) {
-                    throw new Error();
+                    console.error('Not enough items to fill space.');
                 } else {
-                    visibleItems.current.add(index);
+                    visibleItems.current.set(index, { startPos: startEdgePos, endPos: endEdgePos });
                     const node = container.current?.childNodes[index] as HTMLElement;
                     if (node) {
                         node.style.transform =
@@ -314,20 +359,33 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
 
         const positionItems = () => {
             if (!container.current) return;
-            const visibleItemsPrev = new Set(visibleItems.current);
-            visibleItems.current = new Set();
+            const visibleItemsPrev = new Map(visibleItems.current);
+            visibleItems.current = new Map();
             const index = activeItemIndexInternal.current;
             const { startEdgePos, endEdgePos } = getItemPosition(index);
             position(index, startEdgePos, endEdgePos);
             positionRight(modulo(index + 1, items.length), endEdgePos + (gap.current ?? 0));
             positionLeft(modulo(index - 1, items.length), startEdgePos - (gap.current ?? 0));
-            visibleItemsPrev.forEach(index => {
+            visibleItemsPrev.forEach((_, index) => {
                 if (!visibleItems.current.has(index)) {
                     const node = container.current?.childNodes[index] as HTMLElement;
                     if (node) {
                         node.style.transform = ``;
                     }
                 }
+            });
+            onPosition?.({
+                containerSize: containerSize.current,
+                snapPosition: snapPos.current ?? 0,
+                gap: gap.current ?? 0,
+                visibleItems: Array.from(visibleItems.current.entries()).map(
+                    ([index, { startPos, endPos }]) => ({
+                        index,
+                        element: container.current?.childNodes[index] as HTMLElement,
+                        startPos,
+                        endPos,
+                    })
+                ),
             });
         };
 
@@ -339,9 +397,11 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         const rafThrow = React.useRef<number>(0);
         const rafEased = React.useRef<number>(0);
 
-        const stopAutoScrollAnimation = () => {
+        const stopAutoAnimations = () => {
             window.cancelAnimationFrame(rafAutoScroll.current);
+            window.clearInterval(intervalAutoAdvance.current);
             rafAutoScroll.current = 0;
+            intervalAutoAdvance.current = 0;
         };
 
         const stopThrowAnimation = () => {
@@ -352,16 +412,23 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
         const stopEasedAnimation = () => {
             cancelAnimationFrame(rafEased.current);
             rafEased.current = 0;
+            quinticPlan.current = null;
+            velocity.current = 0;
+            accel.current = 0;
         };
 
         const stopAllAnimations = () => {
-            stopAutoScrollAnimation();
+            stopAutoAnimations();
             stopThrowAnimation();
             stopEasedAnimation();
         };
 
         const shouldStartAutoScroll = () => {
             return autoScroll.current !== 0 && !disabled.current && !rafAutoScroll.current;
+        };
+
+        const shouldStartAutoAdvance = () => {
+            return autoAdvance.current !== 0 && !disabled.current && !intervalAutoAdvance.current;
         };
 
         const animateAutoScroll = (v0: number = 0, tweenDuration: number = 500) => {
@@ -382,56 +449,158 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             rafAutoScroll.current = requestAnimationFrame(loop);
         };
 
-        const animateEased = (
-            targetOffset: number,
-            targetIndex: number,
-            options: { easeFn?: EasingFunction; duration?: number } = {}
-        ) => {
-            const { easeFn = easings.easeInOutCubic, duration = 700 } = options;
-            if (snap && onSnap) onSnap(targetIndex);
+        const animateAutoAdvance = () => {
+            if (!shouldStartAutoAdvance()) {
+                return;
+            }
+            intervalAutoAdvance.current = window.setInterval(() => {
+                const index =
+                    (animationState.current?.targetIndex ?? activeItemIndexInternal.current) +
+                    autoAdvance.current;
+                animateEasedToIndex(index, autoAdvanceDuration.current);
+            }, autoAdvanceDelay.current);
+        };
+
+        type QuinticState = { x: number; v: number; a: number };
+        type QuinticPlan = {
+            durationMs: number;
+            coeffs: [number, number, number, number, number, number];
+            sample: (elapsedMs: number) => QuinticState & { done: boolean };
+        };
+
+        const planQuintic = (
+            start: QuinticState,
+            end: QuinticState,
+            duration: number
+        ): QuinticPlan => {
+            const dur = Math.max(1, duration);
+            const T = dur / 1000;
+            const T2 = T * T,
+                T3 = T2 * T,
+                T4 = T3 * T,
+                T5 = T4 * T;
+
+            const a0 = start.x;
+            const a1 = start.v;
+            const a2 = start.a / 2;
+
+            const C0 = end.x - (a0 + a1 * T + 0.5 * start.a * T2);
+            const C1 = end.v - (a1 + start.a * T);
+            const C2 = end.a - start.a;
+
+            const a3 = (10 * C0 - 4 * C1 * T + 0.5 * C2 * T2) / T3;
+            const a4 = (-15 * C0 + 7 * C1 * T - C2 * T2) / T4;
+            const a5 = (6 * C0 - 3 * C1 * T + 0.5 * C2 * T2) / T5;
+
+            const sample = (elapsed: number): QuinticState & { done: boolean } => {
+                const t = Math.max(0, Math.min(T, (elapsed || 0) / 1000));
+                const t2 = t * t,
+                    t3 = t2 * t,
+                    t4 = t3 * t,
+                    t5 = t4 * t;
+
+                const x = a0 + a1 * t + a2 * t2 + a3 * t3 + a4 * t4 + a5 * t5;
+                const v = a1 + 2 * a2 * t + 3 * a3 * t2 + 4 * a4 * t3 + 5 * a5 * t4;
+                const a = 2 * a2 + 6 * a3 * t + 12 * a4 * t2 + 20 * a5 * t3;
+
+                return { x, v, a, done: elapsed >= dur - 0.5 };
+            };
+
+            return { durationMs: dur, coeffs: [a0, a1, a2, a3, a4, a5], sample };
+        };
+
+        const quinticTick = (now: number) => {
+            if (!quinticPlan.current) {
+                rafEased.current = 0;
+                return;
+            }
+
+            const { x, v, a, done } = quinticPlan.current.sample(now - quinticT0.current);
+            offset.current = x;
+            velocity.current = v;
+            accel.current = a;
+            positionItems();
+
+            if (!done) {
+                rafEased.current = requestAnimationFrame(quinticTick);
+            } else {
+                rafEased.current = 0;
+                quinticPlan.current = null;
+                updateActiveItemIndex();
+            }
+        };
+
+        const animateEased = (targetOffset: number, targetIndex: number, duration = 1000) => {
+            stopThrowAnimation();
+
+            const now = performance.now();
+            const endState = { x: targetOffset, v: 0, a: 0 };
+            const startState = quinticPlan.current
+                ? quinticPlan.current.sample(now - quinticT0.current)
+                : { x: offset.current, v: velocity.current, a: accel.current };
+
+            quinticT0.current = now;
+            quinticPlan.current = planQuintic(startState, endState, duration);
+            animationState.current = { targetIndex, targetOffset, trigger: 'animateEased' };
+
+            const indexMod = modulo(targetIndex, items.length);
+            if (snap && onSnap) {
+                const element = container.current?.childNodes[indexMod] as HTMLElement;
+                onSnap(indexMod, element);
+            }
+
             if (duration === 0) {
-                updateActiveItemIndex(targetIndex);
+                offset.current = targetOffset;
+                velocity.current = 0;
+                accel.current = 0;
+                updateActiveItemIndex();
                 positionItems();
                 return;
             }
-            const startTime = performance.now();
-            const startOffset = offset.current;
-            const loop = () => {
-                const currentTime = performance.now();
-                const elapsedTime = currentTime - startTime;
-                const t = elapsedTime / duration;
-                if (t < 1) {
-                    const ease = easeFn(t);
-                    const dist = targetOffset - startOffset;
-                    offset.current = startOffset + dist * ease;
-                    rafEased.current = requestAnimationFrame(loop);
-                } else {
-                    rafEased.current = 0;
-                    updateActiveItemIndex(targetIndex);
-                }
-                positionItems();
-            };
-            rafEased.current = requestAnimationFrame(loop);
+
+            if (!rafEased.current) {
+                rafEased.current = requestAnimationFrame(quinticTick);
+            }
+        };
+
+        const animateEasedToIndex = (targetIndex: number, duration: number = 700) => {
+            let targetOffset = 0;
+            const dir = sign(targetIndex - activeItemIndexInternal.current);
+            for (let i = activeItemIndexInternal.current; i !== targetIndex; i += dir) {
+                targetOffset += getDistanceToNeighbor(i, -dir);
+            }
+            animateEased(targetOffset, targetIndex, duration);
         };
 
         const animateThrow = (v0: number, t0: number) => {
+            stopEasedAnimation();
+
             const startPos = offset.current;
 
             // See https://www.desmos.com/calculator/uejv80whgp for the math
             let index: number;
-            let velocity = v0;
+            let vel = v0;
             let duration = -damping * Math.log(6 / (1000 * Math.abs(v0)));
             let distance = v0 * damping * (1 - Math.exp(-duration / damping));
             if (snap && autoScroll.current === 0) {
                 const { index: iSnap, distance: dSnap } = findSnapDistance(distance);
-                velocity = dSnap / (damping * (1 - Math.exp(-duration / damping)));
-                duration = -damping * Math.log(6 / (1000 * Math.abs(velocity)));
+                vel = dSnap / (damping * (1 - Math.exp(-duration / damping)));
+                duration = -damping * Math.log(6 / (1000 * Math.abs(vel)));
                 distance = dSnap;
                 index = iSnap;
-                if (onSnap) onSnap(index);
+                animationState.current = {
+                    targetIndex: index,
+                    targetOffset: startPos + distance,
+                    trigger: 'animateThrow',
+                };
+                if (onSnap) {
+                    const indexMod = modulo(index, items.length);
+                    const element = container.current?.childNodes[indexMod] as HTMLElement;
+                    onSnap(indexMod, element);
+                }
             }
 
-            if (sign(velocity) !== sign(autoScroll.current)) {
+            if (sign(vel) !== sign(autoScroll.current)) {
                 // Reverse auto-scroll direction if it goes in the
                 // opposite direction of the throw.
                 autoScroll.current *= -1;
@@ -441,7 +610,7 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                 const currentTime = performance.now();
                 const elapsedTime = currentTime - t0;
                 const exp = Math.exp(-elapsedTime / damping);
-                const v = velocity * exp;
+                const v = vel * exp;
                 if (shouldStartAutoScroll()) {
                     // If auto-scroll is enabled, and the velocity of the
                     // throw gets smaller than the auto-scroll velocity,
@@ -453,7 +622,7 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                     }
                 }
                 // Total distance traveled until now
-                const d = velocity * damping * (1 - exp);
+                const d = vel * damping * (1 - exp);
                 // Exit condition: We're either
                 // - sufficiently near the target (normal exit)
                 // - or out of time (fail-safe)
@@ -462,17 +631,21 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                 if (isNearTarget || isOutOfTime) {
                     rafThrow.current = 0;
                     if (typeof index !== 'undefined') {
-                        updateActiveItemIndex(index);
+                        updateActiveItemIndex();
                     }
                     positionItems();
-                    animateAutoScroll();
+                    if (shouldStartAutoScroll()) {
+                        animateAutoScroll();
+                    } else if (shouldStartAutoAdvance()) {
+                        animateAutoAdvance();
+                    }
                 } else {
                     rafThrow.current = requestAnimationFrame(loop);
                     offset.current = startPos + d;
                     positionItems();
                 }
             };
-            loop();
+            rafThrow.current = requestAnimationFrame(loop);
         };
 
         // ///////////////////////////////////////////////////////////////////////////
@@ -658,6 +831,9 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                     // Snap back
                     let { distance, index } = findSnapDistance(0);
                     animateEased(offset.current + distance, index);
+                    if (shouldStartAutoAdvance()) {
+                        animateAutoAdvance();
+                    }
                 }
             }
         };
@@ -803,8 +979,25 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             index: number,
             options: { easeFn?: EasingFunction; duration?: number } = {}
         ) => {
+            const { duration = 700 } = options;
             stopAllAnimations();
-            animateEased(getClosestDistance(index), index, options);
+            animateEased(getClosestDistance(index), index, duration);
+        };
+
+        const next = (duration = 700) => {
+            const index =
+                (animationState.current?.targetIndex ?? activeItemIndexInternal.current) + 1;
+            stopThrowAnimation();
+            stopAutoAnimations();
+            animateEasedToIndex(index, duration);
+        };
+
+        const prev = (duration = 700) => {
+            const index =
+                (animationState.current?.targetIndex ?? activeItemIndexInternal.current) - 1;
+            stopThrowAnimation();
+            stopAutoAnimations();
+            animateEasedToIndex(index, duration);
         };
 
         const refresh = () => {
@@ -816,14 +1009,20 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
             // --carousel-snap-position-end
             // --carousel-item-width
             // --carousel-autoscroll
+            // --carousel-autoadvance
+            // --carousel-autoadvance-delay
+            // --carousel-autoadvance-duration
             // --carousel-disabled
             const values = getCSSValues(container.current, direction);
             gap.current = values.gap;
             itemSize.current = values.width;
-            snapPos.current = values.snap;
+            snapPos.current = values.snapStart;
             snapPosStart.current = values.snapStart;
             snapPosEnd.current = values.snapEnd;
             disabled.current = values.disabled;
+            autoAdvance.current = values.autoAdvance;
+            autoAdvanceDelay.current = values.autoAdvanceDelay;
+            autoAdvanceDuration.current = values.autoAdvanceDuration;
             if (Math.abs(autoScroll.current) !== Math.abs(values.autoScroll)) {
                 autoScroll.current = values.autoScroll;
             }
@@ -858,11 +1057,13 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                 console.error('boom');
                 throw e;
             }
-            // Start or stop auto-scroll animation
-            if (autoScroll.current) {
+            // Start or stop auto-scroll/auto-advance animation
+            if (autoScroll.current !== 0) {
                 animateAutoScroll();
+            } else if (autoAdvance.current !== 0) {
+                animateAutoAdvance();
             } else {
-                stopAutoScrollAnimation();
+                stopAutoAnimations();
             }
         };
 
@@ -884,6 +1085,12 @@ const Carousel = React.forwardRef<CarouselRef, React.PropsWithChildren<CarouselP
                     options: { easeFn?: EasingFunction; duration?: number } = {}
                 ) => {
                     moveIntoView(index, options);
+                },
+                next: (duration?: number) => {
+                    next(duration);
+                },
+                prev: (duration?: number) => {
+                    prev(duration);
                 },
             }),
             [items] // eslint-disable-line react-hooks/exhaustive-deps
@@ -909,6 +1116,9 @@ type CSSValues = {
     snapEnd: number;
     width: number;
     autoScroll: number;
+    autoAdvance: number;
+    autoAdvanceDelay: number;
+    autoAdvanceDuration: number;
     disabled: boolean;
 };
 
@@ -920,6 +1130,9 @@ function getCSSValues(container: HTMLElement, direction: CarouselDirection): CSS
     const SIZE = '--carousel-item-size';
     const WIDTH = '--carousel-item-width';
     const SCROLL = '--carousel-autoscroll';
+    const ADVANCE = '--carousel-autoadvance';
+    const ADVANCEDELAY = '--carousel-autoadvance-delay';
+    const ADVANCEDURATION = '--carousel-autoadvance-duration';
     const DISABLED = '--carousel-disabled';
     const styles = [
         `width: 100%`,
@@ -928,6 +1141,8 @@ function getCSSValues(container: HTMLElement, direction: CarouselDirection): CSS
         `margin-left: var(${SNAPSTART})`,
         `margin-right: var(${SNAPEND})`,
         `left: var(${SIZE}, ${WIDTH})`, // --carousel-item-width is deprecated
+        `transition-delay: var(${ADVANCEDELAY})`,
+        `transition-duration: var(${ADVANCEDURATION})`,
     ];
     const isHorizontal = direction === 'horizontal';
     const containerSize = isHorizontal ? container.offsetWidth : container.offsetHeight;
@@ -946,6 +1161,9 @@ function getCSSValues(container: HTMLElement, direction: CarouselDirection): CSS
     const snapEnd = parseFloat(computed.getPropertyValue('margin-right'));
     const width = parseFloat(computed.getPropertyValue('left'));
     const autoScroll = parseFloat(computed.getPropertyValue(SCROLL));
+    const autoAdvance = parseInt(computed.getPropertyValue(ADVANCE), 10);
+    const autoAdvanceDelay = parseTime(computed.getPropertyValue('transition-delay'), 5000);
+    const autoAdvanceDuration = parseTime(computed.getPropertyValue('transition-duration'), 700);
     const disabled = parseInt(computed.getPropertyValue(DISABLED), 10);
     container.removeChild(dummyContainer);
     return {
@@ -955,8 +1173,27 @@ function getCSSValues(container: HTMLElement, direction: CarouselDirection): CSS
         snapEnd: hasSnapEnd && Number.isFinite(snapEnd) ? snapEnd : snap,
         width: Math.max(Number.isFinite(width) ? width : 0, 0),
         autoScroll: Number.isFinite(autoScroll) ? autoScroll : 0,
+        autoAdvance: Number.isFinite(autoAdvance) ? autoAdvance : 0,
+        autoAdvanceDelay,
+        autoAdvanceDuration,
         disabled: (Number.isFinite(disabled) ? disabled : 0) !== 0,
     };
+}
+
+function parseTime(value: string, defaultValue: number): number {
+    const match = value?.trim()?.match(/([0-9.]+)(ms|s)/);
+    if (match) {
+        const num = parseFloat(match[1]);
+        if (Number.isFinite(num) && num !== 0) {
+            const unit = match[2];
+            if (unit === 'ms') {
+                return num;
+            } else if (unit === 's') {
+                return num * 1000;
+            }
+        }
+    }
+    return defaultValue;
 }
 
 function hermite(
